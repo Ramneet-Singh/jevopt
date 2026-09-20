@@ -1,0 +1,404 @@
+{
+  "compile_commands": [
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/src/crc32/crc_32.c",
+      "-o",
+      "runs/jevopt-embench/crc32/objects/crc_32.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/main.c",
+      "-o",
+      "runs/jevopt-embench/crc32/objects/main.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/beebsc.c",
+      "-o",
+      "runs/jevopt-embench/crc32/objects/beebsc.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/chips/speed-test-gcc/chipsupport.c",
+      "-o",
+      "runs/jevopt-embench/crc32/objects/chipsupport.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/boards/default/boardsupport.c",
+      "-o",
+      "runs/jevopt-embench/crc32/objects/boardsupport.o"
+    ]
+  ],
+  "decisions": [
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.18,
+        "probabilities": {
+          "do_not_inline": 0.41,
+          "inline": 0.59
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 1063.525,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "crc32pseudo",
+        "caller": "benchmark_body",
+        "decision": true,
+        "default": false,
+        "id": 0,
+        "ir": {
+          "callee": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local i64 @crc32pseudo() local_unnamed_addr #0 {\n  br label %1\n\n1:                                                ; preds = %5, %0\n  %2 = phi i32 [ 0, %0 ], [ %14, %5 ]\n  %3 = phi i64 [ 4294967295, %0 ], [ %13, %5 ]\n  %4 = icmp eq i32 %2, 1024\n  br i1 %4, label %15, label %5\n\n5:                                                ; preds = %1\n  %6 = tail call i32 @rand_beebs() #4\n  %7 = zext i32 %6 to i64\n  %8 = xor i64 %3, %7\n  %9 = and i64 %8, 255\n  %10 = getelementptr inbounds nuw [256 x i64], ptr @crc_32_tab, i64 0, i64 %9\n  %11 = load i64, ptr %10, align 8, !tbaa !5\n  %12 = lshr i64 %3, 8\n  %13 = xor i64 %11, %12\n  %14 = add nuw nsw i32 %2, 1\n  br label %1, !llvm.loop !9\n\n15:                                               ; preds = %1\n  %16 = xor i64 %3, -1\n  ret i64 %16\n}\n",
+          "caller": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine internal fastcc range(i32 0, 32768) i32 @benchmark_body(i32 noundef %0) unnamed_addr #3 {\n  br label %2\n\n2:                                                ; preds = %6, %1\n  %3 = phi i32 [ 0, %1 ], [ %8, %6 ]\n  %4 = phi i64 [ undef, %1 ], [ %7, %6 ]\n  %5 = icmp slt i32 %3, %0\n  br i1 %5, label %6, label %9\n\n6:                                                ; preds = %2\n  call void @srand_beebs(i32 noundef 0) #4\n  %7 = call i64 @crc32pseudo() #5\n  %8 = add nuw nsw i32 %3, 1\n  br label %2, !llvm.loop !11\n\n9:                                                ; preds = %2\n  %10 = trunc i64 %4 to i32\n  %11 = and i32 %10, 32767\n  ret i32 %11\n}\n",
+          "callsite": "  %7 = call i64 @crc32pseudo() #5"
+        },
+        "module": "third_party/embench-iot/src/crc32/crc_32.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 25,
+          "callee_basic_block_count": 4,
+          "callee_instruction_count": 17,
+          "callee_users": 1,
+          "caller_basic_block_count": 4,
+          "caller_instruction_count": 12,
+          "caller_users": 2,
+          "callsite_cost": -30,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 75,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 25,
+          "simplified_instructions": 6,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": -1,
+          "unsimplified_common_instructions": 55
+        },
+        "source": "third_party/embench-iot/src/crc32/crc_32.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* This file is part of the Bristol/Embecosm Embedded Benchmark Suite.\n\n   This version, copyright (C) 2013-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor James Pallister <james.pallister@bristol.ac.uk>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   Code originally from: From http://www.snippets.org/.  This original code is\n   FREE with no restrictions. */\n\n/* CRC - 32 BIT ANSI X3.66 CRC checksum files */\n\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 170\n\n#include <stdlib.h>\n\n#ifdef __TURBOC__\n#pragma warn -cln\n#endif\n\n/**********************************************************************\\\n  |* Demonstration program to compute the 32-bit CRC used as the frame  *|\n  |* check sequence in ADCCP (ANSI X3.66, also known as FIPS PUB 71     *|\n  |* and FED-STD-1003, the U.S. versions of CCITT's X.25 link-level     *|\n  |* protocol).  The 32-bit FCS was added via the Federal Register,     *|\n  |* 1 June 1982, p.23798.  I presume but don't know for certain that   *|\n  |* this polynomial is or will be included in CCITT V.41, which        *|\n  |* defines the 16-bit CRC (often called CRC-CCITT) polynomial.  FIPS  *|\n  |* PUB 78 says that the 32-bit FCS reduces otherwise undetected       *|\n  |* errors by a factor of 10^-5 over 16-bit FCS.                       *|\n  \\**********************************************************************/\n\n/* Some basic types.  */\ntypedef unsigned char BYTE;\ntypedef unsigned long DWORD;\ntypedef unsigned short WORD;\n\n#define UPDC32(octet,crc) (crc_32_tab[((crc)^((BYTE)octet)) & 0xff] ^ ((crc) >> 8))\n\n/* Need an unsigned type capable of holding 32 bits; */\n\ntypedef DWORD UNS_32_BITS;\n\n/* Copyright (C) 1986 Gary S. Brown.  You may use this program, or\n   code or tables extracted from it, as desired without restriction.*/\n\n/* First, the polynomial itself and its table of feedback terms.  The  */\n/* polynomial is                                                       */\n/* X^32+X^26+X^23+X^22+X^16+X^12+X^11+X^10+X^8+X^7+X^5+X^4+X^2+X^1+X^0 */\n/* Note that we take it \"backwards\" and put the highest-order term in  */\n/* the lowest-order bit.  The X^32 term is \"implied\"; the LSB is the   */\n/* X^31 term, etc.  The X^0 term (usually shown as \"+1\") results in    */\n/* the MSB being 1.                                                    */\n\n/* Note that the usual hardware shift register implementation, which   */\n/* is what we're using (we're merely optimizing it by doing eight-bit  */\n/* chunks at a time) shifts bits into the lowest-order term.  In our   */\n/* implementation, that means shifting towards the right.  Why do we   */\n/* do it this way?  Because the calculated CRC must be transmitted in  */\n/* order from highest-order term to lowest-order term.  UARTs transmit */\n/* characters in order from LSB to MSB.  By storing the CRC this way,  */\n/* we hand it to the UART in the order low-byte to high-byte; the UART */\n/* sends each low-bit to hight-bit; and the result is transmission bit */\n/* by bit from highest- to lowest-order term without requiring any bit */\n/* shuffling on our part.  Reception works similarly.                  */\n\n/* The feedback terms table consists of 256, 32-bit entries.  Notes:   */\n/*                                                                     */\n/*  1. The table can be generated at runtime if desired; code to do so */\n/*     is shown later.  It might not be obvious, but the feedback      */\n/*     terms simply represent the results of eight shift/xor opera-    */\n/*     tions for all combinations of data and CRC register values.     */\n/*                                                                     */\n/*  2. The CRC accumulation logic is the same for all CRC polynomials, */\n/*     be they sixteen or thirty-two bits wide.  You simply choose the */\n/*     appropriate table.  Alternatively, because the table can be     */\n/*     generated at runtime, you can start by generating the table for */\n/*     the polynomial in question and use exactly the same \"updcrc\",   */\n/*     if your application needn't simultaneously handle two CRC       */\n/*     polynomials.  (Note, however, that XMODEM is strange.)          */\n/*                                                                     */\n/*  3. For 16-bit CRCs, the table entries need be only 16 bits wide;   */\n/*     of course, 32-bit entries work OK if the high 16 bits are zero. */\n/*                                                                     */\n/*  4. The values must be right-shifted by eight bits by the \"updcrc\"  */\n/*     logic; the shift must be unsigned (bring in zeroes).  On some   */\n/*     hardware you could probably optimize the shift in assembler by  */\n/*     using byte-swap instructions.                                   */\n\n/* The BEEBS version of this code uses its own version of rand, to\n   avoid library/architecture variation. */\n\nstatic const UNS_32_BITS crc_32_tab[] = {\t/* CRC polynomial 0xedb88320 */\n  0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,\n  0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,\n  0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91, 0x1db71064, 0x6ab020f2,\n  0xf3b97148, 0x84be41de, 0x1adad47d, 0x6ddde4eb, 0xf4d4b551, 0x83d385c7,\n  0x136c9856, 0x646ba8c0, 0xfd62f97a, 0x8a65c9ec, 0x14015c4f, 0x63066cd9,\n  0xfa0f3d63, 0x8d080df5, 0x3b6e20c8, 0x4c69105e, 0xd56041e4, 0xa2677172,\n  0x3c03e4d1, 0x4b04d447, 0xd20d85fd, 0xa50ab56b, 0x35b5a8fa, 0x42b2986c,\n  0xdbbbc9d6, 0xacbcf940, 0x32d86ce3, 0x45df5c75, 0xdcd60dcf, 0xabd13d59,\n  0x26d930ac, 0x51de003a, 0xc8d75180, 0xbfd06116, 0x21b4f4b5, 0x56b3c423,\n  0xcfba9599, 0xb8bda50f, 0x2802b89e, 0x5f058808, 0xc60cd9b2, 0xb10be924,\n  0x2f6f7c87, 0x58684c11, 0xc1611dab, 0xb6662d3d, 0x76dc4190, 0x01db7106,\n  0x98d220bc, 0xefd5102a, 0x71b18589, 0x06b6b51f, 0x9fbfe4a5, 0xe8b8d433,\n  0x7807c9a2, 0x0f00f934, 0x9609a88e, 0xe10e9818, 0x7f6a0dbb, 0x086d3d2d,\n  0x91646c97, 0xe6635c01, 0x6b6b51f4, 0x1c6c6162, 0x856530d8, 0xf262004e,\n  0x6c0695ed, 0x1b01a57b, 0x8208f4c1, 0xf50fc457, 0x65b0d9c6, 0x12b7e950,\n  0x8bbeb8ea, 0xfcb9887c, 0x62dd1ddf, 0x15da2d49, 0x8cd37cf3, 0xfbd44c65,\n  0x4db26158, 0x3ab551ce, 0xa3bc0074, 0xd4bb30e2, 0x4adfa541, 0x3dd895d7,\n  0xa4d1c46d, 0xd3d6f4fb, 0x4369e96a, 0x346ed9fc, 0xad678846, 0xda60b8d0,\n  0x44042d73, 0x33031de5, 0xaa0a4c5f, 0xdd0d7cc9, 0x5005713c, 0x270241aa,\n  0xbe0b1010, 0xc90c2086, 0x5768b525, 0x206f85b3, 0xb966d409, 0xce61e49f,\n  0x5edef90e, 0x29d9c998, 0xb0d09822, 0xc7d7a8b4, 0x59b33d17, 0x2eb40d81,\n  0xb7bd5c3b, 0xc0ba6cad, 0xedb88320, 0x9abfb3b6, 0x03b6e20c, 0x74b1d29a,\n  0xead54739, 0x9dd277af, 0x04db2615, 0x73dc1683, 0xe3630b12, 0x94643b84,\n  0x0d6d6a3e, 0x7a6a5aa8, 0xe40ecf0b, 0x9309ff9d, 0x0a00ae27, 0x7d079eb1,\n  0xf00f9344, 0x8708a3d2, 0x1e01f268, 0x6906c2fe, 0xf762575d, 0x806567cb,\n  0x196c3671, 0x6e6b06e7, 0xfed41b76, 0x89d32be0, 0x10da7a5a, 0x67dd4acc,\n  0xf9b9df6f, 0x8ebeeff9, 0x17b7be43, 0x60b08ed5, 0xd6d6a3e8, 0xa1d1937e,\n  0x38d8c2c4, 0x4fdff252, 0xd1bb67f1, 0xa6bc5767, 0x3fb506dd, 0x48b2364b,\n  0xd80d2bda, 0xaf0a1b4c, 0x36034af6, 0x41047a60, 0xdf60efc3, 0xa867df55,\n  0x316e8eef, 0x4669be79, 0xcb61b38c, 0xbc66831a, 0x256fd2a0, 0x5268e236,\n  0xcc0c7795, 0xbb0b4703, 0x220216b9, 0x5505262f, 0xc5ba3bbe, 0xb2bd0b28,\n  0x2bb45a92, 0x5cb36a04, 0xc2d7ffa7, 0xb5d0cf31, 0x2cd99e8b, 0x5bdeae1d,\n  0x9b64c2b0, 0xec63f226, 0x756aa39c, 0x026d930a, 0x9c0906a9, 0xeb0e363f,\n  0x72076785, 0x05005713, 0x95bf4a82, 0xe2b87a14, 0x7bb12bae, 0x0cb61b38,\n  0x92d28e9b, 0xe5d5be0d, 0x7cdcefb7, 0x0bdbdf21, 0x86d3d2d4, 0xf1d4e242,\n  0x68ddb3f8, 0x1fda836e, 0x81be16cd, 0xf6b9265b, 0x6fb077e1, 0x18b74777,\n  0x88085ae6, 0xff0f6a70, 0x66063bca, 0x11010b5c, 0x8f659eff, 0xf862ae69,\n  0x616bffd3, 0x166ccf45, 0xa00ae278, 0xd70dd2ee, 0x4e048354, 0x3903b3c2,\n  0xa7672661, 0xd06016f7, 0x4969474d, 0x3e6e77db, 0xaed16a4a, 0xd9d65adc,\n  0x40df0b66, 0x37d83bf0, 0xa9bcae53, 0xdebb9ec5, 0x47b2cf7f, 0x30b5ffe9,\n  0xbdbdf21c, 0xcabac28a, 0x53b39330, 0x24b4a3a6, 0xbad03605, 0xcdd70693,\n  0x54de5729, 0x23d967bf, 0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94,\n  0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d\n};\n\n\nDWORD\ncrc32pseudo ()\n{\n  int i;\n  register DWORD oldcrc32;\n\n  oldcrc32 = 0xFFFFFFFF;\n\n  for (i = 0; i < 1024; ++i)\n    {\n      oldcrc32 = UPDC32 (rand_beebs (), oldcrc32);\n    }\n\n  return ~oldcrc32;\n}\n\nvoid\ninitialise_benchmark (void)\n{\n}\n\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n  DWORD r;\n\n  for (i = 0; i < rpt; i++)\n    {\n      srand_beebs (0);\n      r = crc32pseudo ();\n    }\n\n  return (int) (r % 32768);\n}\n\n\nint\nverify_benchmark (int r)\n{\n  return 11433 == r;\n}\n\n\n/* vim: set ts=3 sw=3 et: */\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local i64 @crc32pseudo() local_unnamed_addr #0 {\n  br label %1\n\n1:                                                ; preds = %5, %0\n  %2 = phi i32 [ 0, %0 ], [ %14, %5 ]\n  %3 = phi i64 [ 4294967295, %0 ], [ %13, %5 ]\n  %4 = icmp eq i32 %2, 1024\n  br i1 %4, label %15, label %5\n\n5:                                                ; preds = %1\n  %6 = tail call i32 @rand_beebs() #4\n  %7 = zext i32 %6 to i64\n  %8 = xor i64 %3, %7\n  %9 = and i64 %8, 255\n  %10 = getelementptr inbounds nuw [256 x i64], ptr @crc_32_tab, i64 0, i64 %9\n  %11 = load i64, ptr %10, align 8, !tbaa !5\n  %12 = lshr i64 %3, 8\n  %13 = xor i64 %11, %12\n  %14 = add nuw nsw i32 %2, 1\n  br label %1, !llvm.loop !9\n\n15:                                               ; preds = %1\n  %16 = xor i64 %3, -1\n  ret i64 %16\n}\n",
+        "caller_ir": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine internal fastcc range(i32 0, 32768) i32 @benchmark_body(i32 noundef %0) unnamed_addr #3 {\n  br label %2\n\n2:                                                ; preds = %6, %1\n  %3 = phi i32 [ 0, %1 ], [ %8, %6 ]\n  %4 = phi i64 [ undef, %1 ], [ %7, %6 ]\n  %5 = icmp slt i32 %3, %0\n  br i1 %5, label %6, label %9\n\n6:                                                ; preds = %2\n  call void @srand_beebs(i32 noundef 0) #4\n  %7 = call i64 @crc32pseudo() #5\n  %8 = add nuw nsw i32 %3, 1\n  br label %2, !llvm.loop !11\n\n9:                                                ; preds = %2\n  %10 = trunc i64 %4 to i32\n  %11 = and i32 %10, 32767\n  ret i32 %11\n}\n",
+        "callsite": {
+          "callee": "crc32pseudo",
+          "caller": "benchmark_body",
+          "instruction": "  %7 = call i64 @crc32pseudo() #5",
+          "module": "third_party/embench-iot/src/crc32/crc_32.c",
+          "source": "third_party/embench-iot/src/crc32/crc_32.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 4,
+          "callee_instruction_count": 17,
+          "callee_users": 1,
+          "caller_basic_block_count": 4,
+          "caller_instruction_count": 12,
+          "caller_users": 2,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 5815,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.54,
+        "probabilities": {
+          "do_not_inline": 0.23,
+          "inline": 0.77
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 330.424,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "malloc_beebs",
+        "caller": "calloc_beebs",
+        "decision": true,
+        "default": false,
+        "id": 0,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+          "callsite": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5"
+        },
+        "module": "third_party/embench-iot/support/beebsc.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "callsite_cost": -35,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 15,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 4,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 1,
+          "unsimplified_common_instructions": 50
+        },
+        "source": "third_party/embench-iot/support/beebsc.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS local library variants\n\n   Copyright (C) 2019 Embecosm Limited.\n\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later */\n\n/* These are very simple local versions of library routines, to ensure the\n   code is compiled with the flags used for the benchmark.  Not all library\n   routines are here, just ones that cause a lot of unecessary load, or where\n   there is variation between platforms and architectures. */\n\n#include <stddef.h>\n#include <string.h>\n#include \"beebsc.h\"\n\n/* Seed for the random number generator */\n\nstatic long int seed = 0;\n\n/* Heap records and sane initial values */\n\nstatic void *heap_ptr = NULL;\nstatic void *heap_end = NULL;\nstatic size_t heap_requested = 0;\n\n\n/* Yield a sequence of random numbers in the range [0, 2^15-1].\n\n   long int is guaranteed to be at least 32 bits. The seed only ever uses 31\n   bits (so is positive).\n\n   For BEEBS this gets round different operating systems using different\n   multipliers and offsets and RAND_MAX variations. */\n\nint\nrand_beebs (void)\n{\n  seed = (seed * 1103515245L + 12345) & ((1UL << 31) - 1);\n  return (int) (seed >> 16);\n}\n\n\n/* Initialize the random number generator */\n\nvoid\nsrand_beebs (unsigned int new_seed)\n{\n  seed = (long int) new_seed;\n}\n\n\n/* Initialize the BEEBS heap pointers. Note that the actual memory block is\n   in the caller code. */\n\nvoid\ninit_heap_beebs (void *heap, size_t heap_size)\n{\n  heap_ptr = (void *) heap;\n  heap_end = (void *) ((char *) heap_ptr + heap_size);\n  heap_requested = 0;\n}\n\n\n/* Report if malloc ever failed.\n\n   Return non-zero (TRUE) if malloc did not reqest more than was available\n   since the last call to init_heap_beebs, zero (FALSE) otherwise. */\n\nint\ncheck_heap_beebs (void *heap)\n{\n  return ((void *) ((char *) heap + heap_requested) <= heap_end);\n}\n\n\n/* BEEBS version of malloc.\n\n   This is primarily to reduce library and OS dependencies. Malloc is\n   generally not used in embedded code, or if it is, only in well defined\n   contexts to pre-allocate a fixed amount of memory. So this simplistic\n   implementation is just fine.\n\n   Note in particular the assumption that memory will never be freed! */\n\nvoid *\nmalloc_beebs (size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of calloc.\n\n   Implement as wrapper for malloc */\n\nvoid *\ncalloc_beebs (size_t nmemb, size_t size)\n{\n  void *new_ptr = malloc_beebs (nmemb * size);\n\n  /* Calloc is defined to zero the memory. OK to use a function here, because\n     it will be handled specially by the compiler anyway. */\n\n  if (NULL != new_ptr)\n    memset (new_ptr, 0, nmemb * size);\n\n  return new_ptr;\n}\n\n\n/* BEEBS version of realloc.\n\n   This is primarily to reduce library and OS dependencies. We just have to\n   allocate new memory and copy stuff across. */\n\nvoid *\nrealloc_beebs (void *ptr, size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n\n      /* This is clunky, since we don't know the size of the original\n         pointer. However it is a read only action and we know it must\n         be big enough if we right off the end, or we couldn't have\n         allocated here. If the size is smaller, it doesn't matter. */\n\n      if (NULL != ptr)\n\t{\n\t  size_t i;\n\n\t  for (i = 0; i < size; i++)\n\t    ((char *) new_ptr)[i] = ((char *) ptr)[i];\n\t}\n\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of free.\n\n   For our simplified version of memory handling, free can just do nothing. */\n\nvoid\nfree_beebs (void *ptr __attribute__ ((unused)))\n{\n}\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+        "callsite": {
+          "callee": "malloc_beebs",
+          "caller": "calloc_beebs",
+          "instruction": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5",
+          "module": "third_party/embench-iot/support/beebsc.c",
+          "source": "third_party/embench-iot/support/beebsc.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 2342,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    }
+  ],
+  "feature_set": "structure",
+  "includes_ir": true,
+  "includes_llvm_default": false,
+  "includes_source": true,
+  "jev_binary": {
+    "path": "runs/jevopt-embench/crc32/jev",
+    "sha256": "a95c20a408993c94b2c1a96edaf389e223f0774090f9f47d7cd07a2776946273",
+    "text_bytes": 463
+  },
+  "link_command": [
+    "/usr/bin/clang-21",
+    "-fuse-ld=lld",
+    "-march=x86-64",
+    "-Wl,--build-id=none",
+    "runs/jevopt-embench/crc32/objects/crc_32.o",
+    "runs/jevopt-embench/crc32/objects/main.o",
+    "runs/jevopt-embench/crc32/objects/beebsc.o",
+    "runs/jevopt-embench/crc32/objects/chipsupport.o",
+    "runs/jevopt-embench/crc32/objects/boardsupport.o",
+    "-Wl,--gc-sections",
+    "-lm",
+    "-o",
+    "runs/jevopt-embench/crc32/jev"
+  ],
+  "min_confidence": 0.0,
+  "mode": "jev-live",
+  "program": {
+    "correct": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "stock_binary": {
+    "path": "runs/jevopt-embench/crc32/stock-run/program",
+    "sha256": "c92d9ef5dd6b72146346fad8bd6802161e0f976cc36ad06da4f840b24fc14fc6",
+    "text_bytes": 456
+  },
+  "summary": {
+    "beats_llvm": false,
+    "decisions": 2,
+    "do_not_inline": 0,
+    "inline": 2,
+    "input_tokens": 8157,
+    "ir_clipped": 0,
+    "jev_inline_answers": 2,
+    "jev_latency_ms": 1393.949,
+    "llvm_confidence_fallbacks": 0,
+    "llvm_default_overrides": 2,
+    "output_tokens": 72,
+    "text_delta_bytes": 7,
+    "text_delta_percent": 1.5351
+  }
+}

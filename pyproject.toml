@@ -1,0 +1,21 @@
+[project]
+name = "jevopt"
+version = "0.1.0"
+description = "Space-optimized C and C++ compilation with Clang and Jev"
+readme = "README.md"
+license = "GPL-3.0-only"
+requires-python = ">=3.12"
+dependencies = [
+    "python-dotenv>=1.2.3",
+    "typesafe-sdk==0.7.0",
+]
+
+[project.scripts]
+jevopt = "jevopt.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jevopt"]

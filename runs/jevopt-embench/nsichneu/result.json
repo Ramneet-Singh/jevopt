@@ -1,0 +1,276 @@
+{
+  "compile_commands": [
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/src/nsichneu/libnsichneu.c",
+      "-o",
+      "runs/jevopt-embench/nsichneu/objects/libnsichneu.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/main.c",
+      "-o",
+      "runs/jevopt-embench/nsichneu/objects/main.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/beebsc.c",
+      "-o",
+      "runs/jevopt-embench/nsichneu/objects/beebsc.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/chips/speed-test-gcc/chipsupport.c",
+      "-o",
+      "runs/jevopt-embench/nsichneu/objects/chipsupport.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/boards/default/boardsupport.c",
+      "-o",
+      "runs/jevopt-embench/nsichneu/objects/boardsupport.o"
+    ]
+  ],
+  "decisions": [
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.57,
+        "probabilities": {
+          "do_not_inline": 0.21,
+          "inline": 0.79
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 803.272,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "malloc_beebs",
+        "caller": "calloc_beebs",
+        "decision": true,
+        "default": false,
+        "id": 0,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+          "callsite": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5"
+        },
+        "module": "third_party/embench-iot/support/beebsc.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "callsite_cost": -35,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 15,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 4,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 1,
+          "unsimplified_common_instructions": 50
+        },
+        "source": "third_party/embench-iot/support/beebsc.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS local library variants\n\n   Copyright (C) 2019 Embecosm Limited.\n\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later */\n\n/* These are very simple local versions of library routines, to ensure the\n   code is compiled with the flags used for the benchmark.  Not all library\n   routines are here, just ones that cause a lot of unecessary load, or where\n   there is variation between platforms and architectures. */\n\n#include <stddef.h>\n#include <string.h>\n#include \"beebsc.h\"\n\n/* Seed for the random number generator */\n\nstatic long int seed = 0;\n\n/* Heap records and sane initial values */\n\nstatic void *heap_ptr = NULL;\nstatic void *heap_end = NULL;\nstatic size_t heap_requested = 0;\n\n\n/* Yield a sequence of random numbers in the range [0, 2^15-1].\n\n   long int is guaranteed to be at least 32 bits. The seed only ever uses 31\n   bits (so is positive).\n\n   For BEEBS this gets round different operating systems using different\n   multipliers and offsets and RAND_MAX variations. */\n\nint\nrand_beebs (void)\n{\n  seed = (seed * 1103515245L + 12345) & ((1UL << 31) - 1);\n  return (int) (seed >> 16);\n}\n\n\n/* Initialize the random number generator */\n\nvoid\nsrand_beebs (unsigned int new_seed)\n{\n  seed = (long int) new_seed;\n}\n\n\n/* Initialize the BEEBS heap pointers. Note that the actual memory block is\n   in the caller code. */\n\nvoid\ninit_heap_beebs (void *heap, size_t heap_size)\n{\n  heap_ptr = (void *) heap;\n  heap_end = (void *) ((char *) heap_ptr + heap_size);\n  heap_requested = 0;\n}\n\n\n/* Report if malloc ever failed.\n\n   Return non-zero (TRUE) if malloc did not reqest more than was available\n   since the last call to init_heap_beebs, zero (FALSE) otherwise. */\n\nint\ncheck_heap_beebs (void *heap)\n{\n  return ((void *) ((char *) heap + heap_requested) <= heap_end);\n}\n\n\n/* BEEBS version of malloc.\n\n   This is primarily to reduce library and OS dependencies. Malloc is\n   generally not used in embedded code, or if it is, only in well defined\n   contexts to pre-allocate a fixed amount of memory. So this simplistic\n   implementation is just fine.\n\n   Note in particular the assumption that memory will never be freed! */\n\nvoid *\nmalloc_beebs (size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of calloc.\n\n   Implement as wrapper for malloc */\n\nvoid *\ncalloc_beebs (size_t nmemb, size_t size)\n{\n  void *new_ptr = malloc_beebs (nmemb * size);\n\n  /* Calloc is defined to zero the memory. OK to use a function here, because\n     it will be handled specially by the compiler anyway. */\n\n  if (NULL != new_ptr)\n    memset (new_ptr, 0, nmemb * size);\n\n  return new_ptr;\n}\n\n\n/* BEEBS version of realloc.\n\n   This is primarily to reduce library and OS dependencies. We just have to\n   allocate new memory and copy stuff across. */\n\nvoid *\nrealloc_beebs (void *ptr, size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n\n      /* This is clunky, since we don't know the size of the original\n         pointer. However it is a read only action and we know it must\n         be big enough if we right off the end, or we couldn't have\n         allocated here. If the size is smaller, it doesn't matter. */\n\n      if (NULL != ptr)\n\t{\n\t  size_t i;\n\n\t  for (i = 0; i < size; i++)\n\t    ((char *) new_ptr)[i] = ((char *) ptr)[i];\n\t}\n\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of free.\n\n   For our simplified version of memory handling, free can just do nothing. */\n\nvoid\nfree_beebs (void *ptr __attribute__ ((unused)))\n{\n}\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+        "callsite": {
+          "callee": "malloc_beebs",
+          "caller": "calloc_beebs",
+          "instruction": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5",
+          "module": "third_party/embench-iot/support/beebsc.c",
+          "source": "third_party/embench-iot/support/beebsc.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 2342,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    }
+  ],
+  "feature_set": "structure",
+  "includes_ir": true,
+  "includes_llvm_default": false,
+  "includes_source": true,
+  "jev_binary": {
+    "path": "runs/jevopt-embench/nsichneu/jev",
+    "sha256": "d0bf5fe14c34e9958f0cdf1ae07dcb7869876980ba7508cf096325a153b776f6",
+    "text_bytes": 17670
+  },
+  "link_command": [
+    "/usr/bin/clang-21",
+    "-fuse-ld=lld",
+    "-march=x86-64",
+    "-Wl,--build-id=none",
+    "runs/jevopt-embench/nsichneu/objects/libnsichneu.o",
+    "runs/jevopt-embench/nsichneu/objects/main.o",
+    "runs/jevopt-embench/nsichneu/objects/beebsc.o",
+    "runs/jevopt-embench/nsichneu/objects/chipsupport.o",
+    "runs/jevopt-embench/nsichneu/objects/boardsupport.o",
+    "-Wl,--gc-sections",
+    "-lm",
+    "-o",
+    "runs/jevopt-embench/nsichneu/jev"
+  ],
+  "min_confidence": 0.0,
+  "mode": "jev-live",
+  "program": {
+    "correct": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "stock_binary": {
+    "path": "runs/jevopt-embench/nsichneu/stock-run/program",
+    "sha256": "d0bf5fe14c34e9958f0cdf1ae07dcb7869876980ba7508cf096325a153b776f6",
+    "text_bytes": 17670
+  },
+  "summary": {
+    "beats_llvm": false,
+    "decisions": 1,
+    "do_not_inline": 0,
+    "inline": 1,
+    "input_tokens": 2342,
+    "ir_clipped": 0,
+    "jev_inline_answers": 1,
+    "jev_latency_ms": 803.272,
+    "llvm_confidence_fallbacks": 0,
+    "llvm_default_overrides": 1,
+    "output_tokens": 36,
+    "text_delta_bytes": 0,
+    "text_delta_percent": 0.0
+  }
+}

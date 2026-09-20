@@ -1,0 +1,551 @@
+{
+  "compile_commands": [
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/src/cubic/basicmath_small.c",
+      "-o",
+      "runs/jevopt-embench/cubic/objects/basicmath_small.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/src/cubic/libcubic.c",
+      "-o",
+      "runs/jevopt-embench/cubic/objects/libcubic.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/main.c",
+      "-o",
+      "runs/jevopt-embench/cubic/objects/main.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/beebsc.c",
+      "-o",
+      "runs/jevopt-embench/cubic/objects/beebsc.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/chips/speed-test-gcc/chipsupport.c",
+      "-o",
+      "runs/jevopt-embench/cubic/objects/chipsupport.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/boards/default/boardsupport.c",
+      "-o",
+      "runs/jevopt-embench/cubic/objects/boardsupport.o"
+    ]
+  ],
+  "decisions": [
+    {
+      "answer": {
+        "choice": "do_not_inline",
+        "confidence": 0.01,
+        "probabilities": {
+          "do_not_inline": 0.5,
+          "inline": 0.5
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 778.292,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "benchmark_body",
+        "caller": "warm_caches",
+        "decision": false,
+        "default": false,
+        "id": 0,
+        "ir": {
+          "callee": "; Function Attrs: minsize nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #4 {\n  %2 = alloca i32, align 4\n  %3 = alloca [48 x double], align 16\n  %4 = call i32 @llvm.smax.i32(i32 %0, i32 0)\n  br label %5\n\n5:                                                ; preds = %32, %1\n  %6 = phi i32 [ 0, %1 ], [ %33, %32 ]\n  %7 = icmp eq i32 %6, %4\n  br i1 %7, label %34, label %8\n\n8:                                                ; preds = %5\n  call void @llvm.lifetime.start.p0(i64 4, ptr nonnull %2) #10\n  call void @llvm.lifetime.start.p0(i64 384, ptr nonnull %3) #10\n  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(384) %3, i8 0, i64 384, i1 false)\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -1.050000e+01, double noundef 3.200000e+01, double noundef -3.000000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %9 = load i32, ptr %2, align 4, !tbaa !5\n  store i32 %9, ptr @soln_cnt0, align 4, !tbaa !5\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) @res0, ptr noundef nonnull align 16 dereferenceable(24) %3, i64 24, i1 false)\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -4.500000e+00, double noundef 1.700000e+01, double noundef -3.000000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %10 = load i32, ptr %2, align 4, !tbaa !5\n  store i32 %10, ptr @soln_cnt1, align 4, !tbaa !5\n  %11 = load double, ptr %3, align 16, !tbaa !9\n  store double %11, ptr @res1, align 8, !tbaa !9\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -3.500000e+00, double noundef 2.200000e+01, double noundef -3.100000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -1.370000e+01, double noundef 1.000000e+00, double noundef -3.500000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  br label %12\n\n12:                                               ; preds = %30, %8\n  %13 = phi double [ 1.000000e+00, %8 ], [ %31, %30 ]\n  %14 = fcmp olt double %13, 3.000000e+00\n  br i1 %14, label %15, label %32\n\n15:                                               ; preds = %12, %28\n  %16 = phi double [ %29, %28 ], [ 1.000000e+01, %12 ]\n  %17 = fcmp ogt double %16, 8.000000e+00\n  br i1 %17, label %18, label %30\n\n18:                                               ; preds = %15, %26\n  %19 = phi double [ %27, %26 ], [ 5.000000e+00, %15 ]\n  %20 = fcmp olt double %19, 6.000000e+00\n  br i1 %20, label %21, label %28\n\n21:                                               ; preds = %18, %24\n  %22 = phi double [ %25, %24 ], [ -1.000000e+00, %18 ]\n  %23 = fcmp ogt double %22, -3.000000e+00\n  br i1 %23, label %24, label %26\n\n24:                                               ; preds = %21\n  call void @SolveCubic(double noundef %13, double noundef %16, double noundef %19, double noundef %22, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %25 = fadd double %22, -1.000000e+00\n  br label %21, !llvm.loop !11\n\n26:                                               ; preds = %21\n  %27 = fadd double %19, 5.000000e-01\n  br label %18, !llvm.loop !13\n\n28:                                               ; preds = %18\n  %29 = fadd double %16, -1.000000e+00\n  br label %15, !llvm.loop !14\n\n30:                                               ; preds = %15\n  %31 = fadd double %13, 1.000000e+00\n  br label %12, !llvm.loop !15\n\n32:                                               ; preds = %12\n  call void @llvm.lifetime.end.p0(i64 384, ptr nonnull %3) #10\n  call void @llvm.lifetime.end.p0(i64 4, ptr nonnull %2) #10\n  %33 = add nuw i32 %6, 1\n  br label %5, !llvm.loop !16\n\n34:                                               ; preds = %5\n  ret i32 poison\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @warm_caches(i32 noundef %0) local_unnamed_addr #4 {\n  %2 = call fastcc i32 @benchmark_body(i32 noundef %0) #10\n  ret void\n}\n",
+          "callsite": "  %2 = call fastcc i32 @benchmark_body(i32 noundef %0) #10"
+        },
+        "module": "third_party/embench-iot/src/cubic/basicmath_small.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 125,
+          "callee_basic_block_count": 13,
+          "callee_instruction_count": 48,
+          "callee_users": 2,
+          "caller_basic_block_count": 1,
+          "caller_instruction_count": 2,
+          "caller_users": 0,
+          "callsite_cost": -35,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 420,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 150,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 25,
+          "simplified_instructions": 17,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": -19,
+          "unsimplified_common_instructions": 155
+        },
+        "source": "third_party/embench-iot/src/cubic/basicmath_small.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 0,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS cubic benchmark\n\n   Contributor: James Pallister <james.pallister@bristol.ac.uk>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later */\n\n#include <string.h>\n#include \"support.h\"\n#include \"snipmath.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 10\n\n\n\n\nstatic int soln_cnt0;\nstatic int soln_cnt1;\nstatic double res0[3];\nstatic double res1;\n\n\nint\nverify_benchmark (int res __attribute ((unused)) )\n{\n  static const double exp_res0[3] = {2.0, 6.0, 2.5};\n  const double exp_res1 = 2.5;\n  return (3 == soln_cnt0)\n    && double_eq_beebs(exp_res0[0], res0[0])\n    && double_eq_beebs(exp_res0[1], res0[1])\n    && double_eq_beebs(exp_res0[2], res0[2])\n    && (1 == soln_cnt1)\n    && double_eq_beebs(exp_res1, res1);\n}\n\n\nvoid\ninitialise_benchmark (void)\n{\n}\n\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int\nbenchmark_body (int rpt)\n{\n  int  i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      double  a1 = 1.0, b1 = -10.5, c1 = 32.0, d1 = -30.0;\n      double  a2 = 1.0, b2 = -4.5, c2 = 17.0, d2 = -30.0;\n      double  a3 = 1.0, b3 = -3.5, c3 = 22.0, d3 = -31.0;\n      double  a4 = 1.0, b4 = -13.7, c4 = 1.0, d4 = -35.0;\n      int     solutions;\n\n      double output[48] = {0};\n      double *output_pos = &(output[0]);\n\n      /* solve some cubic functions */\n      /* should get 3 solutions: 2, 6 & 2.5   */\n      SolveCubic(a1, b1, c1, d1, &solutions, output);\n      soln_cnt0 = solutions;\n      memcpy(res0,output,3*sizeof(res0[0]));\n      /* should get 1 solution: 2.5           */\n      SolveCubic(a2, b2, c2, d2, &solutions, output);\n      soln_cnt1 = solutions;\n      res1 = output[0];\n      SolveCubic(a3, b3, c3, d3, &solutions, output);\n      SolveCubic(a4, b4, c4, d4, &solutions, output);\n      /* Now solve some random equations */\n      for(a1=1;a1<3;a1++) {\n\tfor(b1=10;b1>8;b1--) {\n\t  for(c1=5;c1<6;c1+=0.5) {\n            for(d1=-1;d1>-3;d1--) {\n\t      SolveCubic(a1, b1, c1, d1, &solutions, output_pos);\n            }\n\t  }\n\t}\n      }\n    }\n\n   return 0;\n}\n\n\n/* vim: set ts=3 sw=3 et: */\n",
+        "callee_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #4 {\n  %2 = alloca i32, align 4\n  %3 = alloca [48 x double], align 16\n  %4 = call i32 @llvm.smax.i32(i32 %0, i32 0)\n  br label %5\n\n5:                                                ; preds = %32, %1\n  %6 = phi i32 [ 0, %1 ], [ %33, %32 ]\n  %7 = icmp eq i32 %6, %4\n  br i1 %7, label %34, label %8\n\n8:                                                ; preds = %5\n  call void @llvm.lifetime.start.p0(i64 4, ptr nonnull %2) #10\n  call void @llvm.lifetime.start.p0(i64 384, ptr nonnull %3) #10\n  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(384) %3, i8 0, i64 384, i1 false)\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -1.050000e+01, double noundef 3.200000e+01, double noundef -3.000000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %9 = load i32, ptr %2, align 4, !tbaa !5\n  store i32 %9, ptr @soln_cnt0, align 4, !tbaa !5\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) @res0, ptr noundef nonnull align 16 dereferenceable(24) %3, i64 24, i1 false)\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -4.500000e+00, double noundef 1.700000e+01, double noundef -3.000000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %10 = load i32, ptr %2, align 4, !tbaa !5\n  store i32 %10, ptr @soln_cnt1, align 4, !tbaa !5\n  %11 = load double, ptr %3, align 16, !tbaa !9\n  store double %11, ptr @res1, align 8, !tbaa !9\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -3.500000e+00, double noundef 2.200000e+01, double noundef -3.100000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -1.370000e+01, double noundef 1.000000e+00, double noundef -3.500000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  br label %12\n\n12:                                               ; preds = %30, %8\n  %13 = phi double [ 1.000000e+00, %8 ], [ %31, %30 ]\n  %14 = fcmp olt double %13, 3.000000e+00\n  br i1 %14, label %15, label %32\n\n15:                                               ; preds = %12, %28\n  %16 = phi double [ %29, %28 ], [ 1.000000e+01, %12 ]\n  %17 = fcmp ogt double %16, 8.000000e+00\n  br i1 %17, label %18, label %30\n\n18:                                               ; preds = %15, %26\n  %19 = phi double [ %27, %26 ], [ 5.000000e+00, %15 ]\n  %20 = fcmp olt double %19, 6.000000e+00\n  br i1 %20, label %21, label %28\n\n21:                                               ; preds = %18, %24\n  %22 = phi double [ %25, %24 ], [ -1.000000e+00, %18 ]\n  %23 = fcmp ogt double %22, -3.000000e+00\n  br i1 %23, label %24, label %26\n\n24:                                               ; preds = %21\n  call void @SolveCubic(double noundef %13, double noundef %16, double noundef %19, double noundef %22, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %25 = fadd double %22, -1.000000e+00\n  br label %21, !llvm.loop !11\n\n26:                                               ; preds = %21\n  %27 = fadd double %19, 5.000000e-01\n  br label %18, !llvm.loop !13\n\n28:                                               ; preds = %18\n  %29 = fadd double %16, -1.000000e+00\n  br label %15, !llvm.loop !14\n\n30:                                               ; preds = %15\n  %31 = fadd double %13, 1.000000e+00\n  br label %12, !llvm.loop !15\n\n32:                                               ; preds = %12\n  call void @llvm.lifetime.end.p0(i64 384, ptr nonnull %3) #10\n  call void @llvm.lifetime.end.p0(i64 4, ptr nonnull %2) #10\n  %33 = add nuw i32 %6, 1\n  br label %5, !llvm.loop !16\n\n34:                                               ; preds = %5\n  ret i32 poison\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @warm_caches(i32 noundef %0) local_unnamed_addr #4 {\n  %2 = call fastcc i32 @benchmark_body(i32 noundef %0) #10\n  ret void\n}\n",
+        "callsite": {
+          "callee": "benchmark_body",
+          "caller": "warm_caches",
+          "instruction": "  %2 = call fastcc i32 @benchmark_body(i32 noundef %0) #10",
+          "module": "third_party/embench-iot/src/cubic/basicmath_small.c",
+          "source": "third_party/embench-iot/src/cubic/basicmath_small.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 13,
+          "callee_instruction_count": 48,
+          "callee_users": 2,
+          "caller_basic_block_count": 1,
+          "caller_instruction_count": 2,
+          "caller_users": 0,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 3289,
+        "output_tokens": 38
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.04,
+        "probabilities": {
+          "do_not_inline": 0.48,
+          "inline": 0.52
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 314.777,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "benchmark_body",
+        "caller": "benchmark",
+        "decision": true,
+        "default": false,
+        "id": 1,
+        "ir": {
+          "callee": "; Function Attrs: minsize nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #4 {\n  %2 = alloca i32, align 4\n  %3 = alloca [48 x double], align 16\n  %4 = call i32 @llvm.smax.i32(i32 %0, i32 0)\n  br label %5\n\n5:                                                ; preds = %32, %1\n  %6 = phi i32 [ 0, %1 ], [ %33, %32 ]\n  %7 = icmp eq i32 %6, %4\n  br i1 %7, label %34, label %8\n\n8:                                                ; preds = %5\n  call void @llvm.lifetime.start.p0(i64 4, ptr nonnull %2) #10\n  call void @llvm.lifetime.start.p0(i64 384, ptr nonnull %3) #10\n  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(384) %3, i8 0, i64 384, i1 false)\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -1.050000e+01, double noundef 3.200000e+01, double noundef -3.000000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %9 = load i32, ptr %2, align 4, !tbaa !5\n  store i32 %9, ptr @soln_cnt0, align 4, !tbaa !5\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) @res0, ptr noundef nonnull align 16 dereferenceable(24) %3, i64 24, i1 false)\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -4.500000e+00, double noundef 1.700000e+01, double noundef -3.000000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %10 = load i32, ptr %2, align 4, !tbaa !5\n  store i32 %10, ptr @soln_cnt1, align 4, !tbaa !5\n  %11 = load double, ptr %3, align 16, !tbaa !9\n  store double %11, ptr @res1, align 8, !tbaa !9\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -3.500000e+00, double noundef 2.200000e+01, double noundef -3.100000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -1.370000e+01, double noundef 1.000000e+00, double noundef -3.500000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  br label %12\n\n12:                                               ; preds = %30, %8\n  %13 = phi double [ 1.000000e+00, %8 ], [ %31, %30 ]\n  %14 = fcmp olt double %13, 3.000000e+00\n  br i1 %14, label %15, label %32\n\n15:                                               ; preds = %12, %28\n  %16 = phi double [ %29, %28 ], [ 1.000000e+01, %12 ]\n  %17 = fcmp ogt double %16, 8.000000e+00\n  br i1 %17, label %18, label %30\n\n18:                                               ; preds = %15, %26\n  %19 = phi double [ %27, %26 ], [ 5.000000e+00, %15 ]\n  %20 = fcmp olt double %19, 6.000000e+00\n  br i1 %20, label %21, label %28\n\n21:                                               ; preds = %18, %24\n  %22 = phi double [ %25, %24 ], [ -1.000000e+00, %18 ]\n  %23 = fcmp ogt double %22, -3.000000e+00\n  br i1 %23, label %24, label %26\n\n24:                                               ; preds = %21\n  call void @SolveCubic(double noundef %13, double noundef %16, double noundef %19, double noundef %22, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %25 = fadd double %22, -1.000000e+00\n  br label %21, !llvm.loop !11\n\n26:                                               ; preds = %21\n  %27 = fadd double %19, 5.000000e-01\n  br label %18, !llvm.loop !13\n\n28:                                               ; preds = %18\n  %29 = fadd double %16, -1.000000e+00\n  br label %15, !llvm.loop !14\n\n30:                                               ; preds = %15\n  %31 = fadd double %13, 1.000000e+00\n  br label %12, !llvm.loop !15\n\n32:                                               ; preds = %12\n  call void @llvm.lifetime.end.p0(i64 384, ptr nonnull %3) #10\n  call void @llvm.lifetime.end.p0(i64 4, ptr nonnull %2) #10\n  %33 = add nuw i32 %6, 1\n  br label %5, !llvm.loop !16\n\n34:                                               ; preds = %5\n  ret i32 poison\n}\n",
+          "caller": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine dso_local i32 @benchmark() local_unnamed_addr #5 {\n  %1 = call fastcc i32 @benchmark_body(i32 noundef 10) #10\n  ret i32 0\n}\n",
+          "callsite": "  %1 = call fastcc i32 @benchmark_body(i32 noundef 10) #10"
+        },
+        "module": "third_party/embench-iot/src/cubic/basicmath_small.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 125,
+          "callee_basic_block_count": 13,
+          "callee_instruction_count": 48,
+          "callee_users": 2,
+          "caller_basic_block_count": 1,
+          "caller_instruction_count": 2,
+          "caller_users": 0,
+          "callsite_cost": -35,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 1,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 415,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 150,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 25,
+          "simplified_instructions": 18,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": -19,
+          "unsimplified_common_instructions": 150
+        },
+        "source": "third_party/embench-iot/src/cubic/basicmath_small.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS cubic benchmark\n\n   Contributor: James Pallister <james.pallister@bristol.ac.uk>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later */\n\n#include <string.h>\n#include \"support.h\"\n#include \"snipmath.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 10\n\n\n\n\nstatic int soln_cnt0;\nstatic int soln_cnt1;\nstatic double res0[3];\nstatic double res1;\n\n\nint\nverify_benchmark (int res __attribute ((unused)) )\n{\n  static const double exp_res0[3] = {2.0, 6.0, 2.5};\n  const double exp_res1 = 2.5;\n  return (3 == soln_cnt0)\n    && double_eq_beebs(exp_res0[0], res0[0])\n    && double_eq_beebs(exp_res0[1], res0[1])\n    && double_eq_beebs(exp_res0[2], res0[2])\n    && (1 == soln_cnt1)\n    && double_eq_beebs(exp_res1, res1);\n}\n\n\nvoid\ninitialise_benchmark (void)\n{\n}\n\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int\nbenchmark_body (int rpt)\n{\n  int  i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      double  a1 = 1.0, b1 = -10.5, c1 = 32.0, d1 = -30.0;\n      double  a2 = 1.0, b2 = -4.5, c2 = 17.0, d2 = -30.0;\n      double  a3 = 1.0, b3 = -3.5, c3 = 22.0, d3 = -31.0;\n      double  a4 = 1.0, b4 = -13.7, c4 = 1.0, d4 = -35.0;\n      int     solutions;\n\n      double output[48] = {0};\n      double *output_pos = &(output[0]);\n\n      /* solve some cubic functions */\n      /* should get 3 solutions: 2, 6 & 2.5   */\n      SolveCubic(a1, b1, c1, d1, &solutions, output);\n      soln_cnt0 = solutions;\n      memcpy(res0,output,3*sizeof(res0[0]));\n      /* should get 1 solution: 2.5           */\n      SolveCubic(a2, b2, c2, d2, &solutions, output);\n      soln_cnt1 = solutions;\n      res1 = output[0];\n      SolveCubic(a3, b3, c3, d3, &solutions, output);\n      SolveCubic(a4, b4, c4, d4, &solutions, output);\n      /* Now solve some random equations */\n      for(a1=1;a1<3;a1++) {\n\tfor(b1=10;b1>8;b1--) {\n\t  for(c1=5;c1<6;c1+=0.5) {\n            for(d1=-1;d1>-3;d1--) {\n\t      SolveCubic(a1, b1, c1, d1, &solutions, output_pos);\n            }\n\t  }\n\t}\n      }\n    }\n\n   return 0;\n}\n\n\n/* vim: set ts=3 sw=3 et: */\n",
+        "callee_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #4 {\n  %2 = alloca i32, align 4\n  %3 = alloca [48 x double], align 16\n  %4 = call i32 @llvm.smax.i32(i32 %0, i32 0)\n  br label %5\n\n5:                                                ; preds = %32, %1\n  %6 = phi i32 [ 0, %1 ], [ %33, %32 ]\n  %7 = icmp eq i32 %6, %4\n  br i1 %7, label %34, label %8\n\n8:                                                ; preds = %5\n  call void @llvm.lifetime.start.p0(i64 4, ptr nonnull %2) #10\n  call void @llvm.lifetime.start.p0(i64 384, ptr nonnull %3) #10\n  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(384) %3, i8 0, i64 384, i1 false)\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -1.050000e+01, double noundef 3.200000e+01, double noundef -3.000000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %9 = load i32, ptr %2, align 4, !tbaa !5\n  store i32 %9, ptr @soln_cnt0, align 4, !tbaa !5\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) @res0, ptr noundef nonnull align 16 dereferenceable(24) %3, i64 24, i1 false)\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -4.500000e+00, double noundef 1.700000e+01, double noundef -3.000000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %10 = load i32, ptr %2, align 4, !tbaa !5\n  store i32 %10, ptr @soln_cnt1, align 4, !tbaa !5\n  %11 = load double, ptr %3, align 16, !tbaa !9\n  store double %11, ptr @res1, align 8, !tbaa !9\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -3.500000e+00, double noundef 2.200000e+01, double noundef -3.100000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  call void @SolveCubic(double noundef 1.000000e+00, double noundef -1.370000e+01, double noundef 1.000000e+00, double noundef -3.500000e+01, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  br label %12\n\n12:                                               ; preds = %30, %8\n  %13 = phi double [ 1.000000e+00, %8 ], [ %31, %30 ]\n  %14 = fcmp olt double %13, 3.000000e+00\n  br i1 %14, label %15, label %32\n\n15:                                               ; preds = %12, %28\n  %16 = phi double [ %29, %28 ], [ 1.000000e+01, %12 ]\n  %17 = fcmp ogt double %16, 8.000000e+00\n  br i1 %17, label %18, label %30\n\n18:                                               ; preds = %15, %26\n  %19 = phi double [ %27, %26 ], [ 5.000000e+00, %15 ]\n  %20 = fcmp olt double %19, 6.000000e+00\n  br i1 %20, label %21, label %28\n\n21:                                               ; preds = %18, %24\n  %22 = phi double [ %25, %24 ], [ -1.000000e+00, %18 ]\n  %23 = fcmp ogt double %22, -3.000000e+00\n  br i1 %23, label %24, label %26\n\n24:                                               ; preds = %21\n  call void @SolveCubic(double noundef %13, double noundef %16, double noundef %19, double noundef %22, ptr noundef nonnull %2, ptr noundef nonnull %3) #11\n  %25 = fadd double %22, -1.000000e+00\n  br label %21, !llvm.loop !11\n\n26:                                               ; preds = %21\n  %27 = fadd double %19, 5.000000e-01\n  br label %18, !llvm.loop !13\n\n28:                                               ; preds = %18\n  %29 = fadd double %16, -1.000000e+00\n  br label %15, !llvm.loop !14\n\n30:                                               ; preds = %15\n  %31 = fadd double %13, 1.000000e+00\n  br label %12, !llvm.loop !15\n\n32:                                               ; preds = %12\n  call void @llvm.lifetime.end.p0(i64 384, ptr nonnull %3) #10\n  call void @llvm.lifetime.end.p0(i64 4, ptr nonnull %2) #10\n  %33 = add nuw i32 %6, 1\n  br label %5, !llvm.loop !16\n\n34:                                               ; preds = %5\n  ret i32 poison\n}\n",
+        "caller_ir": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine dso_local i32 @benchmark() local_unnamed_addr #5 {\n  %1 = call fastcc i32 @benchmark_body(i32 noundef 10) #10\n  ret i32 0\n}\n",
+        "callsite": {
+          "callee": "benchmark_body",
+          "caller": "benchmark",
+          "instruction": "  %1 = call fastcc i32 @benchmark_body(i32 noundef 10) #10",
+          "module": "third_party/embench-iot/src/cubic/basicmath_small.c",
+          "source": "third_party/embench-iot/src/cubic/basicmath_small.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 13,
+          "callee_instruction_count": 48,
+          "callee_users": 2,
+          "caller_basic_block_count": 1,
+          "caller_instruction_count": 2,
+          "caller_users": 0,
+          "constant_args": 1
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 3287,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.56,
+        "probabilities": {
+          "do_not_inline": 0.22,
+          "inline": 0.78
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 347.565,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "malloc_beebs",
+        "caller": "calloc_beebs",
+        "decision": true,
+        "default": false,
+        "id": 0,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+          "callsite": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5"
+        },
+        "module": "third_party/embench-iot/support/beebsc.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "callsite_cost": -35,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 15,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 4,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 1,
+          "unsimplified_common_instructions": 50
+        },
+        "source": "third_party/embench-iot/support/beebsc.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS local library variants\n\n   Copyright (C) 2019 Embecosm Limited.\n\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later */\n\n/* These are very simple local versions of library routines, to ensure the\n   code is compiled with the flags used for the benchmark.  Not all library\n   routines are here, just ones that cause a lot of unecessary load, or where\n   there is variation between platforms and architectures. */\n\n#include <stddef.h>\n#include <string.h>\n#include \"beebsc.h\"\n\n/* Seed for the random number generator */\n\nstatic long int seed = 0;\n\n/* Heap records and sane initial values */\n\nstatic void *heap_ptr = NULL;\nstatic void *heap_end = NULL;\nstatic size_t heap_requested = 0;\n\n\n/* Yield a sequence of random numbers in the range [0, 2^15-1].\n\n   long int is guaranteed to be at least 32 bits. The seed only ever uses 31\n   bits (so is positive).\n\n   For BEEBS this gets round different operating systems using different\n   multipliers and offsets and RAND_MAX variations. */\n\nint\nrand_beebs (void)\n{\n  seed = (seed * 1103515245L + 12345) & ((1UL << 31) - 1);\n  return (int) (seed >> 16);\n}\n\n\n/* Initialize the random number generator */\n\nvoid\nsrand_beebs (unsigned int new_seed)\n{\n  seed = (long int) new_seed;\n}\n\n\n/* Initialize the BEEBS heap pointers. Note that the actual memory block is\n   in the caller code. */\n\nvoid\ninit_heap_beebs (void *heap, size_t heap_size)\n{\n  heap_ptr = (void *) heap;\n  heap_end = (void *) ((char *) heap_ptr + heap_size);\n  heap_requested = 0;\n}\n\n\n/* Report if malloc ever failed.\n\n   Return non-zero (TRUE) if malloc did not reqest more than was available\n   since the last call to init_heap_beebs, zero (FALSE) otherwise. */\n\nint\ncheck_heap_beebs (void *heap)\n{\n  return ((void *) ((char *) heap + heap_requested) <= heap_end);\n}\n\n\n/* BEEBS version of malloc.\n\n   This is primarily to reduce library and OS dependencies. Malloc is\n   generally not used in embedded code, or if it is, only in well defined\n   contexts to pre-allocate a fixed amount of memory. So this simplistic\n   implementation is just fine.\n\n   Note in particular the assumption that memory will never be freed! */\n\nvoid *\nmalloc_beebs (size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of calloc.\n\n   Implement as wrapper for malloc */\n\nvoid *\ncalloc_beebs (size_t nmemb, size_t size)\n{\n  void *new_ptr = malloc_beebs (nmemb * size);\n\n  /* Calloc is defined to zero the memory. OK to use a function here, because\n     it will be handled specially by the compiler anyway. */\n\n  if (NULL != new_ptr)\n    memset (new_ptr, 0, nmemb * size);\n\n  return new_ptr;\n}\n\n\n/* BEEBS version of realloc.\n\n   This is primarily to reduce library and OS dependencies. We just have to\n   allocate new memory and copy stuff across. */\n\nvoid *\nrealloc_beebs (void *ptr, size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n\n      /* This is clunky, since we don't know the size of the original\n         pointer. However it is a read only action and we know it must\n         be big enough if we right off the end, or we couldn't have\n         allocated here. If the size is smaller, it doesn't matter. */\n\n      if (NULL != ptr)\n\t{\n\t  size_t i;\n\n\t  for (i = 0; i < size; i++)\n\t    ((char *) new_ptr)[i] = ((char *) ptr)[i];\n\t}\n\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of free.\n\n   For our simplified version of memory handling, free can just do nothing. */\n\nvoid\nfree_beebs (void *ptr __attribute__ ((unused)))\n{\n}\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+        "callsite": {
+          "callee": "malloc_beebs",
+          "caller": "calloc_beebs",
+          "instruction": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5",
+          "module": "third_party/embench-iot/support/beebsc.c",
+          "source": "third_party/embench-iot/support/beebsc.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 2342,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    }
+  ],
+  "feature_set": "structure",
+  "includes_ir": true,
+  "includes_llvm_default": false,
+  "includes_source": true,
+  "jev_binary": {
+    "path": "runs/jevopt-embench/cubic/jev",
+    "sha256": "39a5695b568f8fe489d640e1f23071472f7156a208ee417c284dd4a969db36db",
+    "text_bytes": 2202
+  },
+  "link_command": [
+    "/usr/bin/clang-21",
+    "-fuse-ld=lld",
+    "-march=x86-64",
+    "-Wl,--build-id=none",
+    "runs/jevopt-embench/cubic/objects/basicmath_small.o",
+    "runs/jevopt-embench/cubic/objects/libcubic.o",
+    "runs/jevopt-embench/cubic/objects/main.o",
+    "runs/jevopt-embench/cubic/objects/beebsc.o",
+    "runs/jevopt-embench/cubic/objects/chipsupport.o",
+    "runs/jevopt-embench/cubic/objects/boardsupport.o",
+    "-Wl,--gc-sections",
+    "-lm",
+    "-o",
+    "runs/jevopt-embench/cubic/jev"
+  ],
+  "min_confidence": 0.0,
+  "mode": "jev-live",
+  "program": {
+    "correct": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "stock_binary": {
+    "path": "runs/jevopt-embench/cubic/stock-run/program",
+    "sha256": "a9436c9b4db6081d90ddaebe01809888e5fa663133997ab053923d6df11a589e",
+    "text_bytes": 1724
+  },
+  "summary": {
+    "beats_llvm": false,
+    "decisions": 3,
+    "do_not_inline": 1,
+    "inline": 2,
+    "input_tokens": 8918,
+    "ir_clipped": 0,
+    "jev_inline_answers": 2,
+    "jev_latency_ms": 1440.634,
+    "llvm_confidence_fallbacks": 0,
+    "llvm_default_overrides": 2,
+    "output_tokens": 110,
+    "text_delta_bytes": 478,
+    "text_delta_percent": 27.7262
+  }
+}

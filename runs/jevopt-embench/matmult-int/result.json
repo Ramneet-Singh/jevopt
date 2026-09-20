@@ -1,0 +1,916 @@
+{
+  "compile_commands": [
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/src/matmult-int/matmult-int.c",
+      "-o",
+      "runs/jevopt-embench/matmult-int/objects/matmult-int.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/main.c",
+      "-o",
+      "runs/jevopt-embench/matmult-int/objects/main.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/beebsc.c",
+      "-o",
+      "runs/jevopt-embench/matmult-int/objects/beebsc.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/chips/speed-test-gcc/chipsupport.c",
+      "-o",
+      "runs/jevopt-embench/matmult-int/objects/chipsupport.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/boards/default/boardsupport.c",
+      "-o",
+      "runs/jevopt-embench/matmult-int/objects/boardsupport.o"
+    ]
+  ],
+  "decisions": [
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.05,
+        "probabilities": {
+          "do_not_inline": 0.48,
+          "inline": 0.52
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 1086.594,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "Multiply",
+        "caller": "Test",
+        "decision": true,
+        "default": false,
+        "id": 0,
+        "ir": {
+          "callee": "; Function Attrs: minsize nofree norecurse nosync nounwind optsize memory(argmem: readwrite) uwtable\ndefine dso_local void @Multiply(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #4 {\n  br label %4\n\n4:                                                ; preds = %26, %3\n  %5 = phi i64 [ %27, %26 ], [ 0, %3 ]\n  %6 = icmp eq i64 %5, 20\n  br i1 %6, label %28, label %7\n\n7:                                                ; preds = %4, %24\n  %8 = phi i64 [ %25, %24 ], [ 0, %4 ]\n  %9 = icmp eq i64 %8, 20\n  br i1 %9, label %26, label %10\n\n10:                                               ; preds = %7\n  %11 = getelementptr inbounds nuw [20 x i64], ptr %2, i64 %5, i64 %8\n  store i64 0, ptr %11, align 8, !tbaa !11\n  br label %12\n\n12:                                               ; preds = %16, %10\n  %13 = phi i64 [ %23, %16 ], [ 0, %10 ]\n  %14 = phi i64 [ %22, %16 ], [ 0, %10 ]\n  %15 = icmp eq i64 %13, 20\n  br i1 %15, label %24, label %16\n\n16:                                               ; preds = %12\n  %17 = getelementptr inbounds nuw [20 x i64], ptr %0, i64 %5, i64 %13\n  %18 = load i64, ptr %17, align 8, !tbaa !11\n  %19 = getelementptr inbounds nuw [20 x i64], ptr %1, i64 %13, i64 %8\n  %20 = load i64, ptr %19, align 8, !tbaa !11\n  %21 = mul nsw i64 %20, %18\n  %22 = add nsw i64 %14, %21\n  store i64 %22, ptr %11, align 8, !tbaa !11\n  %23 = add nuw nsw i64 %13, 1\n  br label %12, !llvm.loop !13\n\n24:                                               ; preds = %12\n  %25 = add nuw nsw i64 %8, 1\n  br label %7, !llvm.loop !14\n\n26:                                               ; preds = %7\n  %27 = add nuw nsw i64 %5, 1\n  br label %4, !llvm.loop !15\n\n28:                                               ; preds = %4\n  ret void\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @Test(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #1 {\n  call void @Multiply(ptr noundef %0, ptr noundef %1, ptr noundef %2) #7\n  ret void\n}\n",
+          "callsite": "  call void @Multiply(ptr noundef %0, ptr noundef %1, ptr noundef %2) #7"
+        },
+        "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 9,
+          "callee_instruction_count": 28,
+          "callee_users": 1,
+          "caller_basic_block_count": 1,
+          "caller_instruction_count": 2,
+          "caller_users": 1,
+          "callsite_cost": -45,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 3,
+          "cost_estimate": 70,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 25,
+          "simplified_instructions": 10,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": -11,
+          "unsimplified_common_instructions": 90
+        },
+        "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS matmult benchmark\n\n   This version, copyright (C) 2013-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor James Pallister <james.pallister@bristol.ac.uk>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   Original code from: WCET Benchmarks,\n       http://www.mrtc.mdh.se/projects/wcet/benchmarks.html\n   Permission to license under GPL obtained by email from Bj\u00f6rn Lisper\n */\n\n/* matmult.c */\n/* was mm.c! */\n\n\n/*----------------------------------------------------------------------*\n * To make this program compile under our assumed embedded environment,\n * we had to make several changes:\n * - Declare all functions in ANSI style, not K&R.\n *   this includes adding return types in all cases!\n * - Declare function prototypes\n * - Disable all output\n * - Disable all UNIX-style includes\n *\n * This is a program that was developed from mm.c to matmult.c by\n * Thomas Lundqvist at Chalmers.\n *----------------------------------------------------------------------*/\n\n#include <string.h>\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 46\n#define UPPERLIMIT 20\n#define RANDOM_VALUE (RandomInteger ())\n#define ZERO 0\n#define MOD_SIZE 8095\ntypedef long matrix[UPPERLIMIT][UPPERLIMIT];\n\nint\nvalues_match (long v1, long v2)\n{\n  return (v1 == v2);\n}\n\n\n/*\n * MATRIX MULTIPLICATION BENCHMARK PROGRAM:\n * This program multiplies 2 square matrices resulting in a 3rd\n * matrix. It tests a compiler's speed in handling multidimensional\n * arrays and simple arithmetic.\n */\n\n\n\n\nint Seed;\nmatrix ArrayA_ref, ArrayA, ArrayB_ref, ArrayB, ResultArray;\n\nvoid Multiply (matrix A, matrix B, matrix Res);\nvoid InitSeed (void);\nvoid Test (matrix A, matrix B, matrix Res);\nvoid Initialize (matrix Array);\nint RandomInteger (void);\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      memcpy (ArrayA, ArrayA_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n      memcpy (ArrayB, ArrayB_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n\n      Test (ArrayA, ArrayB, ResultArray);\n    }\n\n  return 0;\n}\n\n\n/*\n * Initializes the seed used in the random number generator.\n */\nvoid\nInitSeed (void)\n{\n  Seed = 0;\n}\n\n/*\n * Runs a multiplication test on an array.  Calculates and prints the\n * time it takes to multiply the matrices.\n */\nvoid\nTest (matrix A, matrix B, matrix Res)\n{\n  Multiply (A, B, Res);\n}\n\n/*\n * Generates random integers between 0 and 8095\n */\nint\nRandomInteger (void)\n{\n  Seed = ((Seed * 133) + 81) % MOD_SIZE;\n  return (Seed);\n}\n\n/*\n * Multiplies arrays A and B and stores the result in ResultArray.\n */\nvoid\nMultiply (matrix A, matrix B, matrix Res)\n{\n  register int Outer, Inner, Index;\n\n  for (Outer = 0; Outer < UPPERLIMIT; Outer++)\n    for (Inner = 0; Inner < UPPERLIMIT; Inner++)\n      {\n\tRes[Outer][Inner] = ZERO;\n\tfor (Index = 0; Index < UPPERLIMIT; Index++)\n\t  Res[Outer][Inner] += A[Outer][Index] * B[Index][Inner];\n      }\n}\n\nvoid\ninitialise_benchmark ()\n{\n  InitSeed ();\n  int OuterIndex, InnerIndex;\n\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayA_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayB_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n}\n\nint\nverify_benchmark (int unused)\n{\n  int i, j;\n  matrix exp = {\n    {291018000, 315000075, 279049970, 205074215, 382719905,\n     302595865, 348060915, 308986330, 343160760, 307099935,\n     292564810, 240954510, 232755815, 246511665, 328466830,\n     263664375, 324016395, 334656070, 285978755, 345370360},\n    {252241835, 333432715, 299220275, 247745815, 422508990,\n     316728505, 359662270, 277775280, 323336795, 320656600,\n     249903690, 251499360, 242195700, 263484280, 348207635,\n     289485100, 328607555, 300799835, 269351410, 305703460},\n    {304901010, 316252815, 263230275, 208939015, 421993740,\n     335002930, 348571170, 280992155, 289749970, 259701175,\n     295249990, 310900035, 250896625, 250154105, 315096035,\n     236364800, 312879355, 312580685, 275998435, 344137885},\n    {286700525, 325985600, 253054970, 224361490, 353502130,\n     306544290, 323492140, 259123905, 307731610, 282414410,\n     281127810, 246936935, 207890815, 233789540, 339836730,\n     277296350, 319925620, 307470895, 290537580, 292297535},\n    {272571255, 377663320, 304545985, 263001340, 375034885,\n     325423710, 410620380, 313191730, 356989815, 308508355,\n     218003850, 272487135, 266000220, 264734710, 367539620,\n     304146675, 355295500, 276019740, 251415695, 301225235},\n    {272547900, 321522300, 288294345, 247748015, 389912855,\n     331874890, 370798315, 315467255, 367554485, 311947660,\n     258809685, 270536510, 256730515, 287143040, 363087030,\n     285672775, 353670120, 304219695, 274897255, 324684660},\n    {233123995, 227142480, 212655155, 198592290, 345335250,\n     302661845, 253374925, 233243305, 233750030, 224590040,\n     200404820, 250791135, 234405760, 211723645, 280630165,\n     185245875, 296423665, 276278575, 252368265, 278726535},\n    {277690535, 339615440, 320921550, 307114315, 400187215,\n     334374655, 376286920, 295993530, 362988020, 356272700,\n     293965465, 261574710, 259690975, 263037705, 416748985,\n     274683275, 385571030, 402782385, 323927010, 362778710},\n    {267168970, 323401680, 279474330, 201934365, 362624300,\n     330736145, 371793675, 299650280, 333646005, 264791490,\n     215918320, 277512760, 264068435, 234555295, 321772515,\n     217507025, 310372440, 317544750, 245525965, 343183435},\n    {281293570, 326519505, 233494705, 238516065, 297038200,\n     266273420, 349521550, 259343530, 306032255, 266397915,\n     210274920, 263743085, 231689610, 251949545, 293562740,\n     226822900, 309225440, 286212000, 206108715, 236678985},\n    {288404350, 310319375, 282695670, 244150740, 426489380,\n     387525790, 342018190, 326086505, 352250260, 319997735,\n     300645835, 284822660, 271837440, 274000415, 361826730,\n     252399600, 348582320, 375813820, 316588255, 322499110},\n    {273368780, 329706295, 288668335, 234501665, 381962610,\n     343186285, 337520205, 259637405, 295755465, 284778105,\n     205310525, 249598310, 256662470, 251533535, 336159770,\n     249342150, 333559450, 329296590, 278254845, 300673860},\n    {318589575, 315522800, 260632295, 250009765, 337127730,\n     312810490, 346698590, 260810030, 388289910, 337081285,\n     283635410, 208148610, 234123865, 259653165, 370115255,\n     243311450, 377808245, 358786770, 286839730, 321912835},\n    {229541925, 253967450, 223002545, 202302515, 303446955,\n     268472740, 285580065, 211013405, 287677960, 279773910,\n     227377310, 197461135, 222469715, 179536615, 306957380,\n     178407075, 281051570, 279718120, 234868230, 288991535},\n    {290692955, 317729070, 297868235, 213450065, 469270935,\n     375344910, 326987580, 334565680, 325300040, 290325655,\n     254703825, 284914960, 245773820, 276641510, 323510795,\n     271034400, 337424250, 360011440, 281515520, 331261535},\n    {287075125, 313194850, 269889345, 208109115, 420653930,\n     331900290, 355440665, 318065155, 343785360, 302163035,\n     308959360, 312666110, 268997740, 288557415, 370158305,\n     205012650, 318198795, 384484520, 316450105, 378714460},\n    {278680580, 356815220, 307597060, 216073365, 390879235,\n     358775185, 358895230, 306434180, 315569040, 272688130,\n     249424325, 274584610, 273530970, 265450585, 325127920,\n     312802050, 317134900, 298518590, 269975470, 332586535},\n    {245629780, 267021570, 234689035, 208808065, 366356035,\n     267059560, 349348005, 270158755, 348048340, 291550930,\n     272717800, 259714410, 236033845, 280627610, 335089770,\n     176610475, 259339950, 322752840, 236218295, 329687310},\n    {226517370, 272306005, 271484080, 216145515, 400972075,\n     288475645, 332969550, 338410905, 329052205, 330392265,\n     306488095, 271979085, 232795960, 257593945, 339558165,\n     202700275, 320622065, 386350450, 315344865, 329233410},\n    {224852610, 231292540, 236945875, 243273740, 336327040,\n     305144680, 248261920, 191671605, 241699245, 263085200,\n     198883715, 175742885, 202517850, 172427630, 296304160,\n     209188850, 326546955, 252990460, 238844535, 289753485}\n  };\n\n  return 0 == memcmp (ResultArray, exp,\n\t\t      UPPERLIMIT * UPPERLIMIT * sizeof (exp[0][0]));\n}\n\n/* vim: set ts=3 sw=3 et: */\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize nofree norecurse nosync nounwind optsize memory(argmem: readwrite) uwtable\ndefine dso_local void @Multiply(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #4 {\n  br label %4\n\n4:                                                ; preds = %26, %3\n  %5 = phi i64 [ %27, %26 ], [ 0, %3 ]\n  %6 = icmp eq i64 %5, 20\n  br i1 %6, label %28, label %7\n\n7:                                                ; preds = %4, %24\n  %8 = phi i64 [ %25, %24 ], [ 0, %4 ]\n  %9 = icmp eq i64 %8, 20\n  br i1 %9, label %26, label %10\n\n10:                                               ; preds = %7\n  %11 = getelementptr inbounds nuw [20 x i64], ptr %2, i64 %5, i64 %8\n  store i64 0, ptr %11, align 8, !tbaa !11\n  br label %12\n\n12:                                               ; preds = %16, %10\n  %13 = phi i64 [ %23, %16 ], [ 0, %10 ]\n  %14 = phi i64 [ %22, %16 ], [ 0, %10 ]\n  %15 = icmp eq i64 %13, 20\n  br i1 %15, label %24, label %16\n\n16:                                               ; preds = %12\n  %17 = getelementptr inbounds nuw [20 x i64], ptr %0, i64 %5, i64 %13\n  %18 = load i64, ptr %17, align 8, !tbaa !11\n  %19 = getelementptr inbounds nuw [20 x i64], ptr %1, i64 %13, i64 %8\n  %20 = load i64, ptr %19, align 8, !tbaa !11\n  %21 = mul nsw i64 %20, %18\n  %22 = add nsw i64 %14, %21\n  store i64 %22, ptr %11, align 8, !tbaa !11\n  %23 = add nuw nsw i64 %13, 1\n  br label %12, !llvm.loop !13\n\n24:                                               ; preds = %12\n  %25 = add nuw nsw i64 %8, 1\n  br label %7, !llvm.loop !14\n\n26:                                               ; preds = %7\n  %27 = add nuw nsw i64 %5, 1\n  br label %4, !llvm.loop !15\n\n28:                                               ; preds = %4\n  ret void\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @Test(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #1 {\n  call void @Multiply(ptr noundef %0, ptr noundef %1, ptr noundef %2) #7\n  ret void\n}\n",
+        "callsite": {
+          "callee": "Multiply",
+          "caller": "Test",
+          "instruction": "  call void @Multiply(ptr noundef %0, ptr noundef %1, ptr noundef %2) #7",
+          "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+          "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 9,
+          "callee_instruction_count": 28,
+          "callee_users": 1,
+          "caller_basic_block_count": 1,
+          "caller_instruction_count": 2,
+          "caller_users": 1,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 7253,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.3,
+        "probabilities": {
+          "do_not_inline": 0.35,
+          "inline": 0.65
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 356.183,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "Test",
+        "caller": "benchmark_body",
+        "decision": true,
+        "default": false,
+        "id": 1,
+        "ir": {
+          "callee": "; Function Attrs: minsize nofree norecurse nosync nounwind optsize memory(argmem: readwrite) uwtable\ndefine dso_local void @Test(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #4 {\n  br label %4\n\n4:                                                ; preds = %26, %3\n  %5 = phi i64 [ %27, %26 ], [ 0, %3 ]\n  %6 = icmp eq i64 %5, 20\n  br i1 %6, label %28, label %7\n\n7:                                                ; preds = %4, %24\n  %8 = phi i64 [ %25, %24 ], [ 0, %4 ]\n  %9 = icmp eq i64 %8, 20\n  br i1 %9, label %26, label %10\n\n10:                                               ; preds = %7\n  %11 = getelementptr inbounds nuw [20 x i64], ptr %2, i64 %5, i64 %8\n  store i64 0, ptr %11, align 8, !tbaa !11\n  br label %12\n\n12:                                               ; preds = %16, %10\n  %13 = phi i64 [ %23, %16 ], [ 0, %10 ]\n  %14 = phi i64 [ %22, %16 ], [ 0, %10 ]\n  %15 = icmp eq i64 %13, 20\n  br i1 %15, label %24, label %16\n\n16:                                               ; preds = %12\n  %17 = getelementptr inbounds nuw [20 x i64], ptr %0, i64 %5, i64 %13\n  %18 = load i64, ptr %17, align 8, !tbaa !11\n  %19 = getelementptr inbounds nuw [20 x i64], ptr %1, i64 %13, i64 %8\n  %20 = load i64, ptr %19, align 8, !tbaa !11\n  %21 = mul nsw i64 %20, %18\n  %22 = add nsw i64 %21, %14\n  store i64 %22, ptr %11, align 8, !tbaa !11\n  %23 = add nuw nsw i64 %13, 1\n  br label %12, !llvm.loop !13\n\n24:                                               ; preds = %12\n  %25 = add nuw nsw i64 %8, 1\n  br label %7, !llvm.loop !14\n\n26:                                               ; preds = %7\n  %27 = add nuw nsw i64 %5, 1\n  br label %4, !llvm.loop !15\n\n28:                                               ; preds = %4\n  ret void\n}\n",
+          "caller": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #3 {\n  br label %2\n\n2:                                                ; preds = %5, %1\n  %3 = phi i32 [ 0, %1 ], [ %6, %5 ]\n  %4 = icmp slt i32 %3, %0\n  br i1 %4, label %5, label %7\n\n5:                                                ; preds = %2\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(3200) @ArrayA, ptr noundef nonnull align 16 dereferenceable(3200) @ArrayA_ref, i64 3200, i1 false)\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(3200) @ArrayB, ptr noundef nonnull align 16 dereferenceable(3200) @ArrayB_ref, i64 3200, i1 false)\n  call void @Test(ptr noundef nonnull @ArrayA, ptr noundef nonnull @ArrayB, ptr noundef nonnull @ResultArray) #7\n  %6 = add nuw nsw i32 %3, 1\n  br label %2, !llvm.loop !5\n\n7:                                                ; preds = %2\n  ret i32 poison\n}\n",
+          "callsite": "  call void @Test(ptr noundef nonnull @ArrayA, ptr noundef nonnull @ArrayB, ptr noundef nonnull @ResultArray) #7"
+        },
+        "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 9,
+          "callee_instruction_count": 28,
+          "callee_users": 1,
+          "caller_basic_block_count": 4,
+          "caller_instruction_count": 10,
+          "caller_users": 2,
+          "callsite_cost": -45,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 3,
+          "constant_offset_ptr_args": 3,
+          "cost_estimate": 70,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 25,
+          "simplified_instructions": 10,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": -11,
+          "unsimplified_common_instructions": 90
+        },
+        "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS matmult benchmark\n\n   This version, copyright (C) 2013-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor James Pallister <james.pallister@bristol.ac.uk>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   Original code from: WCET Benchmarks,\n       http://www.mrtc.mdh.se/projects/wcet/benchmarks.html\n   Permission to license under GPL obtained by email from Bj\u00f6rn Lisper\n */\n\n/* matmult.c */\n/* was mm.c! */\n\n\n/*----------------------------------------------------------------------*\n * To make this program compile under our assumed embedded environment,\n * we had to make several changes:\n * - Declare all functions in ANSI style, not K&R.\n *   this includes adding return types in all cases!\n * - Declare function prototypes\n * - Disable all output\n * - Disable all UNIX-style includes\n *\n * This is a program that was developed from mm.c to matmult.c by\n * Thomas Lundqvist at Chalmers.\n *----------------------------------------------------------------------*/\n\n#include <string.h>\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 46\n#define UPPERLIMIT 20\n#define RANDOM_VALUE (RandomInteger ())\n#define ZERO 0\n#define MOD_SIZE 8095\ntypedef long matrix[UPPERLIMIT][UPPERLIMIT];\n\nint\nvalues_match (long v1, long v2)\n{\n  return (v1 == v2);\n}\n\n\n/*\n * MATRIX MULTIPLICATION BENCHMARK PROGRAM:\n * This program multiplies 2 square matrices resulting in a 3rd\n * matrix. It tests a compiler's speed in handling multidimensional\n * arrays and simple arithmetic.\n */\n\n\n\n\nint Seed;\nmatrix ArrayA_ref, ArrayA, ArrayB_ref, ArrayB, ResultArray;\n\nvoid Multiply (matrix A, matrix B, matrix Res);\nvoid InitSeed (void);\nvoid Test (matrix A, matrix B, matrix Res);\nvoid Initialize (matrix Array);\nint RandomInteger (void);\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      memcpy (ArrayA, ArrayA_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n      memcpy (ArrayB, ArrayB_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n\n      Test (ArrayA, ArrayB, ResultArray);\n    }\n\n  return 0;\n}\n\n\n/*\n * Initializes the seed used in the random number generator.\n */\nvoid\nInitSeed (void)\n{\n  Seed = 0;\n}\n\n/*\n * Runs a multiplication test on an array.  Calculates and prints the\n * time it takes to multiply the matrices.\n */\nvoid\nTest (matrix A, matrix B, matrix Res)\n{\n  Multiply (A, B, Res);\n}\n\n/*\n * Generates random integers between 0 and 8095\n */\nint\nRandomInteger (void)\n{\n  Seed = ((Seed * 133) + 81) % MOD_SIZE;\n  return (Seed);\n}\n\n/*\n * Multiplies arrays A and B and stores the result in ResultArray.\n */\nvoid\nMultiply (matrix A, matrix B, matrix Res)\n{\n  register int Outer, Inner, Index;\n\n  for (Outer = 0; Outer < UPPERLIMIT; Outer++)\n    for (Inner = 0; Inner < UPPERLIMIT; Inner++)\n      {\n\tRes[Outer][Inner] = ZERO;\n\tfor (Index = 0; Index < UPPERLIMIT; Index++)\n\t  Res[Outer][Inner] += A[Outer][Index] * B[Index][Inner];\n      }\n}\n\nvoid\ninitialise_benchmark ()\n{\n  InitSeed ();\n  int OuterIndex, InnerIndex;\n\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayA_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayB_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n}\n\nint\nverify_benchmark (int unused)\n{\n  int i, j;\n  matrix exp = {\n    {291018000, 315000075, 279049970, 205074215, 382719905,\n     302595865, 348060915, 308986330, 343160760, 307099935,\n     292564810, 240954510, 232755815, 246511665, 328466830,\n     263664375, 324016395, 334656070, 285978755, 345370360},\n    {252241835, 333432715, 299220275, 247745815, 422508990,\n     316728505, 359662270, 277775280, 323336795, 320656600,\n     249903690, 251499360, 242195700, 263484280, 348207635,\n     289485100, 328607555, 300799835, 269351410, 305703460},\n    {304901010, 316252815, 263230275, 208939015, 421993740,\n     335002930, 348571170, 280992155, 289749970, 259701175,\n     295249990, 310900035, 250896625, 250154105, 315096035,\n     236364800, 312879355, 312580685, 275998435, 344137885},\n    {286700525, 325985600, 253054970, 224361490, 353502130,\n     306544290, 323492140, 259123905, 307731610, 282414410,\n     281127810, 246936935, 207890815, 233789540, 339836730,\n     277296350, 319925620, 307470895, 290537580, 292297535},\n    {272571255, 377663320, 304545985, 263001340, 375034885,\n     325423710, 410620380, 313191730, 356989815, 308508355,\n     218003850, 272487135, 266000220, 264734710, 367539620,\n     304146675, 355295500, 276019740, 251415695, 301225235},\n    {272547900, 321522300, 288294345, 247748015, 389912855,\n     331874890, 370798315, 315467255, 367554485, 311947660,\n     258809685, 270536510, 256730515, 287143040, 363087030,\n     285672775, 353670120, 304219695, 274897255, 324684660},\n    {233123995, 227142480, 212655155, 198592290, 345335250,\n     302661845, 253374925, 233243305, 233750030, 224590040,\n     200404820, 250791135, 234405760, 211723645, 280630165,\n     185245875, 296423665, 276278575, 252368265, 278726535},\n    {277690535, 339615440, 320921550, 307114315, 400187215,\n     334374655, 376286920, 295993530, 362988020, 356272700,\n     293965465, 261574710, 259690975, 263037705, 416748985,\n     274683275, 385571030, 402782385, 323927010, 362778710},\n    {267168970, 323401680, 279474330, 201934365, 362624300,\n     330736145, 371793675, 299650280, 333646005, 264791490,\n     215918320, 277512760, 264068435, 234555295, 321772515,\n     217507025, 310372440, 317544750, 245525965, 343183435},\n    {281293570, 326519505, 233494705, 238516065, 297038200,\n     266273420, 349521550, 259343530, 306032255, 266397915,\n     210274920, 263743085, 231689610, 251949545, 293562740,\n     226822900, 309225440, 286212000, 206108715, 236678985},\n    {288404350, 310319375, 282695670, 244150740, 426489380,\n     387525790, 342018190, 326086505, 352250260, 319997735,\n     300645835, 284822660, 271837440, 274000415, 361826730,\n     252399600, 348582320, 375813820, 316588255, 322499110},\n    {273368780, 329706295, 288668335, 234501665, 381962610,\n     343186285, 337520205, 259637405, 295755465, 284778105,\n     205310525, 249598310, 256662470, 251533535, 336159770,\n     249342150, 333559450, 329296590, 278254845, 300673860},\n    {318589575, 315522800, 260632295, 250009765, 337127730,\n     312810490, 346698590, 260810030, 388289910, 337081285,\n     283635410, 208148610, 234123865, 259653165, 370115255,\n     243311450, 377808245, 358786770, 286839730, 321912835},\n    {229541925, 253967450, 223002545, 202302515, 303446955,\n     268472740, 285580065, 211013405, 287677960, 279773910,\n     227377310, 197461135, 222469715, 179536615, 306957380,\n     178407075, 281051570, 279718120, 234868230, 288991535},\n    {290692955, 317729070, 297868235, 213450065, 469270935,\n     375344910, 326987580, 334565680, 325300040, 290325655,\n     254703825, 284914960, 245773820, 276641510, 323510795,\n     271034400, 337424250, 360011440, 281515520, 331261535},\n    {287075125, 313194850, 269889345, 208109115, 420653930,\n     331900290, 355440665, 318065155, 343785360, 302163035,\n     308959360, 312666110, 268997740, 288557415, 370158305,\n     205012650, 318198795, 384484520, 316450105, 378714460},\n    {278680580, 356815220, 307597060, 216073365, 390879235,\n     358775185, 358895230, 306434180, 315569040, 272688130,\n     249424325, 274584610, 273530970, 265450585, 325127920,\n     312802050, 317134900, 298518590, 269975470, 332586535},\n    {245629780, 267021570, 234689035, 208808065, 366356035,\n     267059560, 349348005, 270158755, 348048340, 291550930,\n     272717800, 259714410, 236033845, 280627610, 335089770,\n     176610475, 259339950, 322752840, 236218295, 329687310},\n    {226517370, 272306005, 271484080, 216145515, 400972075,\n     288475645, 332969550, 338410905, 329052205, 330392265,\n     306488095, 271979085, 232795960, 257593945, 339558165,\n     202700275, 320622065, 386350450, 315344865, 329233410},\n    {224852610, 231292540, 236945875, 243273740, 336327040,\n     305144680, 248261920, 191671605, 241699245, 263085200,\n     198883715, 175742885, 202517850, 172427630, 296304160,\n     209188850, 326546955, 252990460, 238844535, 289753485}\n  };\n\n  return 0 == memcmp (ResultArray, exp,\n\t\t      UPPERLIMIT * UPPERLIMIT * sizeof (exp[0][0]));\n}\n\n/* vim: set ts=3 sw=3 et: */\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize nofree norecurse nosync nounwind optsize memory(argmem: readwrite) uwtable\ndefine dso_local void @Test(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #4 {\n  br label %4\n\n4:                                                ; preds = %26, %3\n  %5 = phi i64 [ %27, %26 ], [ 0, %3 ]\n  %6 = icmp eq i64 %5, 20\n  br i1 %6, label %28, label %7\n\n7:                                                ; preds = %4, %24\n  %8 = phi i64 [ %25, %24 ], [ 0, %4 ]\n  %9 = icmp eq i64 %8, 20\n  br i1 %9, label %26, label %10\n\n10:                                               ; preds = %7\n  %11 = getelementptr inbounds nuw [20 x i64], ptr %2, i64 %5, i64 %8\n  store i64 0, ptr %11, align 8, !tbaa !11\n  br label %12\n\n12:                                               ; preds = %16, %10\n  %13 = phi i64 [ %23, %16 ], [ 0, %10 ]\n  %14 = phi i64 [ %22, %16 ], [ 0, %10 ]\n  %15 = icmp eq i64 %13, 20\n  br i1 %15, label %24, label %16\n\n16:                                               ; preds = %12\n  %17 = getelementptr inbounds nuw [20 x i64], ptr %0, i64 %5, i64 %13\n  %18 = load i64, ptr %17, align 8, !tbaa !11\n  %19 = getelementptr inbounds nuw [20 x i64], ptr %1, i64 %13, i64 %8\n  %20 = load i64, ptr %19, align 8, !tbaa !11\n  %21 = mul nsw i64 %20, %18\n  %22 = add nsw i64 %21, %14\n  store i64 %22, ptr %11, align 8, !tbaa !11\n  %23 = add nuw nsw i64 %13, 1\n  br label %12, !llvm.loop !13\n\n24:                                               ; preds = %12\n  %25 = add nuw nsw i64 %8, 1\n  br label %7, !llvm.loop !14\n\n26:                                               ; preds = %7\n  %27 = add nuw nsw i64 %5, 1\n  br label %4, !llvm.loop !15\n\n28:                                               ; preds = %4\n  ret void\n}\n",
+        "caller_ir": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #3 {\n  br label %2\n\n2:                                                ; preds = %5, %1\n  %3 = phi i32 [ 0, %1 ], [ %6, %5 ]\n  %4 = icmp slt i32 %3, %0\n  br i1 %4, label %5, label %7\n\n5:                                                ; preds = %2\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(3200) @ArrayA, ptr noundef nonnull align 16 dereferenceable(3200) @ArrayA_ref, i64 3200, i1 false)\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(3200) @ArrayB, ptr noundef nonnull align 16 dereferenceable(3200) @ArrayB_ref, i64 3200, i1 false)\n  call void @Test(ptr noundef nonnull @ArrayA, ptr noundef nonnull @ArrayB, ptr noundef nonnull @ResultArray) #7\n  %6 = add nuw nsw i32 %3, 1\n  br label %2, !llvm.loop !5\n\n7:                                                ; preds = %2\n  ret i32 poison\n}\n",
+        "callsite": {
+          "callee": "Test",
+          "caller": "benchmark_body",
+          "instruction": "  call void @Test(ptr noundef nonnull @ArrayA, ptr noundef nonnull @ArrayB, ptr noundef nonnull @ResultArray) #7",
+          "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+          "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 9,
+          "callee_instruction_count": 28,
+          "callee_users": 1,
+          "caller_basic_block_count": 4,
+          "caller_instruction_count": 10,
+          "caller_users": 2,
+          "constant_args": 3
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 7550,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.68,
+        "probabilities": {
+          "do_not_inline": 0.16,
+          "inline": 0.84
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 386.852,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "InitSeed",
+        "caller": "initialise_benchmark",
+        "decision": true,
+        "default": true,
+        "id": 2,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(write, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local void @InitSeed() local_unnamed_addr #5 {\n  store i32 0, ptr @Seed, align 4, !tbaa !14\n  ret void\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @initialise_benchmark() local_unnamed_addr #8 {\n  call void @InitSeed() #12\n  br label %1\n\n1:                                                ; preds = %14, %0\n  %2 = phi i32 [ 0, %0 ], [ %15, %14 ]\n  %3 = icmp samesign ult i32 %2, 20\n  br i1 %3, label %4, label %16\n\n4:                                                ; preds = %1, %7\n  %5 = phi i32 [ %13, %7 ], [ 0, %1 ]\n  %6 = icmp samesign ult i32 %5, 20\n  br i1 %6, label %7, label %14\n\n7:                                                ; preds = %4\n  %8 = call i32 @RandomInteger() #12\n  %9 = sext i32 %8 to i64\n  %10 = zext nneg i32 %2 to i64\n  %11 = zext nneg i32 %5 to i64\n  %12 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayA_ref, i64 0, i64 %10, i64 %11\n  store i64 %9, ptr %12, align 8, !tbaa !5\n  %13 = add nuw nsw i32 %5, 1\n  br label %4, !llvm.loop !16\n\n14:                                               ; preds = %4\n  %15 = add nuw nsw i32 %2, 1\n  br label %1, !llvm.loop !17\n\n16:                                               ; preds = %1, %29\n  %17 = phi i32 [ %30, %29 ], [ 0, %1 ]\n  %18 = icmp samesign ult i32 %17, 20\n  br i1 %18, label %19, label %31\n\n19:                                               ; preds = %16, %22\n  %20 = phi i32 [ %28, %22 ], [ 0, %16 ]\n  %21 = icmp samesign ult i32 %20, 20\n  br i1 %21, label %22, label %29\n\n22:                                               ; preds = %19\n  %23 = call i32 @RandomInteger() #12\n  %24 = sext i32 %23 to i64\n  %25 = zext nneg i32 %17 to i64\n  %26 = zext nneg i32 %20 to i64\n  %27 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayB_ref, i64 0, i64 %25, i64 %26\n  store i64 %24, ptr %27, align 8, !tbaa !5\n  %28 = add nuw nsw i32 %20, 1\n  br label %19, !llvm.loop !18\n\n29:                                               ; preds = %19\n  %30 = add nuw nsw i32 %17, 1\n  br label %16, !llvm.loop !19\n\n31:                                               ; preds = %16\n  ret void\n}\n",
+          "callsite": "  call void @InitSeed() #12"
+        },
+        "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 2,
+          "callee_users": 1,
+          "caller_basic_block_count": 10,
+          "caller_instruction_count": 35,
+          "caller_users": 0,
+          "callsite_cost": -30,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": -25,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 0,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 1,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 5,
+          "unsimplified_common_instructions": 5
+        },
+        "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS matmult benchmark\n\n   This version, copyright (C) 2013-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor James Pallister <james.pallister@bristol.ac.uk>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   Original code from: WCET Benchmarks,\n       http://www.mrtc.mdh.se/projects/wcet/benchmarks.html\n   Permission to license under GPL obtained by email from Bj\u00f6rn Lisper\n */\n\n/* matmult.c */\n/* was mm.c! */\n\n\n/*----------------------------------------------------------------------*\n * To make this program compile under our assumed embedded environment,\n * we had to make several changes:\n * - Declare all functions in ANSI style, not K&R.\n *   this includes adding return types in all cases!\n * - Declare function prototypes\n * - Disable all output\n * - Disable all UNIX-style includes\n *\n * This is a program that was developed from mm.c to matmult.c by\n * Thomas Lundqvist at Chalmers.\n *----------------------------------------------------------------------*/\n\n#include <string.h>\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 46\n#define UPPERLIMIT 20\n#define RANDOM_VALUE (RandomInteger ())\n#define ZERO 0\n#define MOD_SIZE 8095\ntypedef long matrix[UPPERLIMIT][UPPERLIMIT];\n\nint\nvalues_match (long v1, long v2)\n{\n  return (v1 == v2);\n}\n\n\n/*\n * MATRIX MULTIPLICATION BENCHMARK PROGRAM:\n * This program multiplies 2 square matrices resulting in a 3rd\n * matrix. It tests a compiler's speed in handling multidimensional\n * arrays and simple arithmetic.\n */\n\n\n\n\nint Seed;\nmatrix ArrayA_ref, ArrayA, ArrayB_ref, ArrayB, ResultArray;\n\nvoid Multiply (matrix A, matrix B, matrix Res);\nvoid InitSeed (void);\nvoid Test (matrix A, matrix B, matrix Res);\nvoid Initialize (matrix Array);\nint RandomInteger (void);\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      memcpy (ArrayA, ArrayA_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n      memcpy (ArrayB, ArrayB_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n\n      Test (ArrayA, ArrayB, ResultArray);\n    }\n\n  return 0;\n}\n\n\n/*\n * Initializes the seed used in the random number generator.\n */\nvoid\nInitSeed (void)\n{\n  Seed = 0;\n}\n\n/*\n * Runs a multiplication test on an array.  Calculates and prints the\n * time it takes to multiply the matrices.\n */\nvoid\nTest (matrix A, matrix B, matrix Res)\n{\n  Multiply (A, B, Res);\n}\n\n/*\n * Generates random integers between 0 and 8095\n */\nint\nRandomInteger (void)\n{\n  Seed = ((Seed * 133) + 81) % MOD_SIZE;\n  return (Seed);\n}\n\n/*\n * Multiplies arrays A and B and stores the result in ResultArray.\n */\nvoid\nMultiply (matrix A, matrix B, matrix Res)\n{\n  register int Outer, Inner, Index;\n\n  for (Outer = 0; Outer < UPPERLIMIT; Outer++)\n    for (Inner = 0; Inner < UPPERLIMIT; Inner++)\n      {\n\tRes[Outer][Inner] = ZERO;\n\tfor (Index = 0; Index < UPPERLIMIT; Index++)\n\t  Res[Outer][Inner] += A[Outer][Index] * B[Index][Inner];\n      }\n}\n\nvoid\ninitialise_benchmark ()\n{\n  InitSeed ();\n  int OuterIndex, InnerIndex;\n\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayA_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayB_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n}\n\nint\nverify_benchmark (int unused)\n{\n  int i, j;\n  matrix exp = {\n    {291018000, 315000075, 279049970, 205074215, 382719905,\n     302595865, 348060915, 308986330, 343160760, 307099935,\n     292564810, 240954510, 232755815, 246511665, 328466830,\n     263664375, 324016395, 334656070, 285978755, 345370360},\n    {252241835, 333432715, 299220275, 247745815, 422508990,\n     316728505, 359662270, 277775280, 323336795, 320656600,\n     249903690, 251499360, 242195700, 263484280, 348207635,\n     289485100, 328607555, 300799835, 269351410, 305703460},\n    {304901010, 316252815, 263230275, 208939015, 421993740,\n     335002930, 348571170, 280992155, 289749970, 259701175,\n     295249990, 310900035, 250896625, 250154105, 315096035,\n     236364800, 312879355, 312580685, 275998435, 344137885},\n    {286700525, 325985600, 253054970, 224361490, 353502130,\n     306544290, 323492140, 259123905, 307731610, 282414410,\n     281127810, 246936935, 207890815, 233789540, 339836730,\n     277296350, 319925620, 307470895, 290537580, 292297535},\n    {272571255, 377663320, 304545985, 263001340, 375034885,\n     325423710, 410620380, 313191730, 356989815, 308508355,\n     218003850, 272487135, 266000220, 264734710, 367539620,\n     304146675, 355295500, 276019740, 251415695, 301225235},\n    {272547900, 321522300, 288294345, 247748015, 389912855,\n     331874890, 370798315, 315467255, 367554485, 311947660,\n     258809685, 270536510, 256730515, 287143040, 363087030,\n     285672775, 353670120, 304219695, 274897255, 324684660},\n    {233123995, 227142480, 212655155, 198592290, 345335250,\n     302661845, 253374925, 233243305, 233750030, 224590040,\n     200404820, 250791135, 234405760, 211723645, 280630165,\n     185245875, 296423665, 276278575, 252368265, 278726535},\n    {277690535, 339615440, 320921550, 307114315, 400187215,\n     334374655, 376286920, 295993530, 362988020, 356272700,\n     293965465, 261574710, 259690975, 263037705, 416748985,\n     274683275, 385571030, 402782385, 323927010, 362778710},\n    {267168970, 323401680, 279474330, 201934365, 362624300,\n     330736145, 371793675, 299650280, 333646005, 264791490,\n     215918320, 277512760, 264068435, 234555295, 321772515,\n     217507025, 310372440, 317544750, 245525965, 343183435},\n    {281293570, 326519505, 233494705, 238516065, 297038200,\n     266273420, 349521550, 259343530, 306032255, 266397915,\n     210274920, 263743085, 231689610, 251949545, 293562740,\n     226822900, 309225440, 286212000, 206108715, 236678985},\n    {288404350, 310319375, 282695670, 244150740, 426489380,\n     387525790, 342018190, 326086505, 352250260, 319997735,\n     300645835, 284822660, 271837440, 274000415, 361826730,\n     252399600, 348582320, 375813820, 316588255, 322499110},\n    {273368780, 329706295, 288668335, 234501665, 381962610,\n     343186285, 337520205, 259637405, 295755465, 284778105,\n     205310525, 249598310, 256662470, 251533535, 336159770,\n     249342150, 333559450, 329296590, 278254845, 300673860},\n    {318589575, 315522800, 260632295, 250009765, 337127730,\n     312810490, 346698590, 260810030, 388289910, 337081285,\n     283635410, 208148610, 234123865, 259653165, 370115255,\n     243311450, 377808245, 358786770, 286839730, 321912835},\n    {229541925, 253967450, 223002545, 202302515, 303446955,\n     268472740, 285580065, 211013405, 287677960, 279773910,\n     227377310, 197461135, 222469715, 179536615, 306957380,\n     178407075, 281051570, 279718120, 234868230, 288991535},\n    {290692955, 317729070, 297868235, 213450065, 469270935,\n     375344910, 326987580, 334565680, 325300040, 290325655,\n     254703825, 284914960, 245773820, 276641510, 323510795,\n     271034400, 337424250, 360011440, 281515520, 331261535},\n    {287075125, 313194850, 269889345, 208109115, 420653930,\n     331900290, 355440665, 318065155, 343785360, 302163035,\n     308959360, 312666110, 268997740, 288557415, 370158305,\n     205012650, 318198795, 384484520, 316450105, 378714460},\n    {278680580, 356815220, 307597060, 216073365, 390879235,\n     358775185, 358895230, 306434180, 315569040, 272688130,\n     249424325, 274584610, 273530970, 265450585, 325127920,\n     312802050, 317134900, 298518590, 269975470, 332586535},\n    {245629780, 267021570, 234689035, 208808065, 366356035,\n     267059560, 349348005, 270158755, 348048340, 291550930,\n     272717800, 259714410, 236033845, 280627610, 335089770,\n     176610475, 259339950, 322752840, 236218295, 329687310},\n    {226517370, 272306005, 271484080, 216145515, 400972075,\n     288475645, 332969550, 338410905, 329052205, 330392265,\n     306488095, 271979085, 232795960, 257593945, 339558165,\n     202700275, 320622065, 386350450, 315344865, 329233410},\n    {224852610, 231292540, 236945875, 243273740, 336327040,\n     305144680, 248261920, 191671605, 241699245, 263085200,\n     198883715, 175742885, 202517850, 172427630, 296304160,\n     209188850, 326546955, 252990460, 238844535, 289753485}\n  };\n\n  return 0 == memcmp (ResultArray, exp,\n\t\t      UPPERLIMIT * UPPERLIMIT * sizeof (exp[0][0]));\n}\n\n/* vim: set ts=3 sw=3 et: */\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(write, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local void @InitSeed() local_unnamed_addr #5 {\n  store i32 0, ptr @Seed, align 4, !tbaa !14\n  ret void\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @initialise_benchmark() local_unnamed_addr #8 {\n  call void @InitSeed() #12\n  br label %1\n\n1:                                                ; preds = %14, %0\n  %2 = phi i32 [ 0, %0 ], [ %15, %14 ]\n  %3 = icmp samesign ult i32 %2, 20\n  br i1 %3, label %4, label %16\n\n4:                                                ; preds = %1, %7\n  %5 = phi i32 [ %13, %7 ], [ 0, %1 ]\n  %6 = icmp samesign ult i32 %5, 20\n  br i1 %6, label %7, label %14\n\n7:                                                ; preds = %4\n  %8 = call i32 @RandomInteger() #12\n  %9 = sext i32 %8 to i64\n  %10 = zext nneg i32 %2 to i64\n  %11 = zext nneg i32 %5 to i64\n  %12 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayA_ref, i64 0, i64 %10, i64 %11\n  store i64 %9, ptr %12, align 8, !tbaa !5\n  %13 = add nuw nsw i32 %5, 1\n  br label %4, !llvm.loop !16\n\n14:                                               ; preds = %4\n  %15 = add nuw nsw i32 %2, 1\n  br label %1, !llvm.loop !17\n\n16:                                               ; preds = %1, %29\n  %17 = phi i32 [ %30, %29 ], [ 0, %1 ]\n  %18 = icmp samesign ult i32 %17, 20\n  br i1 %18, label %19, label %31\n\n19:                                               ; preds = %16, %22\n  %20 = phi i32 [ %28, %22 ], [ 0, %16 ]\n  %21 = icmp samesign ult i32 %20, 20\n  br i1 %21, label %22, label %29\n\n22:                                               ; preds = %19\n  %23 = call i32 @RandomInteger() #12\n  %24 = sext i32 %23 to i64\n  %25 = zext nneg i32 %17 to i64\n  %26 = zext nneg i32 %20 to i64\n  %27 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayB_ref, i64 0, i64 %25, i64 %26\n  store i64 %24, ptr %27, align 8, !tbaa !5\n  %28 = add nuw nsw i32 %20, 1\n  br label %19, !llvm.loop !18\n\n29:                                               ; preds = %19\n  %30 = add nuw nsw i32 %17, 1\n  br label %16, !llvm.loop !19\n\n31:                                               ; preds = %16\n  ret void\n}\n",
+        "callsite": {
+          "callee": "InitSeed",
+          "caller": "initialise_benchmark",
+          "instruction": "  call void @InitSeed() #12",
+          "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+          "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 2,
+          "callee_users": 1,
+          "caller_basic_block_count": 10,
+          "caller_instruction_count": 35,
+          "caller_users": 0,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 7340,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.48,
+        "probabilities": {
+          "do_not_inline": 0.26,
+          "inline": 0.74
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 390.068,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "RandomInteger",
+        "caller": "initialise_benchmark",
+        "decision": true,
+        "default": true,
+        "id": 3,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local range(i32 -8094, 8095) i32 @RandomInteger() local_unnamed_addr #7 {\n  %1 = load i32, ptr @Seed, align 4, !tbaa !14\n  %2 = mul nsw i32 %1, 133\n  %3 = add nsw i32 %2, 81\n  %4 = srem i32 %3, 8095\n  store i32 %4, ptr @Seed, align 4, !tbaa !14\n  ret i32 %4\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @initialise_benchmark() local_unnamed_addr #8 {\n  store i32 0, ptr @Seed, align 4, !tbaa !14\n  br label %1\n\n1:                                                ; preds = %14, %0\n  %2 = phi i32 [ 0, %0 ], [ %15, %14 ]\n  %3 = icmp samesign ult i32 %2, 20\n  br i1 %3, label %4, label %16\n\n4:                                                ; preds = %1, %7\n  %5 = phi i32 [ %13, %7 ], [ 0, %1 ]\n  %6 = icmp samesign ult i32 %5, 20\n  br i1 %6, label %7, label %14\n\n7:                                                ; preds = %4\n  %8 = call i32 @RandomInteger() #12\n  %9 = sext i32 %8 to i64\n  %10 = zext nneg i32 %2 to i64\n  %11 = zext nneg i32 %5 to i64\n  %12 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayA_ref, i64 0, i64 %10, i64 %11\n  store i64 %9, ptr %12, align 8, !tbaa !5\n  %13 = add nuw nsw i32 %5, 1\n  br label %4, !llvm.loop !16\n\n14:                                               ; preds = %4\n  %15 = add nuw nsw i32 %2, 1\n  br label %1, !llvm.loop !17\n\n16:                                               ; preds = %1, %29\n  %17 = phi i32 [ %30, %29 ], [ 0, %1 ]\n  %18 = icmp samesign ult i32 %17, 20\n  br i1 %18, label %19, label %31\n\n19:                                               ; preds = %16, %22\n  %20 = phi i32 [ %28, %22 ], [ 0, %16 ]\n  %21 = icmp samesign ult i32 %20, 20\n  br i1 %21, label %22, label %29\n\n22:                                               ; preds = %19\n  %23 = call i32 @RandomInteger() #12\n  %24 = sext i32 %23 to i64\n  %25 = zext nneg i32 %17 to i64\n  %26 = zext nneg i32 %20 to i64\n  %27 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayB_ref, i64 0, i64 %25, i64 %26\n  store i64 %24, ptr %27, align 8, !tbaa !5\n  %28 = add nuw nsw i32 %20, 1\n  br label %19, !llvm.loop !18\n\n29:                                               ; preds = %19\n  %30 = add nuw nsw i32 %17, 1\n  br label %16, !llvm.loop !19\n\n31:                                               ; preds = %16\n  ret void\n}\n",
+          "callsite": "  %8 = call i32 @RandomInteger() #12"
+        },
+        "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 6,
+          "callee_users": 2,
+          "caller_basic_block_count": 10,
+          "caller_instruction_count": 35,
+          "caller_users": 0,
+          "callsite_cost": -30,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": -5,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 0,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 1,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 5,
+          "unsimplified_common_instructions": 25
+        },
+        "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS matmult benchmark\n\n   This version, copyright (C) 2013-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor James Pallister <james.pallister@bristol.ac.uk>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   Original code from: WCET Benchmarks,\n       http://www.mrtc.mdh.se/projects/wcet/benchmarks.html\n   Permission to license under GPL obtained by email from Bj\u00f6rn Lisper\n */\n\n/* matmult.c */\n/* was mm.c! */\n\n\n/*----------------------------------------------------------------------*\n * To make this program compile under our assumed embedded environment,\n * we had to make several changes:\n * - Declare all functions in ANSI style, not K&R.\n *   this includes adding return types in all cases!\n * - Declare function prototypes\n * - Disable all output\n * - Disable all UNIX-style includes\n *\n * This is a program that was developed from mm.c to matmult.c by\n * Thomas Lundqvist at Chalmers.\n *----------------------------------------------------------------------*/\n\n#include <string.h>\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 46\n#define UPPERLIMIT 20\n#define RANDOM_VALUE (RandomInteger ())\n#define ZERO 0\n#define MOD_SIZE 8095\ntypedef long matrix[UPPERLIMIT][UPPERLIMIT];\n\nint\nvalues_match (long v1, long v2)\n{\n  return (v1 == v2);\n}\n\n\n/*\n * MATRIX MULTIPLICATION BENCHMARK PROGRAM:\n * This program multiplies 2 square matrices resulting in a 3rd\n * matrix. It tests a compiler's speed in handling multidimensional\n * arrays and simple arithmetic.\n */\n\n\n\n\nint Seed;\nmatrix ArrayA_ref, ArrayA, ArrayB_ref, ArrayB, ResultArray;\n\nvoid Multiply (matrix A, matrix B, matrix Res);\nvoid InitSeed (void);\nvoid Test (matrix A, matrix B, matrix Res);\nvoid Initialize (matrix Array);\nint RandomInteger (void);\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      memcpy (ArrayA, ArrayA_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n      memcpy (ArrayB, ArrayB_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n\n      Test (ArrayA, ArrayB, ResultArray);\n    }\n\n  return 0;\n}\n\n\n/*\n * Initializes the seed used in the random number generator.\n */\nvoid\nInitSeed (void)\n{\n  Seed = 0;\n}\n\n/*\n * Runs a multiplication test on an array.  Calculates and prints the\n * time it takes to multiply the matrices.\n */\nvoid\nTest (matrix A, matrix B, matrix Res)\n{\n  Multiply (A, B, Res);\n}\n\n/*\n * Generates random integers between 0 and 8095\n */\nint\nRandomInteger (void)\n{\n  Seed = ((Seed * 133) + 81) % MOD_SIZE;\n  return (Seed);\n}\n\n/*\n * Multiplies arrays A and B and stores the result in ResultArray.\n */\nvoid\nMultiply (matrix A, matrix B, matrix Res)\n{\n  register int Outer, Inner, Index;\n\n  for (Outer = 0; Outer < UPPERLIMIT; Outer++)\n    for (Inner = 0; Inner < UPPERLIMIT; Inner++)\n      {\n\tRes[Outer][Inner] = ZERO;\n\tfor (Index = 0; Index < UPPERLIMIT; Index++)\n\t  Res[Outer][Inner] += A[Outer][Index] * B[Index][Inner];\n      }\n}\n\nvoid\ninitialise_benchmark ()\n{\n  InitSeed ();\n  int OuterIndex, InnerIndex;\n\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayA_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayB_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n}\n\nint\nverify_benchmark (int unused)\n{\n  int i, j;\n  matrix exp = {\n    {291018000, 315000075, 279049970, 205074215, 382719905,\n     302595865, 348060915, 308986330, 343160760, 307099935,\n     292564810, 240954510, 232755815, 246511665, 328466830,\n     263664375, 324016395, 334656070, 285978755, 345370360},\n    {252241835, 333432715, 299220275, 247745815, 422508990,\n     316728505, 359662270, 277775280, 323336795, 320656600,\n     249903690, 251499360, 242195700, 263484280, 348207635,\n     289485100, 328607555, 300799835, 269351410, 305703460},\n    {304901010, 316252815, 263230275, 208939015, 421993740,\n     335002930, 348571170, 280992155, 289749970, 259701175,\n     295249990, 310900035, 250896625, 250154105, 315096035,\n     236364800, 312879355, 312580685, 275998435, 344137885},\n    {286700525, 325985600, 253054970, 224361490, 353502130,\n     306544290, 323492140, 259123905, 307731610, 282414410,\n     281127810, 246936935, 207890815, 233789540, 339836730,\n     277296350, 319925620, 307470895, 290537580, 292297535},\n    {272571255, 377663320, 304545985, 263001340, 375034885,\n     325423710, 410620380, 313191730, 356989815, 308508355,\n     218003850, 272487135, 266000220, 264734710, 367539620,\n     304146675, 355295500, 276019740, 251415695, 301225235},\n    {272547900, 321522300, 288294345, 247748015, 389912855,\n     331874890, 370798315, 315467255, 367554485, 311947660,\n     258809685, 270536510, 256730515, 287143040, 363087030,\n     285672775, 353670120, 304219695, 274897255, 324684660},\n    {233123995, 227142480, 212655155, 198592290, 345335250,\n     302661845, 253374925, 233243305, 233750030, 224590040,\n     200404820, 250791135, 234405760, 211723645, 280630165,\n     185245875, 296423665, 276278575, 252368265, 278726535},\n    {277690535, 339615440, 320921550, 307114315, 400187215,\n     334374655, 376286920, 295993530, 362988020, 356272700,\n     293965465, 261574710, 259690975, 263037705, 416748985,\n     274683275, 385571030, 402782385, 323927010, 362778710},\n    {267168970, 323401680, 279474330, 201934365, 362624300,\n     330736145, 371793675, 299650280, 333646005, 264791490,\n     215918320, 277512760, 264068435, 234555295, 321772515,\n     217507025, 310372440, 317544750, 245525965, 343183435},\n    {281293570, 326519505, 233494705, 238516065, 297038200,\n     266273420, 349521550, 259343530, 306032255, 266397915,\n     210274920, 263743085, 231689610, 251949545, 293562740,\n     226822900, 309225440, 286212000, 206108715, 236678985},\n    {288404350, 310319375, 282695670, 244150740, 426489380,\n     387525790, 342018190, 326086505, 352250260, 319997735,\n     300645835, 284822660, 271837440, 274000415, 361826730,\n     252399600, 348582320, 375813820, 316588255, 322499110},\n    {273368780, 329706295, 288668335, 234501665, 381962610,\n     343186285, 337520205, 259637405, 295755465, 284778105,\n     205310525, 249598310, 256662470, 251533535, 336159770,\n     249342150, 333559450, 329296590, 278254845, 300673860},\n    {318589575, 315522800, 260632295, 250009765, 337127730,\n     312810490, 346698590, 260810030, 388289910, 337081285,\n     283635410, 208148610, 234123865, 259653165, 370115255,\n     243311450, 377808245, 358786770, 286839730, 321912835},\n    {229541925, 253967450, 223002545, 202302515, 303446955,\n     268472740, 285580065, 211013405, 287677960, 279773910,\n     227377310, 197461135, 222469715, 179536615, 306957380,\n     178407075, 281051570, 279718120, 234868230, 288991535},\n    {290692955, 317729070, 297868235, 213450065, 469270935,\n     375344910, 326987580, 334565680, 325300040, 290325655,\n     254703825, 284914960, 245773820, 276641510, 323510795,\n     271034400, 337424250, 360011440, 281515520, 331261535},\n    {287075125, 313194850, 269889345, 208109115, 420653930,\n     331900290, 355440665, 318065155, 343785360, 302163035,\n     308959360, 312666110, 268997740, 288557415, 370158305,\n     205012650, 318198795, 384484520, 316450105, 378714460},\n    {278680580, 356815220, 307597060, 216073365, 390879235,\n     358775185, 358895230, 306434180, 315569040, 272688130,\n     249424325, 274584610, 273530970, 265450585, 325127920,\n     312802050, 317134900, 298518590, 269975470, 332586535},\n    {245629780, 267021570, 234689035, 208808065, 366356035,\n     267059560, 349348005, 270158755, 348048340, 291550930,\n     272717800, 259714410, 236033845, 280627610, 335089770,\n     176610475, 259339950, 322752840, 236218295, 329687310},\n    {226517370, 272306005, 271484080, 216145515, 400972075,\n     288475645, 332969550, 338410905, 329052205, 330392265,\n     306488095, 271979085, 232795960, 257593945, 339558165,\n     202700275, 320622065, 386350450, 315344865, 329233410},\n    {224852610, 231292540, 236945875, 243273740, 336327040,\n     305144680, 248261920, 191671605, 241699245, 263085200,\n     198883715, 175742885, 202517850, 172427630, 296304160,\n     209188850, 326546955, 252990460, 238844535, 289753485}\n  };\n\n  return 0 == memcmp (ResultArray, exp,\n\t\t      UPPERLIMIT * UPPERLIMIT * sizeof (exp[0][0]));\n}\n\n/* vim: set ts=3 sw=3 et: */\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local range(i32 -8094, 8095) i32 @RandomInteger() local_unnamed_addr #7 {\n  %1 = load i32, ptr @Seed, align 4, !tbaa !14\n  %2 = mul nsw i32 %1, 133\n  %3 = add nsw i32 %2, 81\n  %4 = srem i32 %3, 8095\n  store i32 %4, ptr @Seed, align 4, !tbaa !14\n  ret i32 %4\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @initialise_benchmark() local_unnamed_addr #8 {\n  store i32 0, ptr @Seed, align 4, !tbaa !14\n  br label %1\n\n1:                                                ; preds = %14, %0\n  %2 = phi i32 [ 0, %0 ], [ %15, %14 ]\n  %3 = icmp samesign ult i32 %2, 20\n  br i1 %3, label %4, label %16\n\n4:                                                ; preds = %1, %7\n  %5 = phi i32 [ %13, %7 ], [ 0, %1 ]\n  %6 = icmp samesign ult i32 %5, 20\n  br i1 %6, label %7, label %14\n\n7:                                                ; preds = %4\n  %8 = call i32 @RandomInteger() #12\n  %9 = sext i32 %8 to i64\n  %10 = zext nneg i32 %2 to i64\n  %11 = zext nneg i32 %5 to i64\n  %12 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayA_ref, i64 0, i64 %10, i64 %11\n  store i64 %9, ptr %12, align 8, !tbaa !5\n  %13 = add nuw nsw i32 %5, 1\n  br label %4, !llvm.loop !16\n\n14:                                               ; preds = %4\n  %15 = add nuw nsw i32 %2, 1\n  br label %1, !llvm.loop !17\n\n16:                                               ; preds = %1, %29\n  %17 = phi i32 [ %30, %29 ], [ 0, %1 ]\n  %18 = icmp samesign ult i32 %17, 20\n  br i1 %18, label %19, label %31\n\n19:                                               ; preds = %16, %22\n  %20 = phi i32 [ %28, %22 ], [ 0, %16 ]\n  %21 = icmp samesign ult i32 %20, 20\n  br i1 %21, label %22, label %29\n\n22:                                               ; preds = %19\n  %23 = call i32 @RandomInteger() #12\n  %24 = sext i32 %23 to i64\n  %25 = zext nneg i32 %17 to i64\n  %26 = zext nneg i32 %20 to i64\n  %27 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayB_ref, i64 0, i64 %25, i64 %26\n  store i64 %24, ptr %27, align 8, !tbaa !5\n  %28 = add nuw nsw i32 %20, 1\n  br label %19, !llvm.loop !18\n\n29:                                               ; preds = %19\n  %30 = add nuw nsw i32 %17, 1\n  br label %16, !llvm.loop !19\n\n31:                                               ; preds = %16\n  ret void\n}\n",
+        "callsite": {
+          "callee": "RandomInteger",
+          "caller": "initialise_benchmark",
+          "instruction": "  %8 = call i32 @RandomInteger() #12",
+          "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+          "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 6,
+          "callee_users": 2,
+          "caller_basic_block_count": 10,
+          "caller_instruction_count": 35,
+          "caller_users": 0,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 7465,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.69,
+        "probabilities": {
+          "do_not_inline": 0.15,
+          "inline": 0.85
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 315.941,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "RandomInteger",
+        "caller": "initialise_benchmark",
+        "decision": true,
+        "default": true,
+        "id": 4,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local range(i32 -8094, 8095) i32 @RandomInteger() local_unnamed_addr #7 {\n  %1 = load i32, ptr @Seed, align 4, !tbaa !14\n  %2 = mul nsw i32 %1, 133\n  %3 = add nsw i32 %2, 81\n  %4 = srem i32 %3, 8095\n  store i32 %4, ptr @Seed, align 4, !tbaa !14\n  ret i32 %4\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @initialise_benchmark() local_unnamed_addr #8 {\n  store i32 0, ptr @Seed, align 4, !tbaa !14\n  br label %1\n\n1:                                                ; preds = %17, %0\n  %2 = phi i32 [ 0, %0 ], [ %18, %17 ]\n  %3 = icmp samesign ult i32 %2, 20\n  br i1 %3, label %4, label %19\n\n4:                                                ; preds = %1, %7\n  %5 = phi i32 [ %16, %7 ], [ 0, %1 ]\n  %6 = icmp samesign ult i32 %5, 20\n  br i1 %6, label %7, label %17\n\n7:                                                ; preds = %4\n  %8 = load i32, ptr @Seed, align 4, !tbaa !14\n  %9 = mul nsw i32 %8, 133\n  %10 = add nsw i32 %9, 81\n  %11 = srem i32 %10, 8095\n  store i32 %11, ptr @Seed, align 4, !tbaa !14\n  %12 = sext i32 %11 to i64\n  %13 = zext nneg i32 %2 to i64\n  %14 = zext nneg i32 %5 to i64\n  %15 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayA_ref, i64 0, i64 %13, i64 %14\n  store i64 %12, ptr %15, align 8, !tbaa !5\n  %16 = add nuw nsw i32 %5, 1\n  br label %4, !llvm.loop !16\n\n17:                                               ; preds = %4\n  %18 = add nuw nsw i32 %2, 1\n  br label %1, !llvm.loop !17\n\n19:                                               ; preds = %1, %32\n  %20 = phi i32 [ %33, %32 ], [ 0, %1 ]\n  %21 = icmp samesign ult i32 %20, 20\n  br i1 %21, label %22, label %34\n\n22:                                               ; preds = %19, %25\n  %23 = phi i32 [ %31, %25 ], [ 0, %19 ]\n  %24 = icmp samesign ult i32 %23, 20\n  br i1 %24, label %25, label %32\n\n25:                                               ; preds = %22\n  %26 = call i32 @RandomInteger() #12\n  %27 = sext i32 %26 to i64\n  %28 = zext nneg i32 %20 to i64\n  %29 = zext nneg i32 %23 to i64\n  %30 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayB_ref, i64 0, i64 %28, i64 %29\n  store i64 %27, ptr %30, align 8, !tbaa !5\n  %31 = add nuw nsw i32 %23, 1\n  br label %22, !llvm.loop !18\n\n32:                                               ; preds = %22\n  %33 = add nuw nsw i32 %20, 1\n  br label %19, !llvm.loop !19\n\n34:                                               ; preds = %19\n  ret void\n}\n",
+          "callsite": "  %26 = call i32 @RandomInteger() #12"
+        },
+        "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 6,
+          "callee_users": 1,
+          "caller_basic_block_count": 10,
+          "caller_instruction_count": 39,
+          "caller_users": 0,
+          "callsite_cost": -30,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": -5,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 0,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 1,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 5,
+          "unsimplified_common_instructions": 25
+        },
+        "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS matmult benchmark\n\n   This version, copyright (C) 2013-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor James Pallister <james.pallister@bristol.ac.uk>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   Original code from: WCET Benchmarks,\n       http://www.mrtc.mdh.se/projects/wcet/benchmarks.html\n   Permission to license under GPL obtained by email from Bj\u00f6rn Lisper\n */\n\n/* matmult.c */\n/* was mm.c! */\n\n\n/*----------------------------------------------------------------------*\n * To make this program compile under our assumed embedded environment,\n * we had to make several changes:\n * - Declare all functions in ANSI style, not K&R.\n *   this includes adding return types in all cases!\n * - Declare function prototypes\n * - Disable all output\n * - Disable all UNIX-style includes\n *\n * This is a program that was developed from mm.c to matmult.c by\n * Thomas Lundqvist at Chalmers.\n *----------------------------------------------------------------------*/\n\n#include <string.h>\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 46\n#define UPPERLIMIT 20\n#define RANDOM_VALUE (RandomInteger ())\n#define ZERO 0\n#define MOD_SIZE 8095\ntypedef long matrix[UPPERLIMIT][UPPERLIMIT];\n\nint\nvalues_match (long v1, long v2)\n{\n  return (v1 == v2);\n}\n\n\n/*\n * MATRIX MULTIPLICATION BENCHMARK PROGRAM:\n * This program multiplies 2 square matrices resulting in a 3rd\n * matrix. It tests a compiler's speed in handling multidimensional\n * arrays and simple arithmetic.\n */\n\n\n\n\nint Seed;\nmatrix ArrayA_ref, ArrayA, ArrayB_ref, ArrayB, ResultArray;\n\nvoid Multiply (matrix A, matrix B, matrix Res);\nvoid InitSeed (void);\nvoid Test (matrix A, matrix B, matrix Res);\nvoid Initialize (matrix Array);\nint RandomInteger (void);\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      memcpy (ArrayA, ArrayA_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n      memcpy (ArrayB, ArrayB_ref,\n\t      UPPERLIMIT * UPPERLIMIT * sizeof (ArrayA[0][0]));\n\n      Test (ArrayA, ArrayB, ResultArray);\n    }\n\n  return 0;\n}\n\n\n/*\n * Initializes the seed used in the random number generator.\n */\nvoid\nInitSeed (void)\n{\n  Seed = 0;\n}\n\n/*\n * Runs a multiplication test on an array.  Calculates and prints the\n * time it takes to multiply the matrices.\n */\nvoid\nTest (matrix A, matrix B, matrix Res)\n{\n  Multiply (A, B, Res);\n}\n\n/*\n * Generates random integers between 0 and 8095\n */\nint\nRandomInteger (void)\n{\n  Seed = ((Seed * 133) + 81) % MOD_SIZE;\n  return (Seed);\n}\n\n/*\n * Multiplies arrays A and B and stores the result in ResultArray.\n */\nvoid\nMultiply (matrix A, matrix B, matrix Res)\n{\n  register int Outer, Inner, Index;\n\n  for (Outer = 0; Outer < UPPERLIMIT; Outer++)\n    for (Inner = 0; Inner < UPPERLIMIT; Inner++)\n      {\n\tRes[Outer][Inner] = ZERO;\n\tfor (Index = 0; Index < UPPERLIMIT; Index++)\n\t  Res[Outer][Inner] += A[Outer][Index] * B[Index][Inner];\n      }\n}\n\nvoid\ninitialise_benchmark ()\n{\n  InitSeed ();\n  int OuterIndex, InnerIndex;\n\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayA_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n  for (OuterIndex = 0; OuterIndex < UPPERLIMIT; OuterIndex++)\n    for (InnerIndex = 0; InnerIndex < UPPERLIMIT; InnerIndex++)\n      ArrayB_ref[OuterIndex][InnerIndex] = RANDOM_VALUE;\n}\n\nint\nverify_benchmark (int unused)\n{\n  int i, j;\n  matrix exp = {\n    {291018000, 315000075, 279049970, 205074215, 382719905,\n     302595865, 348060915, 308986330, 343160760, 307099935,\n     292564810, 240954510, 232755815, 246511665, 328466830,\n     263664375, 324016395, 334656070, 285978755, 345370360},\n    {252241835, 333432715, 299220275, 247745815, 422508990,\n     316728505, 359662270, 277775280, 323336795, 320656600,\n     249903690, 251499360, 242195700, 263484280, 348207635,\n     289485100, 328607555, 300799835, 269351410, 305703460},\n    {304901010, 316252815, 263230275, 208939015, 421993740,\n     335002930, 348571170, 280992155, 289749970, 259701175,\n     295249990, 310900035, 250896625, 250154105, 315096035,\n     236364800, 312879355, 312580685, 275998435, 344137885},\n    {286700525, 325985600, 253054970, 224361490, 353502130,\n     306544290, 323492140, 259123905, 307731610, 282414410,\n     281127810, 246936935, 207890815, 233789540, 339836730,\n     277296350, 319925620, 307470895, 290537580, 292297535},\n    {272571255, 377663320, 304545985, 263001340, 375034885,\n     325423710, 410620380, 313191730, 356989815, 308508355,\n     218003850, 272487135, 266000220, 264734710, 367539620,\n     304146675, 355295500, 276019740, 251415695, 301225235},\n    {272547900, 321522300, 288294345, 247748015, 389912855,\n     331874890, 370798315, 315467255, 367554485, 311947660,\n     258809685, 270536510, 256730515, 287143040, 363087030,\n     285672775, 353670120, 304219695, 274897255, 324684660},\n    {233123995, 227142480, 212655155, 198592290, 345335250,\n     302661845, 253374925, 233243305, 233750030, 224590040,\n     200404820, 250791135, 234405760, 211723645, 280630165,\n     185245875, 296423665, 276278575, 252368265, 278726535},\n    {277690535, 339615440, 320921550, 307114315, 400187215,\n     334374655, 376286920, 295993530, 362988020, 356272700,\n     293965465, 261574710, 259690975, 263037705, 416748985,\n     274683275, 385571030, 402782385, 323927010, 362778710},\n    {267168970, 323401680, 279474330, 201934365, 362624300,\n     330736145, 371793675, 299650280, 333646005, 264791490,\n     215918320, 277512760, 264068435, 234555295, 321772515,\n     217507025, 310372440, 317544750, 245525965, 343183435},\n    {281293570, 326519505, 233494705, 238516065, 297038200,\n     266273420, 349521550, 259343530, 306032255, 266397915,\n     210274920, 263743085, 231689610, 251949545, 293562740,\n     226822900, 309225440, 286212000, 206108715, 236678985},\n    {288404350, 310319375, 282695670, 244150740, 426489380,\n     387525790, 342018190, 326086505, 352250260, 319997735,\n     300645835, 284822660, 271837440, 274000415, 361826730,\n     252399600, 348582320, 375813820, 316588255, 322499110},\n    {273368780, 329706295, 288668335, 234501665, 381962610,\n     343186285, 337520205, 259637405, 295755465, 284778105,\n     205310525, 249598310, 256662470, 251533535, 336159770,\n     249342150, 333559450, 329296590, 278254845, 300673860},\n    {318589575, 315522800, 260632295, 250009765, 337127730,\n     312810490, 346698590, 260810030, 388289910, 337081285,\n     283635410, 208148610, 234123865, 259653165, 370115255,\n     243311450, 377808245, 358786770, 286839730, 321912835},\n    {229541925, 253967450, 223002545, 202302515, 303446955,\n     268472740, 285580065, 211013405, 287677960, 279773910,\n     227377310, 197461135, 222469715, 179536615, 306957380,\n     178407075, 281051570, 279718120, 234868230, 288991535},\n    {290692955, 317729070, 297868235, 213450065, 469270935,\n     375344910, 326987580, 334565680, 325300040, 290325655,\n     254703825, 284914960, 245773820, 276641510, 323510795,\n     271034400, 337424250, 360011440, 281515520, 331261535},\n    {287075125, 313194850, 269889345, 208109115, 420653930,\n     331900290, 355440665, 318065155, 343785360, 302163035,\n     308959360, 312666110, 268997740, 288557415, 370158305,\n     205012650, 318198795, 384484520, 316450105, 378714460},\n    {278680580, 356815220, 307597060, 216073365, 390879235,\n     358775185, 358895230, 306434180, 315569040, 272688130,\n     249424325, 274584610, 273530970, 265450585, 325127920,\n     312802050, 317134900, 298518590, 269975470, 332586535},\n    {245629780, 267021570, 234689035, 208808065, 366356035,\n     267059560, 349348005, 270158755, 348048340, 291550930,\n     272717800, 259714410, 236033845, 280627610, 335089770,\n     176610475, 259339950, 322752840, 236218295, 329687310},\n    {226517370, 272306005, 271484080, 216145515, 400972075,\n     288475645, 332969550, 338410905, 329052205, 330392265,\n     306488095, 271979085, 232795960, 257593945, 339558165,\n     202700275, 320622065, 386350450, 315344865, 329233410},\n    {224852610, 231292540, 236945875, 243273740, 336327040,\n     305144680, 248261920, 191671605, 241699245, 263085200,\n     198883715, 175742885, 202517850, 172427630, 296304160,\n     209188850, 326546955, 252990460, 238844535, 289753485}\n  };\n\n  return 0 == memcmp (ResultArray, exp,\n\t\t      UPPERLIMIT * UPPERLIMIT * sizeof (exp[0][0]));\n}\n\n/* vim: set ts=3 sw=3 et: */\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local range(i32 -8094, 8095) i32 @RandomInteger() local_unnamed_addr #7 {\n  %1 = load i32, ptr @Seed, align 4, !tbaa !14\n  %2 = mul nsw i32 %1, 133\n  %3 = add nsw i32 %2, 81\n  %4 = srem i32 %3, 8095\n  store i32 %4, ptr @Seed, align 4, !tbaa !14\n  ret i32 %4\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local void @initialise_benchmark() local_unnamed_addr #8 {\n  store i32 0, ptr @Seed, align 4, !tbaa !14\n  br label %1\n\n1:                                                ; preds = %17, %0\n  %2 = phi i32 [ 0, %0 ], [ %18, %17 ]\n  %3 = icmp samesign ult i32 %2, 20\n  br i1 %3, label %4, label %19\n\n4:                                                ; preds = %1, %7\n  %5 = phi i32 [ %16, %7 ], [ 0, %1 ]\n  %6 = icmp samesign ult i32 %5, 20\n  br i1 %6, label %7, label %17\n\n7:                                                ; preds = %4\n  %8 = load i32, ptr @Seed, align 4, !tbaa !14\n  %9 = mul nsw i32 %8, 133\n  %10 = add nsw i32 %9, 81\n  %11 = srem i32 %10, 8095\n  store i32 %11, ptr @Seed, align 4, !tbaa !14\n  %12 = sext i32 %11 to i64\n  %13 = zext nneg i32 %2 to i64\n  %14 = zext nneg i32 %5 to i64\n  %15 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayA_ref, i64 0, i64 %13, i64 %14\n  store i64 %12, ptr %15, align 8, !tbaa !5\n  %16 = add nuw nsw i32 %5, 1\n  br label %4, !llvm.loop !16\n\n17:                                               ; preds = %4\n  %18 = add nuw nsw i32 %2, 1\n  br label %1, !llvm.loop !17\n\n19:                                               ; preds = %1, %32\n  %20 = phi i32 [ %33, %32 ], [ 0, %1 ]\n  %21 = icmp samesign ult i32 %20, 20\n  br i1 %21, label %22, label %34\n\n22:                                               ; preds = %19, %25\n  %23 = phi i32 [ %31, %25 ], [ 0, %19 ]\n  %24 = icmp samesign ult i32 %23, 20\n  br i1 %24, label %25, label %32\n\n25:                                               ; preds = %22\n  %26 = call i32 @RandomInteger() #12\n  %27 = sext i32 %26 to i64\n  %28 = zext nneg i32 %20 to i64\n  %29 = zext nneg i32 %23 to i64\n  %30 = getelementptr inbounds nuw [20 x [20 x i64]], ptr @ArrayB_ref, i64 0, i64 %28, i64 %29\n  store i64 %27, ptr %30, align 8, !tbaa !5\n  %31 = add nuw nsw i32 %23, 1\n  br label %22, !llvm.loop !18\n\n32:                                               ; preds = %22\n  %33 = add nuw nsw i32 %20, 1\n  br label %19, !llvm.loop !19\n\n34:                                               ; preds = %19\n  ret void\n}\n",
+        "callsite": {
+          "callee": "RandomInteger",
+          "caller": "initialise_benchmark",
+          "instruction": "  %26 = call i32 @RandomInteger() #12",
+          "module": "third_party/embench-iot/src/matmult-int/matmult-int.c",
+          "source": "third_party/embench-iot/src/matmult-int/matmult-int.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 6,
+          "callee_users": 1,
+          "caller_basic_block_count": 10,
+          "caller_instruction_count": 39,
+          "caller_users": 0,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 7555,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.57,
+        "probabilities": {
+          "do_not_inline": 0.22,
+          "inline": 0.78
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 326.87,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "malloc_beebs",
+        "caller": "calloc_beebs",
+        "decision": true,
+        "default": false,
+        "id": 0,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+          "callsite": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5"
+        },
+        "module": "third_party/embench-iot/support/beebsc.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "callsite_cost": -35,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 15,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 4,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 1,
+          "unsimplified_common_instructions": 50
+        },
+        "source": "third_party/embench-iot/support/beebsc.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS local library variants\n\n   Copyright (C) 2019 Embecosm Limited.\n\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later */\n\n/* These are very simple local versions of library routines, to ensure the\n   code is compiled with the flags used for the benchmark.  Not all library\n   routines are here, just ones that cause a lot of unecessary load, or where\n   there is variation between platforms and architectures. */\n\n#include <stddef.h>\n#include <string.h>\n#include \"beebsc.h\"\n\n/* Seed for the random number generator */\n\nstatic long int seed = 0;\n\n/* Heap records and sane initial values */\n\nstatic void *heap_ptr = NULL;\nstatic void *heap_end = NULL;\nstatic size_t heap_requested = 0;\n\n\n/* Yield a sequence of random numbers in the range [0, 2^15-1].\n\n   long int is guaranteed to be at least 32 bits. The seed only ever uses 31\n   bits (so is positive).\n\n   For BEEBS this gets round different operating systems using different\n   multipliers and offsets and RAND_MAX variations. */\n\nint\nrand_beebs (void)\n{\n  seed = (seed * 1103515245L + 12345) & ((1UL << 31) - 1);\n  return (int) (seed >> 16);\n}\n\n\n/* Initialize the random number generator */\n\nvoid\nsrand_beebs (unsigned int new_seed)\n{\n  seed = (long int) new_seed;\n}\n\n\n/* Initialize the BEEBS heap pointers. Note that the actual memory block is\n   in the caller code. */\n\nvoid\ninit_heap_beebs (void *heap, size_t heap_size)\n{\n  heap_ptr = (void *) heap;\n  heap_end = (void *) ((char *) heap_ptr + heap_size);\n  heap_requested = 0;\n}\n\n\n/* Report if malloc ever failed.\n\n   Return non-zero (TRUE) if malloc did not reqest more than was available\n   since the last call to init_heap_beebs, zero (FALSE) otherwise. */\n\nint\ncheck_heap_beebs (void *heap)\n{\n  return ((void *) ((char *) heap + heap_requested) <= heap_end);\n}\n\n\n/* BEEBS version of malloc.\n\n   This is primarily to reduce library and OS dependencies. Malloc is\n   generally not used in embedded code, or if it is, only in well defined\n   contexts to pre-allocate a fixed amount of memory. So this simplistic\n   implementation is just fine.\n\n   Note in particular the assumption that memory will never be freed! */\n\nvoid *\nmalloc_beebs (size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of calloc.\n\n   Implement as wrapper for malloc */\n\nvoid *\ncalloc_beebs (size_t nmemb, size_t size)\n{\n  void *new_ptr = malloc_beebs (nmemb * size);\n\n  /* Calloc is defined to zero the memory. OK to use a function here, because\n     it will be handled specially by the compiler anyway. */\n\n  if (NULL != new_ptr)\n    memset (new_ptr, 0, nmemb * size);\n\n  return new_ptr;\n}\n\n\n/* BEEBS version of realloc.\n\n   This is primarily to reduce library and OS dependencies. We just have to\n   allocate new memory and copy stuff across. */\n\nvoid *\nrealloc_beebs (void *ptr, size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n\n      /* This is clunky, since we don't know the size of the original\n         pointer. However it is a read only action and we know it must\n         be big enough if we right off the end, or we couldn't have\n         allocated here. If the size is smaller, it doesn't matter. */\n\n      if (NULL != ptr)\n\t{\n\t  size_t i;\n\n\t  for (i = 0; i < size; i++)\n\t    ((char *) new_ptr)[i] = ((char *) ptr)[i];\n\t}\n\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of free.\n\n   For our simplified version of memory handling, free can just do nothing. */\n\nvoid\nfree_beebs (void *ptr __attribute__ ((unused)))\n{\n}\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+        "callsite": {
+          "callee": "malloc_beebs",
+          "caller": "calloc_beebs",
+          "instruction": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5",
+          "module": "third_party/embench-iot/support/beebsc.c",
+          "source": "third_party/embench-iot/support/beebsc.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 2342,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    }
+  ],
+  "feature_set": "structure",
+  "includes_ir": true,
+  "includes_llvm_default": false,
+  "includes_source": true,
+  "jev_binary": {
+    "path": "runs/jevopt-embench/matmult-int/jev",
+    "sha256": "6173d53fd0dac77dab4f35122dcb5c943bf9ccfe7352f1f057ea1893d24a1ad1",
+    "text_bytes": 687
+  },
+  "link_command": [
+    "/usr/bin/clang-21",
+    "-fuse-ld=lld",
+    "-march=x86-64",
+    "-Wl,--build-id=none",
+    "runs/jevopt-embench/matmult-int/objects/matmult-int.o",
+    "runs/jevopt-embench/matmult-int/objects/main.o",
+    "runs/jevopt-embench/matmult-int/objects/beebsc.o",
+    "runs/jevopt-embench/matmult-int/objects/chipsupport.o",
+    "runs/jevopt-embench/matmult-int/objects/boardsupport.o",
+    "-Wl,--gc-sections",
+    "-lm",
+    "-o",
+    "runs/jevopt-embench/matmult-int/jev"
+  ],
+  "min_confidence": 0.0,
+  "mode": "jev-live",
+  "program": {
+    "correct": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "stock_binary": {
+    "path": "runs/jevopt-embench/matmult-int/stock-run/program",
+    "sha256": "5e132a466d1d9910b99da39bd2c8996014f62e8f5ac3ef06ce327cbae9e3b488",
+    "text_bytes": 708
+  },
+  "summary": {
+    "beats_llvm": true,
+    "decisions": 6,
+    "do_not_inline": 0,
+    "inline": 6,
+    "input_tokens": 39505,
+    "ir_clipped": 0,
+    "jev_inline_answers": 6,
+    "jev_latency_ms": 2862.508,
+    "llvm_confidence_fallbacks": 0,
+    "llvm_default_overrides": 3,
+    "output_tokens": 216,
+    "text_delta_bytes": -21,
+    "text_delta_percent": -2.9661
+  }
+}

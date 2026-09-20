@@ -1,0 +1,788 @@
+{
+  "compile_commands": [
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/src/minver/libminver.c",
+      "-o",
+      "runs/jevopt-embench/minver/objects/libminver.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/main.c",
+      "-o",
+      "runs/jevopt-embench/minver/objects/main.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/support/beebsc.c",
+      "-o",
+      "runs/jevopt-embench/minver/objects/beebsc.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/chips/speed-test-gcc/chipsupport.c",
+      "-o",
+      "runs/jevopt-embench/minver/objects/chipsupport.o"
+    ],
+    [
+      "/usr/bin/clang-21",
+      "-Oz",
+      "-march=x86-64",
+      "-Ithird_party/embench-iot/support",
+      "-Ithird_party/embench-iot/config/native/chips/speed-test-gcc",
+      "-Ithird_party/embench-iot/config/native/boards/default",
+      "-Ithird_party/embench-iot/config/native",
+      "-DCPU_MHZ=1",
+      "-DWARMUP_HEAT=1",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fpass-plugin=build/llvm_plugin/JevInlineAdvisor.so",
+      "-c",
+      "third_party/embench-iot/config/native/boards/default/boardsupport.c",
+      "-o",
+      "runs/jevopt-embench/minver/objects/boardsupport.o"
+    ]
+  ],
+  "decisions": [
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.57,
+        "probabilities": {
+          "do_not_inline": 0.21,
+          "inline": 0.79
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 1058.85,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "minver_fabs",
+        "caller": "minver",
+        "decision": true,
+        "default": true,
+        "id": 0,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(none) uwtable\ndefine internal fastcc noundef float @minver_fabs(float noundef %0) unnamed_addr #4 {\n  %2 = fcmp ult float %0, 0.000000e+00\n  %3 = fneg float %0\n  %4 = select i1 %2, float %3, float %0\n  ret float %4\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local range(i32 0, 1000) i32 @minver(i32 noundef %0, i32 noundef %1, float noundef %2) local_unnamed_addr #3 {\n  %4 = alloca [500 x i32], align 16\n  call void @llvm.lifetime.start.p0(i64 2000, ptr nonnull %4) #7\n  %5 = add i32 %0, -501\n  %6 = icmp uge i32 %5, -499\n  %7 = fcmp ugt float %2, 0.000000e+00\n  %8 = and i1 %6, %7\n  br i1 %8, label %9, label %138\n\n9:                                                ; preds = %3, %12\n  %10 = phi i32 [ %15, %12 ], [ 0, %3 ]\n  %11 = icmp slt i32 %10, %0\n  br i1 %11, label %12, label %16\n\n12:                                               ; preds = %9\n  %13 = zext nneg i32 %10 to i64\n  %14 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %13\n  store i32 %10, ptr %14, align 4, !tbaa !13\n  %15 = add nuw nsw i32 %10, 1\n  br label %9, !llvm.loop !15\n\n16:                                               ; preds = %9, %110\n  %17 = phi i32 [ %113, %110 ], [ 0, %9 ]\n  %18 = phi i32 [ %23, %110 ], [ 0, %9 ]\n  %19 = phi float [ %79, %110 ], [ 0.000000e+00, %9 ]\n  %20 = phi float [ %68, %110 ], [ 1.000000e+00, %9 ]\n  %21 = icmp slt i32 %17, %0\n  br i1 %21, label %22, label %114\n\n22:                                               ; preds = %16, %28\n  %23 = phi i32 [ %35, %28 ], [ %18, %16 ]\n  %24 = phi float [ %33, %28 ], [ %19, %16 ]\n  %25 = phi float [ %36, %28 ], [ 0.000000e+00, %16 ]\n  %26 = phi i32 [ %37, %28 ], [ %17, %16 ]\n  %27 = icmp slt i32 %26, %0\n  br i1 %27, label %28, label %38\n\n28:                                               ; preds = %22\n  %29 = zext nneg i32 %26 to i64\n  %30 = zext nneg i32 %17 to i64\n  %31 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %29, i64 %30\n  %32 = load float, ptr %31, align 4, !tbaa !5\n  %33 = call fastcc float @minver_fabs(float noundef %32) #8\n  %34 = fcmp ogt float %33, %25\n  %35 = select i1 %34, i32 %26, i32 %23\n  %36 = select i1 %34, float %33, float %25\n  %37 = add nuw nsw i32 %26, 1\n  br label %22, !llvm.loop !16\n\n38:                                               ; preds = %22\n  %39 = sext i32 %23 to i64\n  %40 = zext nneg i32 %17 to i64\n  %41 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %39, i64 %40\n  %42 = load float, ptr %41, align 4, !tbaa !5\n  %43 = call fastcc float @minver_fabs(float noundef %42) #8\n  %44 = fcmp ugt float %43, %2\n  br i1 %44, label %46, label %45\n\n45:                                               ; preds = %38\n  store float %20, ptr @det, align 4, !tbaa !5\n  br label %138\n\n46:                                               ; preds = %38\n  %47 = fmul float %20, %42\n  %48 = icmp eq i32 %23, %17\n  br i1 %48, label %66, label %49\n\n49:                                               ; preds = %46\n  %50 = fneg float %24\n  %51 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %40\n  %52 = load i32, ptr %51, align 4, !tbaa !13\n  %53 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %39\n  %54 = load i32, ptr %53, align 4, !tbaa !13\n  store i32 %54, ptr %51, align 4, !tbaa !13\n  store i32 %52, ptr %53, align 4, !tbaa !13\n  br label %55\n\n55:                                               ; preds = %59, %49\n  %56 = phi i32 [ 0, %49 ], [ %65, %59 ]\n  %57 = phi float [ %24, %49 ], [ %62, %59 ]\n  %58 = icmp slt i32 %56, %0\n  br i1 %58, label %59, label %66\n\n59:                                               ; preds = %55\n  %60 = zext nneg i32 %56 to i64\n  %61 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %40, i64 %60\n  %62 = load float, ptr %61, align 4, !tbaa !5\n  %63 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %39, i64 %60\n  %64 = load float, ptr %63, align 4, !tbaa !5\n  store float %64, ptr %61, align 4, !tbaa !5\n  store float %62, ptr %63, align 4, !tbaa !5\n  %65 = add nuw nsw i32 %56, 1\n  br label %55, !llvm.loop !17\n\n66:                                               ; preds = %55, %46\n  %67 = phi float [ %57, %55 ], [ %24, %46 ]\n  %68 = phi float [ %50, %55 ], [ %47, %46 ]\n  br label %69\n\n69:                                               ; preds = %72, %66\n  %70 = phi i32 [ 0, %66 ], [ %77, %72 ]\n  %71 = icmp slt i32 %70, %0\n  br i1 %71, label %72, label %78\n\n72:                                               ; preds = %69\n  %73 = zext nneg i32 %70 to i64\n  %74 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %40, i64 %73\n  %75 = load float, ptr %74, align 4, !tbaa !5\n  %76 = fdiv float %75, %42\n  store float %76, ptr %74, align 4, !tbaa !5\n  %77 = add nuw nsw i32 %70, 1\n  br label %69, !llvm.loop !18\n\n78:                                               ; preds = %69, %107\n  %79 = phi float [ %108, %107 ], [ %67, %69 ]\n  %80 = phi i32 [ %109, %107 ], [ 0, %69 ]\n  %81 = icmp slt i32 %80, %0\n  br i1 %81, label %82, label %110\n\n82:                                               ; preds = %78\n  %83 = icmp eq i32 %80, %17\n  br i1 %83, label %107, label %84\n\n84:                                               ; preds = %82\n  %85 = zext nneg i32 %80 to i64\n  %86 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %85, i64 %40\n  %87 = load float, ptr %86, align 4, !tbaa !5\n  %88 = fcmp une float %87, 0.000000e+00\n  br i1 %88, label %89, label %107\n\n89:                                               ; preds = %84, %102\n  %90 = phi i32 [ %103, %102 ], [ 0, %84 ]\n  %91 = icmp slt i32 %90, %0\n  br i1 %91, label %92, label %104\n\n92:                                               ; preds = %89\n  %93 = icmp eq i32 %90, %17\n  br i1 %93, label %102, label %94\n\n94:                                               ; preds = %92\n  %95 = zext nneg i32 %90 to i64\n  %96 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %40, i64 %95\n  %97 = load float, ptr %96, align 4, !tbaa !5\n  %98 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %85, i64 %95\n  %99 = load float, ptr %98, align 4, !tbaa !5\n  %100 = fneg float %87\n  %101 = call float @llvm.fmuladd.f32(float %100, float %97, float %99)\n  store float %101, ptr %98, align 4, !tbaa !5\n  br label %102\n\n102:                                              ; preds = %92, %94\n  %103 = add nuw nsw i32 %90, 1\n  br label %89, !llvm.loop !19\n\n104:                                              ; preds = %89\n  %105 = fneg float %87\n  %106 = fdiv float %105, %42\n  store float %106, ptr %86, align 4, !tbaa !5\n  br label %107\n\n107:                                              ; preds = %82, %104, %84\n  %108 = phi float [ %87, %104 ], [ %87, %84 ], [ %79, %82 ]\n  %109 = add nuw nsw i32 %80, 1\n  br label %78, !llvm.loop !20\n\n110:                                              ; preds = %78\n  %111 = fdiv float 1.000000e+00, %42\n  %112 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %40, i64 %40\n  store float %111, ptr %112, align 4, !tbaa !5\n  %113 = add nuw nsw i32 %17, 1\n  br label %16, !llvm.loop !21\n\n114:                                              ; preds = %16, %135\n  %115 = phi i32 [ %136, %135 ], [ 0, %16 ]\n  %116 = icmp slt i32 %115, %0\n  br i1 %116, label %117, label %137\n\n117:                                              ; preds = %126, %114\n  %118 = zext nneg i32 %115 to i64\n  %119 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %118\n  %120 = load i32, ptr %119, align 4, !tbaa !13\n  %121 = icmp eq i32 %120, %115\n  br i1 %121, label %135, label %122\n\n122:                                              ; preds = %117\n  %123 = sext i32 %120 to i64\n  %124 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %123\n  %125 = load i32, ptr %124, align 4, !tbaa !13\n  store i32 %120, ptr %124, align 4, !tbaa !13\n  store i32 %125, ptr %119, align 4, !tbaa !13\n  br label %126\n\n126:                                              ; preds = %129, %122\n  %127 = phi i32 [ 0, %122 ], [ %134, %129 ]\n  %128 = icmp slt i32 %127, %0\n  br i1 %128, label %129, label %117\n\n129:                                              ; preds = %126\n  %130 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %123, i64 %118\n  %131 = load float, ptr %130, align 4, !tbaa !5\n  %132 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %123, i64 %123\n  %133 = load float, ptr %132, align 4, !tbaa !5\n  store float %133, ptr %130, align 4, !tbaa !5\n  store float %131, ptr %132, align 4, !tbaa !5\n  %134 = add nuw nsw i32 %127, 1\n  br label %126, !llvm.loop !22\n\n135:                                              ; preds = %117\n  %136 = add nuw nsw i32 %115, 1\n  br label %114, !llvm.loop !23\n\n137:                                              ; preds = %114\n  store float %20, ptr @det, align 4, !tbaa !5\n  br label %138\n\n138:                                              ; preds = %3, %137, %45\n  %139 = phi i32 [ 1, %45 ], [ 0, %137 ], [ 999, %3 ]\n  call void @llvm.lifetime.end.p0(i64 2000, ptr nonnull %4) #7\n  ret i32 %139\n}\n",
+          "callsite": "  %33 = call fastcc float @minver_fabs(float noundef %32) #8"
+        },
+        "module": "third_party/embench-iot/src/minver/libminver.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 4,
+          "callee_users": 2,
+          "caller_basic_block_count": 33,
+          "caller_instruction_count": 154,
+          "caller_users": 1,
+          "callsite_cost": -35,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": -20,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 0,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 0,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 1,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 5,
+          "unsimplified_common_instructions": 15
+        },
+        "source": "third_party/embench-iot/src/minver/libminver.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS minver benchmark\n\n   This version, copyright (C) 2014-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor Pierre Langlois <pierre.langlois@embecosm.com>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   *************************************************************************\n   *                                                                       *\n   *   SNU-RT Benchmark Suite for Worst Case Timing Analysis               *\n   *   =====================================================               *\n   *                              Collected and Modified by S.-S. Lim      *\n   *                                           sslim@archi.snu.ac.kr       *\n   *                                         Real-Time Research Group      *\n   *                                        Seoul National University      *\n   *                                                                       *\n   *                                                                       *\n   *        < Features > - restrictions for our experimental environment   *\n   *                                                                       *\n   *          1. Completely structured.                                    *\n   *               - There are no unconditional jumps.                     *\n   *               - There are no exit from loop bodies.                   *\n   *                 (There are no 'break' or 'return' in loop bodies)     *\n   *          2. No 'switch' statements.                                   *\n   *          3. No 'do..while' statements.                                *\n   *          4. Expressions are restricted.                               *\n   *               - There are no multiple expressions joined by 'or',     *\n   *                'and' operations.                                      *\n   *          5. No library calls.                                         *\n   *               - All the functions needed are implemented in the       *\n   *                 source file.                                          *\n   *                                                                       *\n   *                                                                       *\n   *************************************************************************\n   *                                                                       *\n   *  FILE: minver.c                                                       *\n   *  SOURCE : Turbo C Programming for Engineering by Hyun Soo Ahn         *\n   *                                                                       *\n   *  DESCRIPTION :                                                        *\n   *                                                                       *\n   *     Matrix inversion for 3x3 floating point matrix.                   *\n   *                                                                       *\n   *  REMARK :                                                             *\n   *                                                                       *\n   *  EXECUTION TIME :                                                     *\n   *                                                                       *\n   *                                                                       *\n   *************************************************************************\n\n*/\n\n#include <math.h>\n#include <string.h>\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 555\n\nint minver (int row, int col, float eps);\nint mmul (int row_a, int col_a, int row_b, int col_b);\n\nstatic float a_ref[3][3] = {\n  {3.0, -6.0, 7.0},\n  {9.0, 0.0, -5.0},\n  {5.0, -8.0, 6.0},\n};\n\nstatic float b[3][3] = {\n  {-3.0, 0.0, 2.0},\n  {3.0, -2.0, 0.0},\n  {0.0, 2.0, -3.0},\n};\n\nstatic float a[3][3], c[3][3], d[3][3], det;\n\nstatic float\nminver_fabs (float n)\n{\n  float f;\n\n  if (n >= 0)\n    f = n;\n  else\n    f = -n;\n  return f;\n}\n\nint\nmmul (int row_a, int col_a, int row_b, int col_b)\n{\n  int i, j, k, row_c, col_c;\n  float w;\n\n  row_c = row_a;\n  col_c = col_b;\n\n  if (row_c < 1 || row_b < 1 || col_c < 1 || col_a != row_b)\n    return (999);\n  for (i = 0; i < row_c; i++)\n    {\n      for (j = 0; j < col_c; j++)\n\t{\n\t  w = 0.0;\n\t  for (k = 0; k < row_b; k++)\n\t    w += a[i][k] * b[k][j];\n\t  c[i][j] = w;\n\t}\n    }\n\n  return (0);\n}\n\n\nint\nminver (int row, int col, float eps)\n{\n  int work[500], i, j, k, r, iw, u, v;\n  float w, wmax, pivot, api, w1;\n\n  r = w = 0;\n  if (row < 2 || row > 500 || eps <= 0.0)\n    return (999);\n  w1 = 1.0;\n  for (i = 0; i < row; i++)\n    work[i] = i;\n  for (k = 0; k < row; k++)\n    {\n      wmax = 0.0;\n      for (i = k; i < row; i++)\n\t{\n\t  w = minver_fabs (a[i][k]);\n\t  if (w > wmax)\n\t    {\n\t      wmax = w;\n\t      r = i;\n\t    }\n\t}\n      pivot = a[r][k];\n      api = minver_fabs (pivot);\n      if (api <= eps)\n\t{\n\t  det = w1;\n\t  return (1);\n\t}\n      w1 *= pivot;\n      u = k * col;\n      v = r * col;\n      if (r != k)\n\t{\n\t  w1 = -w;\n\t  iw = work[k];\n\t  work[k] = work[r];\n\t  work[r] = iw;\n\t  for (j = 0; j < row; j++)\n\t    {\n\t      w = a[k][j];\n\t      a[k][j] = a[r][j];\n\t      a[r][j] = w;\n\t    }\n\t}\n      for (i = 0; i < row; i++)\n\ta[k][i] /= pivot;\n      for (i = 0; i < row; i++)\n\t{\n\t  if (i != k)\n\t    {\n\t      v = i * col;\n\t      w = a[i][k];\n\t      if (w != 0.0)\n\t\t{\n\t\t  for (j = 0; j < row; j++)\n\t\t    if (j != k)\n\t\t      a[i][j] -= w * a[k][j];\n\t\t  a[i][k] = -w / pivot;\n\t\t}\n\t    }\n\t}\n      a[k][k] = 1.0 / pivot;\n    }\n\n  for (i = 0; i < row; i++)\n    {\n      while (1)\n\t{\n\t  k = work[i];\n\t  if (k == i)\n\t    break;\n\t  iw = work[k];\n\t  work[k] = work[i];\n\t  work[i] = iw;\n\t  for (j = 0; j < row; j++)\n\t    {\n\t      u = j * col;\n\t      w = a[k][i];\n\t      a[k][i] = a[k][k];\n\t      a[k][k] = w;\n\t    }\n\t}\n    }\n\n  det = w1;\n\n  return (0);\n}\n\n\nint\nverify_benchmark (int res __attribute ((unused)))\n{\n  int i, j;\n  float eps = 1.0e-6;\n\n  static float c_exp[3][3] = {\n    {-27.0, 26.0, -15.0},\n    {-27.0, -10.0, 33.0},\n    {-39.0, 28.0, -8.0}\n  };\n\n  static float d_exp[3][3] = {\n    {0.133333325, -0.199999958, 0.2666665910},\n    {-0.519999862, 0.113333330, 0.5266665220},\n    {0.479999840, -0.359999895, 0.0399999917}\n  };\n\n  /* Allow small errors in floating point */\n\n  for (i = 0; i < 3; i++)\n    for (j = 0; j < 3; j++)\n      if (float_neq_beebs(c[i][j], c_exp[i][j]) || float_neq_beebs(d[i][j], d_exp[i][j]))\n\treturn 0;\n\n  return float_eq_beebs(det, -16.6666718);\n}\n\n\nvoid\ninitialise_benchmark (void)\n{\n}\n\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      float eps = 1.0e-6;\n\n      memcpy (a, a_ref, 3 * 3 * sizeof (a[0][0]));\n      minver (3, 3, eps);\n      memcpy (d, a, 3 * 3 * sizeof (a[0][0]));\n      memcpy (a, a_ref, 3 * 3 * sizeof (a[0][0]));\n      mmul (3, 3, 3, 3);\n    }\n\n  return 0;\n}\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(none) uwtable\ndefine internal fastcc noundef float @minver_fabs(float noundef %0) unnamed_addr #4 {\n  %2 = fcmp ult float %0, 0.000000e+00\n  %3 = fneg float %0\n  %4 = select i1 %2, float %3, float %0\n  ret float %4\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local range(i32 0, 1000) i32 @minver(i32 noundef %0, i32 noundef %1, float noundef %2) local_unnamed_addr #3 {\n  %4 = alloca [500 x i32], align 16\n  call void @llvm.lifetime.start.p0(i64 2000, ptr nonnull %4) #7\n  %5 = add i32 %0, -501\n  %6 = icmp uge i32 %5, -499\n  %7 = fcmp ugt float %2, 0.000000e+00\n  %8 = and i1 %6, %7\n  br i1 %8, label %9, label %138\n\n9:                                                ; preds = %3, %12\n  %10 = phi i32 [ %15, %12 ], [ 0, %3 ]\n  %11 = icmp slt i32 %10, %0\n  br i1 %11, label %12, label %16\n\n12:                                               ; preds = %9\n  %13 = zext nneg i32 %10 to i64\n  %14 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %13\n  store i32 %10, ptr %14, align 4, !tbaa !13\n  %15 = add nuw nsw i32 %10, 1\n  br label %9, !llvm.loop !15\n\n16:                                               ; preds = %9, %110\n  %17 = phi i32 [ %113, %110 ], [ 0, %9 ]\n  %18 = phi i32 [ %23, %110 ], [ 0, %9 ]\n  %19 = phi float [ %79, %110 ], [ 0.000000e+00, %9 ]\n  %20 = phi float [ %68, %110 ], [ 1.000000e+00, %9 ]\n  %21 = icmp slt i32 %17, %0\n  br i1 %21, label %22, label %114\n\n22:                                               ; preds = %16, %28\n  %23 = phi i32 [ %35, %28 ], [ %18, %16 ]\n  %24 = phi float [ %33, %28 ], [ %19, %16 ]\n  %25 = phi float [ %36, %28 ], [ 0.000000e+00, %16 ]\n  %26 = phi i32 [ %37, %28 ], [ %17, %16 ]\n  %27 = icmp slt i32 %26, %0\n  br i1 %27, label %28, label %38\n\n28:                                               ; preds = %22\n  %29 = zext nneg i32 %26 to i64\n  %30 = zext nneg i32 %17 to i64\n  %31 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %29, i64 %30\n  %32 = load float, ptr %31, align 4, !tbaa !5\n  %33 = call fastcc float @minver_fabs(float noundef %32) #8\n  %34 = fcmp ogt float %33, %25\n  %35 = select i1 %34, i32 %26, i32 %23\n  %36 = select i1 %34, float %33, float %25\n  %37 = add nuw nsw i32 %26, 1\n  br label %22, !llvm.loop !16\n\n38:                                               ; preds = %22\n  %39 = sext i32 %23 to i64\n  %40 = zext nneg i32 %17 to i64\n  %41 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %39, i64 %40\n  %42 = load float, ptr %41, align 4, !tbaa !5\n  %43 = call fastcc float @minver_fabs(float noundef %42) #8\n  %44 = fcmp ugt float %43, %2\n  br i1 %44, label %46, label %45\n\n45:                                               ; preds = %38\n  store float %20, ptr @det, align 4, !tbaa !5\n  br label %138\n\n46:                                               ; preds = %38\n  %47 = fmul float %20, %42\n  %48 = icmp eq i32 %23, %17\n  br i1 %48, label %66, label %49\n\n49:                                               ; preds = %46\n  %50 = fneg float %24\n  %51 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %40\n  %52 = load i32, ptr %51, align 4, !tbaa !13\n  %53 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %39\n  %54 = load i32, ptr %53, align 4, !tbaa !13\n  store i32 %54, ptr %51, align 4, !tbaa !13\n  store i32 %52, ptr %53, align 4, !tbaa !13\n  br label %55\n\n55:                                               ; preds = %59, %49\n  %56 = phi i32 [ 0, %49 ], [ %65, %59 ]\n  %57 = phi float [ %24, %49 ], [ %62, %59 ]\n  %58 = icmp slt i32 %56, %0\n  br i1 %58, label %59, label %66\n\n59:                                               ; preds = %55\n  %60 = zext nneg i32 %56 to i64\n  %61 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %40, i64 %60\n  %62 = load float, ptr %61, align 4, !tbaa !5\n  %63 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %39, i64 %60\n  %64 = load float, ptr %63, align 4, !tbaa !5\n  store float %64, ptr %61, align 4, !tbaa !5\n  store float %62, ptr %63, align 4, !tbaa !5\n  %65 = add nuw nsw i32 %56, 1\n  br label %55, !llvm.loop !17\n\n66:                                               ; preds = %55, %46\n  %67 = phi float [ %57, %55 ], [ %24, %46 ]\n  %68 = phi float [ %50, %55 ], [ %47, %46 ]\n  br label %69\n\n69:                                               ; preds = %72, %66\n  %70 = phi i32 [ 0, %66 ], [ %77, %72 ]\n  %71 = icmp slt i32 %70, %0\n  br i1 %71, label %72, label %78\n\n72:                                               ; preds = %69\n  %73 = zext nneg i32 %70 to i64\n  %74 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %40, i64 %73\n  %75 = load float, ptr %74, align 4, !tbaa !5\n  %76 = fdiv float %75, %42\n  store float %76, ptr %74, align 4, !tbaa !5\n  %77 = add nuw nsw i32 %70, 1\n  br label %69, !llvm.loop !18\n\n78:                                               ; preds = %69, %107\n  %79 = phi float [ %108, %107 ], [ %67, %69 ]\n  %80 = phi i32 [ %109, %107 ], [ 0, %69 ]\n  %81 = icmp slt i32 %80, %0\n  br i1 %81, label %82, label %110\n\n82:                                               ; preds = %78\n  %83 = icmp eq i32 %80, %17\n  br i1 %83, label %107, label %84\n\n84:                                               ; preds = %82\n  %85 = zext nneg i32 %80 to i64\n  %86 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %85, i64 %40\n  %87 = load float, ptr %86, align 4, !tbaa !5\n  %88 = fcmp une float %87, 0.000000e+00\n  br i1 %88, label %89, label %107\n\n89:                                               ; preds = %84, %102\n  %90 = phi i32 [ %103, %102 ], [ 0, %84 ]\n  %91 = icmp slt i32 %90, %0\n  br i1 %91, label %92, label %104\n\n92:                                               ; preds = %89\n  %93 = icmp eq i32 %90, %17\n  br i1 %93, label %102, label %94\n\n94:                                               ; preds = %92\n  %95 = zext nneg i32 %90 to i64\n  %96 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %40, i64 %95\n  %97 = load float, ptr %96, align 4, !tbaa !5\n  %98 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %85, i64 %95\n  %99 = load float, ptr %98, align 4, !tbaa !5\n  %100 = fneg float %87\n  %101 = call float @llvm.fmuladd.f32(float %100, float %97, float %99)\n  store float %101, ptr %98, align 4, !tbaa !5\n  br label %102\n\n102:                                              ; preds = %92, %94\n  %103 = add nuw nsw i32 %90, 1\n  br label %89, !llvm.loop !19\n\n104:                                              ; preds = %89\n  %105 = fneg float %87\n  %106 = fdiv float %105, %42\n  store float %106, ptr %86, align 4, !tbaa !5\n  br label %107\n\n107:                                              ; preds = %82, %104, %84\n  %108 = phi float [ %87, %104 ], [ %87, %84 ], [ %79, %82 ]\n  %109 = add nuw nsw i32 %80, 1\n  br label %78, !llvm.loop !20\n\n110:                                              ; preds = %78\n  %111 = fdiv float 1.000000e+00, %42\n  %112 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %40, i64 %40\n  store float %111, ptr %112, align 4, !tbaa !5\n  %113 = add nuw nsw i32 %17, 1\n  br label %16, !llvm.loop !21\n\n114:                                              ; preds = %16, %135\n  %115 = phi i32 [ %136, %135 ], [ 0, %16 ]\n  %116 = icmp slt i32 %115, %0\n  br i1 %116, label %117, label %137\n\n117:                                              ; preds = %126, %114\n  %118 = zext nneg i32 %115 to i64\n  %119 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %118\n  %120 = load i32, ptr %119, align 4, !tbaa !13\n  %121 = icmp eq i32 %120, %115\n  br i1 %121, label %135, label %122\n\n122:                                              ; preds = %117\n  %123 = sext i32 %120 to i64\n  %124 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %123\n  %125 = load i32, ptr %124, align 4, !tbaa !13\n  store i32 %120, ptr %124, align 4, !tbaa !13\n  store i32 %125, ptr %119, align 4, !tbaa !13\n  br label %126\n\n126:                                              ; preds = %129, %122\n  %127 = phi i32 [ 0, %122 ], [ %134, %129 ]\n  %128 = icmp slt i32 %127, %0\n  br i1 %128, label %129, label %117\n\n129:                                              ; preds = %126\n  %130 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %123, i64 %118\n  %131 = load float, ptr %130, align 4, !tbaa !5\n  %132 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %123, i64 %123\n  %133 = load float, ptr %132, align 4, !tbaa !5\n  store float %133, ptr %130, align 4, !tbaa !5\n  store float %131, ptr %132, align 4, !tbaa !5\n  %134 = add nuw nsw i32 %127, 1\n  br label %126, !llvm.loop !22\n\n135:                                              ; preds = %117\n  %136 = add nuw nsw i32 %115, 1\n  br label %114, !llvm.loop !23\n\n137:                                              ; preds = %114\n  store float %20, ptr @det, align 4, !tbaa !5\n  br label %138\n\n138:                                              ; preds = %3, %137, %45\n  %139 = phi i32 [ 1, %45 ], [ 0, %137 ], [ 999, %3 ]\n  call void @llvm.lifetime.end.p0(i64 2000, ptr nonnull %4) #7\n  ret i32 %139\n}\n",
+        "callsite": {
+          "callee": "minver_fabs",
+          "caller": "minver",
+          "instruction": "  %33 = call fastcc float @minver_fabs(float noundef %32) #8",
+          "module": "third_party/embench-iot/src/minver/libminver.c",
+          "source": "third_party/embench-iot/src/minver/libminver.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 4,
+          "callee_users": 2,
+          "caller_basic_block_count": 33,
+          "caller_instruction_count": 154,
+          "caller_users": 1,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 7095,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.7,
+        "probabilities": {
+          "do_not_inline": 0.15,
+          "inline": 0.85
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 513.248,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "minver_fabs",
+        "caller": "minver",
+        "decision": true,
+        "default": true,
+        "id": 1,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(none) uwtable\ndefine internal fastcc noundef float @minver_fabs(float noundef %0) unnamed_addr #4 {\n  %2 = fcmp ult float %0, 0.000000e+00\n  %3 = fneg float %0\n  %4 = select i1 %2, float %3, float %0\n  ret float %4\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local range(i32 0, 1000) i32 @minver(i32 noundef %0, i32 noundef %1, float noundef %2) local_unnamed_addr #3 {\n  %4 = alloca [500 x i32], align 16\n  call void @llvm.lifetime.start.p0(i64 2000, ptr nonnull %4) #7\n  %5 = add i32 %0, -501\n  %6 = icmp uge i32 %5, -499\n  %7 = fcmp ugt float %2, 0.000000e+00\n  %8 = and i1 %6, %7\n  br i1 %8, label %9, label %140\n\n9:                                                ; preds = %3, %12\n  %10 = phi i32 [ %15, %12 ], [ 0, %3 ]\n  %11 = icmp slt i32 %10, %0\n  br i1 %11, label %12, label %16\n\n12:                                               ; preds = %9\n  %13 = zext nneg i32 %10 to i64\n  %14 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %13\n  store i32 %10, ptr %14, align 4, !tbaa !13\n  %15 = add nuw nsw i32 %10, 1\n  br label %9, !llvm.loop !15\n\n16:                                               ; preds = %9, %112\n  %17 = phi i32 [ %115, %112 ], [ 0, %9 ]\n  %18 = phi i32 [ %23, %112 ], [ 0, %9 ]\n  %19 = phi float [ %81, %112 ], [ 0.000000e+00, %9 ]\n  %20 = phi float [ %70, %112 ], [ 1.000000e+00, %9 ]\n  %21 = icmp slt i32 %17, %0\n  br i1 %21, label %22, label %116\n\n22:                                               ; preds = %16, %28\n  %23 = phi i32 [ %37, %28 ], [ %18, %16 ]\n  %24 = phi float [ %35, %28 ], [ %19, %16 ]\n  %25 = phi float [ %38, %28 ], [ 0.000000e+00, %16 ]\n  %26 = phi i32 [ %39, %28 ], [ %17, %16 ]\n  %27 = icmp slt i32 %26, %0\n  br i1 %27, label %28, label %40\n\n28:                                               ; preds = %22\n  %29 = zext nneg i32 %26 to i64\n  %30 = zext nneg i32 %17 to i64\n  %31 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %29, i64 %30\n  %32 = load float, ptr %31, align 4, !tbaa !5\n  %33 = fcmp ult float %32, 0.000000e+00\n  %34 = fneg float %32\n  %35 = select i1 %33, float %34, float %32\n  %36 = fcmp ogt float %35, %25\n  %37 = select i1 %36, i32 %26, i32 %23\n  %38 = select i1 %36, float %35, float %25\n  %39 = add nuw nsw i32 %26, 1\n  br label %22, !llvm.loop !16\n\n40:                                               ; preds = %22\n  %41 = sext i32 %23 to i64\n  %42 = zext nneg i32 %17 to i64\n  %43 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %41, i64 %42\n  %44 = load float, ptr %43, align 4, !tbaa !5\n  %45 = call fastcc float @minver_fabs(float noundef %44) #8\n  %46 = fcmp ugt float %45, %2\n  br i1 %46, label %48, label %47\n\n47:                                               ; preds = %40\n  store float %20, ptr @det, align 4, !tbaa !5\n  br label %140\n\n48:                                               ; preds = %40\n  %49 = fmul float %20, %44\n  %50 = icmp eq i32 %23, %17\n  br i1 %50, label %68, label %51\n\n51:                                               ; preds = %48\n  %52 = fneg float %24\n  %53 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %42\n  %54 = load i32, ptr %53, align 4, !tbaa !13\n  %55 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %41\n  %56 = load i32, ptr %55, align 4, !tbaa !13\n  store i32 %56, ptr %53, align 4, !tbaa !13\n  store i32 %54, ptr %55, align 4, !tbaa !13\n  br label %57\n\n57:                                               ; preds = %61, %51\n  %58 = phi i32 [ 0, %51 ], [ %67, %61 ]\n  %59 = phi float [ %24, %51 ], [ %64, %61 ]\n  %60 = icmp slt i32 %58, %0\n  br i1 %60, label %61, label %68\n\n61:                                               ; preds = %57\n  %62 = zext nneg i32 %58 to i64\n  %63 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %42, i64 %62\n  %64 = load float, ptr %63, align 4, !tbaa !5\n  %65 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %41, i64 %62\n  %66 = load float, ptr %65, align 4, !tbaa !5\n  store float %66, ptr %63, align 4, !tbaa !5\n  store float %64, ptr %65, align 4, !tbaa !5\n  %67 = add nuw nsw i32 %58, 1\n  br label %57, !llvm.loop !17\n\n68:                                               ; preds = %57, %48\n  %69 = phi float [ %59, %57 ], [ %24, %48 ]\n  %70 = phi float [ %52, %57 ], [ %49, %48 ]\n  br label %71\n\n71:                                               ; preds = %74, %68\n  %72 = phi i32 [ 0, %68 ], [ %79, %74 ]\n  %73 = icmp slt i32 %72, %0\n  br i1 %73, label %74, label %80\n\n74:                                               ; preds = %71\n  %75 = zext nneg i32 %72 to i64\n  %76 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %42, i64 %75\n  %77 = load float, ptr %76, align 4, !tbaa !5\n  %78 = fdiv float %77, %44\n  store float %78, ptr %76, align 4, !tbaa !5\n  %79 = add nuw nsw i32 %72, 1\n  br label %71, !llvm.loop !18\n\n80:                                               ; preds = %71, %109\n  %81 = phi float [ %110, %109 ], [ %69, %71 ]\n  %82 = phi i32 [ %111, %109 ], [ 0, %71 ]\n  %83 = icmp slt i32 %82, %0\n  br i1 %83, label %84, label %112\n\n84:                                               ; preds = %80\n  %85 = icmp eq i32 %82, %17\n  br i1 %85, label %109, label %86\n\n86:                                               ; preds = %84\n  %87 = zext nneg i32 %82 to i64\n  %88 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %87, i64 %42\n  %89 = load float, ptr %88, align 4, !tbaa !5\n  %90 = fcmp une float %89, 0.000000e+00\n  br i1 %90, label %91, label %109\n\n91:                                               ; preds = %86, %104\n  %92 = phi i32 [ %105, %104 ], [ 0, %86 ]\n  %93 = icmp slt i32 %92, %0\n  br i1 %93, label %94, label %106\n\n94:                                               ; preds = %91\n  %95 = icmp eq i32 %92, %17\n  br i1 %95, label %104, label %96\n\n96:                                               ; preds = %94\n  %97 = zext nneg i32 %92 to i64\n  %98 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %42, i64 %97\n  %99 = load float, ptr %98, align 4, !tbaa !5\n  %100 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %87, i64 %97\n  %101 = load float, ptr %100, align 4, !tbaa !5\n  %102 = fneg float %89\n  %103 = call float @llvm.fmuladd.f32(float %102, float %99, float %101)\n  store float %103, ptr %100, align 4, !tbaa !5\n  br label %104\n\n104:                                              ; preds = %94, %96\n  %105 = add nuw nsw i32 %92, 1\n  br label %91, !llvm.loop !19\n\n106:                                              ; preds = %91\n  %107 = fneg float %89\n  %108 = fdiv float %107, %44\n  store float %108, ptr %88, align 4, !tbaa !5\n  br label %109\n\n109:                                              ; preds = %84, %106, %86\n  %110 = phi float [ %89, %106 ], [ %89, %86 ], [ %81, %84 ]\n  %111 = add nuw nsw i32 %82, 1\n  br label %80, !llvm.loop !20\n\n112:                                              ; preds = %80\n  %113 = fdiv float 1.000000e+00, %44\n  %114 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %42, i64 %42\n  store float %113, ptr %114, align 4, !tbaa !5\n  %115 = add nuw nsw i32 %17, 1\n  br label %16, !llvm.loop !21\n\n116:                                              ; preds = %16, %137\n  %117 = phi i32 [ %138, %137 ], [ 0, %16 ]\n  %118 = icmp slt i32 %117, %0\n  br i1 %118, label %119, label %139\n\n119:                                              ; preds = %128, %116\n  %120 = zext nneg i32 %117 to i64\n  %121 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %120\n  %122 = load i32, ptr %121, align 4, !tbaa !13\n  %123 = icmp eq i32 %122, %117\n  br i1 %123, label %137, label %124\n\n124:                                              ; preds = %119\n  %125 = sext i32 %122 to i64\n  %126 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %125\n  %127 = load i32, ptr %126, align 4, !tbaa !13\n  store i32 %122, ptr %126, align 4, !tbaa !13\n  store i32 %127, ptr %121, align 4, !tbaa !13\n  br label %128\n\n128:                                              ; preds = %131, %124\n  %129 = phi i32 [ 0, %124 ], [ %136, %131 ]\n  %130 = icmp slt i32 %129, %0\n  br i1 %130, label %131, label %119\n\n131:                                              ; preds = %128\n  %132 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %125, i64 %120\n  %133 = load float, ptr %132, align 4, !tbaa !5\n  %134 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %125, i64 %125\n  %135 = load float, ptr %134, align 4, !tbaa !5\n  store float %135, ptr %132, align 4, !tbaa !5\n  store float %133, ptr %134, align 4, !tbaa !5\n  %136 = add nuw nsw i32 %129, 1\n  br label %128, !llvm.loop !22\n\n137:                                              ; preds = %119\n  %138 = add nuw nsw i32 %117, 1\n  br label %116, !llvm.loop !23\n\n139:                                              ; preds = %116\n  store float %20, ptr @det, align 4, !tbaa !5\n  br label %140\n\n140:                                              ; preds = %3, %139, %47\n  %141 = phi i32 [ 1, %47 ], [ 0, %139 ], [ 999, %3 ]\n  call void @llvm.lifetime.end.p0(i64 2000, ptr nonnull %4) #7\n  ret i32 %141\n}\n",
+          "callsite": "  %45 = call fastcc float @minver_fabs(float noundef %44) #8"
+        },
+        "module": "third_party/embench-iot/src/minver/libminver.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 4,
+          "callee_users": 1,
+          "caller_basic_block_count": 33,
+          "caller_instruction_count": 156,
+          "caller_users": 1,
+          "callsite_cost": -35,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": -15020,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 0,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 1,
+          "load_elimination": 0,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 1,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 5,
+          "unsimplified_common_instructions": 15
+        },
+        "source": "third_party/embench-iot/src/minver/libminver.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS minver benchmark\n\n   This version, copyright (C) 2014-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor Pierre Langlois <pierre.langlois@embecosm.com>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   *************************************************************************\n   *                                                                       *\n   *   SNU-RT Benchmark Suite for Worst Case Timing Analysis               *\n   *   =====================================================               *\n   *                              Collected and Modified by S.-S. Lim      *\n   *                                           sslim@archi.snu.ac.kr       *\n   *                                         Real-Time Research Group      *\n   *                                        Seoul National University      *\n   *                                                                       *\n   *                                                                       *\n   *        < Features > - restrictions for our experimental environment   *\n   *                                                                       *\n   *          1. Completely structured.                                    *\n   *               - There are no unconditional jumps.                     *\n   *               - There are no exit from loop bodies.                   *\n   *                 (There are no 'break' or 'return' in loop bodies)     *\n   *          2. No 'switch' statements.                                   *\n   *          3. No 'do..while' statements.                                *\n   *          4. Expressions are restricted.                               *\n   *               - There are no multiple expressions joined by 'or',     *\n   *                'and' operations.                                      *\n   *          5. No library calls.                                         *\n   *               - All the functions needed are implemented in the       *\n   *                 source file.                                          *\n   *                                                                       *\n   *                                                                       *\n   *************************************************************************\n   *                                                                       *\n   *  FILE: minver.c                                                       *\n   *  SOURCE : Turbo C Programming for Engineering by Hyun Soo Ahn         *\n   *                                                                       *\n   *  DESCRIPTION :                                                        *\n   *                                                                       *\n   *     Matrix inversion for 3x3 floating point matrix.                   *\n   *                                                                       *\n   *  REMARK :                                                             *\n   *                                                                       *\n   *  EXECUTION TIME :                                                     *\n   *                                                                       *\n   *                                                                       *\n   *************************************************************************\n\n*/\n\n#include <math.h>\n#include <string.h>\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 555\n\nint minver (int row, int col, float eps);\nint mmul (int row_a, int col_a, int row_b, int col_b);\n\nstatic float a_ref[3][3] = {\n  {3.0, -6.0, 7.0},\n  {9.0, 0.0, -5.0},\n  {5.0, -8.0, 6.0},\n};\n\nstatic float b[3][3] = {\n  {-3.0, 0.0, 2.0},\n  {3.0, -2.0, 0.0},\n  {0.0, 2.0, -3.0},\n};\n\nstatic float a[3][3], c[3][3], d[3][3], det;\n\nstatic float\nminver_fabs (float n)\n{\n  float f;\n\n  if (n >= 0)\n    f = n;\n  else\n    f = -n;\n  return f;\n}\n\nint\nmmul (int row_a, int col_a, int row_b, int col_b)\n{\n  int i, j, k, row_c, col_c;\n  float w;\n\n  row_c = row_a;\n  col_c = col_b;\n\n  if (row_c < 1 || row_b < 1 || col_c < 1 || col_a != row_b)\n    return (999);\n  for (i = 0; i < row_c; i++)\n    {\n      for (j = 0; j < col_c; j++)\n\t{\n\t  w = 0.0;\n\t  for (k = 0; k < row_b; k++)\n\t    w += a[i][k] * b[k][j];\n\t  c[i][j] = w;\n\t}\n    }\n\n  return (0);\n}\n\n\nint\nminver (int row, int col, float eps)\n{\n  int work[500], i, j, k, r, iw, u, v;\n  float w, wmax, pivot, api, w1;\n\n  r = w = 0;\n  if (row < 2 || row > 500 || eps <= 0.0)\n    return (999);\n  w1 = 1.0;\n  for (i = 0; i < row; i++)\n    work[i] = i;\n  for (k = 0; k < row; k++)\n    {\n      wmax = 0.0;\n      for (i = k; i < row; i++)\n\t{\n\t  w = minver_fabs (a[i][k]);\n\t  if (w > wmax)\n\t    {\n\t      wmax = w;\n\t      r = i;\n\t    }\n\t}\n      pivot = a[r][k];\n      api = minver_fabs (pivot);\n      if (api <= eps)\n\t{\n\t  det = w1;\n\t  return (1);\n\t}\n      w1 *= pivot;\n      u = k * col;\n      v = r * col;\n      if (r != k)\n\t{\n\t  w1 = -w;\n\t  iw = work[k];\n\t  work[k] = work[r];\n\t  work[r] = iw;\n\t  for (j = 0; j < row; j++)\n\t    {\n\t      w = a[k][j];\n\t      a[k][j] = a[r][j];\n\t      a[r][j] = w;\n\t    }\n\t}\n      for (i = 0; i < row; i++)\n\ta[k][i] /= pivot;\n      for (i = 0; i < row; i++)\n\t{\n\t  if (i != k)\n\t    {\n\t      v = i * col;\n\t      w = a[i][k];\n\t      if (w != 0.0)\n\t\t{\n\t\t  for (j = 0; j < row; j++)\n\t\t    if (j != k)\n\t\t      a[i][j] -= w * a[k][j];\n\t\t  a[i][k] = -w / pivot;\n\t\t}\n\t    }\n\t}\n      a[k][k] = 1.0 / pivot;\n    }\n\n  for (i = 0; i < row; i++)\n    {\n      while (1)\n\t{\n\t  k = work[i];\n\t  if (k == i)\n\t    break;\n\t  iw = work[k];\n\t  work[k] = work[i];\n\t  work[i] = iw;\n\t  for (j = 0; j < row; j++)\n\t    {\n\t      u = j * col;\n\t      w = a[k][i];\n\t      a[k][i] = a[k][k];\n\t      a[k][k] = w;\n\t    }\n\t}\n    }\n\n  det = w1;\n\n  return (0);\n}\n\n\nint\nverify_benchmark (int res __attribute ((unused)))\n{\n  int i, j;\n  float eps = 1.0e-6;\n\n  static float c_exp[3][3] = {\n    {-27.0, 26.0, -15.0},\n    {-27.0, -10.0, 33.0},\n    {-39.0, 28.0, -8.0}\n  };\n\n  static float d_exp[3][3] = {\n    {0.133333325, -0.199999958, 0.2666665910},\n    {-0.519999862, 0.113333330, 0.5266665220},\n    {0.479999840, -0.359999895, 0.0399999917}\n  };\n\n  /* Allow small errors in floating point */\n\n  for (i = 0; i < 3; i++)\n    for (j = 0; j < 3; j++)\n      if (float_neq_beebs(c[i][j], c_exp[i][j]) || float_neq_beebs(d[i][j], d_exp[i][j]))\n\treturn 0;\n\n  return float_eq_beebs(det, -16.6666718);\n}\n\n\nvoid\ninitialise_benchmark (void)\n{\n}\n\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      float eps = 1.0e-6;\n\n      memcpy (a, a_ref, 3 * 3 * sizeof (a[0][0]));\n      minver (3, 3, eps);\n      memcpy (d, a, 3 * 3 * sizeof (a[0][0]));\n      memcpy (a, a_ref, 3 * 3 * sizeof (a[0][0]));\n      mmul (3, 3, 3, 3);\n    }\n\n  return 0;\n}\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(none) uwtable\ndefine internal fastcc noundef float @minver_fabs(float noundef %0) unnamed_addr #4 {\n  %2 = fcmp ult float %0, 0.000000e+00\n  %3 = fneg float %0\n  %4 = select i1 %2, float %3, float %0\n  ret float %4\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local range(i32 0, 1000) i32 @minver(i32 noundef %0, i32 noundef %1, float noundef %2) local_unnamed_addr #3 {\n  %4 = alloca [500 x i32], align 16\n  call void @llvm.lifetime.start.p0(i64 2000, ptr nonnull %4) #7\n  %5 = add i32 %0, -501\n  %6 = icmp uge i32 %5, -499\n  %7 = fcmp ugt float %2, 0.000000e+00\n  %8 = and i1 %6, %7\n  br i1 %8, label %9, label %140\n\n9:                                                ; preds = %3, %12\n  %10 = phi i32 [ %15, %12 ], [ 0, %3 ]\n  %11 = icmp slt i32 %10, %0\n  br i1 %11, label %12, label %16\n\n12:                                               ; preds = %9\n  %13 = zext nneg i32 %10 to i64\n  %14 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %13\n  store i32 %10, ptr %14, align 4, !tbaa !13\n  %15 = add nuw nsw i32 %10, 1\n  br label %9, !llvm.loop !15\n\n16:                                               ; preds = %9, %112\n  %17 = phi i32 [ %115, %112 ], [ 0, %9 ]\n  %18 = phi i32 [ %23, %112 ], [ 0, %9 ]\n  %19 = phi float [ %81, %112 ], [ 0.000000e+00, %9 ]\n  %20 = phi float [ %70, %112 ], [ 1.000000e+00, %9 ]\n  %21 = icmp slt i32 %17, %0\n  br i1 %21, label %22, label %116\n\n22:                                               ; preds = %16, %28\n  %23 = phi i32 [ %37, %28 ], [ %18, %16 ]\n  %24 = phi float [ %35, %28 ], [ %19, %16 ]\n  %25 = phi float [ %38, %28 ], [ 0.000000e+00, %16 ]\n  %26 = phi i32 [ %39, %28 ], [ %17, %16 ]\n  %27 = icmp slt i32 %26, %0\n  br i1 %27, label %28, label %40\n\n28:                                               ; preds = %22\n  %29 = zext nneg i32 %26 to i64\n  %30 = zext nneg i32 %17 to i64\n  %31 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %29, i64 %30\n  %32 = load float, ptr %31, align 4, !tbaa !5\n  %33 = fcmp ult float %32, 0.000000e+00\n  %34 = fneg float %32\n  %35 = select i1 %33, float %34, float %32\n  %36 = fcmp ogt float %35, %25\n  %37 = select i1 %36, i32 %26, i32 %23\n  %38 = select i1 %36, float %35, float %25\n  %39 = add nuw nsw i32 %26, 1\n  br label %22, !llvm.loop !16\n\n40:                                               ; preds = %22\n  %41 = sext i32 %23 to i64\n  %42 = zext nneg i32 %17 to i64\n  %43 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %41, i64 %42\n  %44 = load float, ptr %43, align 4, !tbaa !5\n  %45 = call fastcc float @minver_fabs(float noundef %44) #8\n  %46 = fcmp ugt float %45, %2\n  br i1 %46, label %48, label %47\n\n47:                                               ; preds = %40\n  store float %20, ptr @det, align 4, !tbaa !5\n  br label %140\n\n48:                                               ; preds = %40\n  %49 = fmul float %20, %44\n  %50 = icmp eq i32 %23, %17\n  br i1 %50, label %68, label %51\n\n51:                                               ; preds = %48\n  %52 = fneg float %24\n  %53 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %42\n  %54 = load i32, ptr %53, align 4, !tbaa !13\n  %55 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %41\n  %56 = load i32, ptr %55, align 4, !tbaa !13\n  store i32 %56, ptr %53, align 4, !tbaa !13\n  store i32 %54, ptr %55, align 4, !tbaa !13\n  br label %57\n\n57:                                               ; preds = %61, %51\n  %58 = phi i32 [ 0, %51 ], [ %67, %61 ]\n  %59 = phi float [ %24, %51 ], [ %64, %61 ]\n  %60 = icmp slt i32 %58, %0\n  br i1 %60, label %61, label %68\n\n61:                                               ; preds = %57\n  %62 = zext nneg i32 %58 to i64\n  %63 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %42, i64 %62\n  %64 = load float, ptr %63, align 4, !tbaa !5\n  %65 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %41, i64 %62\n  %66 = load float, ptr %65, align 4, !tbaa !5\n  store float %66, ptr %63, align 4, !tbaa !5\n  store float %64, ptr %65, align 4, !tbaa !5\n  %67 = add nuw nsw i32 %58, 1\n  br label %57, !llvm.loop !17\n\n68:                                               ; preds = %57, %48\n  %69 = phi float [ %59, %57 ], [ %24, %48 ]\n  %70 = phi float [ %52, %57 ], [ %49, %48 ]\n  br label %71\n\n71:                                               ; preds = %74, %68\n  %72 = phi i32 [ 0, %68 ], [ %79, %74 ]\n  %73 = icmp slt i32 %72, %0\n  br i1 %73, label %74, label %80\n\n74:                                               ; preds = %71\n  %75 = zext nneg i32 %72 to i64\n  %76 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %42, i64 %75\n  %77 = load float, ptr %76, align 4, !tbaa !5\n  %78 = fdiv float %77, %44\n  store float %78, ptr %76, align 4, !tbaa !5\n  %79 = add nuw nsw i32 %72, 1\n  br label %71, !llvm.loop !18\n\n80:                                               ; preds = %71, %109\n  %81 = phi float [ %110, %109 ], [ %69, %71 ]\n  %82 = phi i32 [ %111, %109 ], [ 0, %71 ]\n  %83 = icmp slt i32 %82, %0\n  br i1 %83, label %84, label %112\n\n84:                                               ; preds = %80\n  %85 = icmp eq i32 %82, %17\n  br i1 %85, label %109, label %86\n\n86:                                               ; preds = %84\n  %87 = zext nneg i32 %82 to i64\n  %88 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %87, i64 %42\n  %89 = load float, ptr %88, align 4, !tbaa !5\n  %90 = fcmp une float %89, 0.000000e+00\n  br i1 %90, label %91, label %109\n\n91:                                               ; preds = %86, %104\n  %92 = phi i32 [ %105, %104 ], [ 0, %86 ]\n  %93 = icmp slt i32 %92, %0\n  br i1 %93, label %94, label %106\n\n94:                                               ; preds = %91\n  %95 = icmp eq i32 %92, %17\n  br i1 %95, label %104, label %96\n\n96:                                               ; preds = %94\n  %97 = zext nneg i32 %92 to i64\n  %98 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %42, i64 %97\n  %99 = load float, ptr %98, align 4, !tbaa !5\n  %100 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %87, i64 %97\n  %101 = load float, ptr %100, align 4, !tbaa !5\n  %102 = fneg float %89\n  %103 = call float @llvm.fmuladd.f32(float %102, float %99, float %101)\n  store float %103, ptr %100, align 4, !tbaa !5\n  br label %104\n\n104:                                              ; preds = %94, %96\n  %105 = add nuw nsw i32 %92, 1\n  br label %91, !llvm.loop !19\n\n106:                                              ; preds = %91\n  %107 = fneg float %89\n  %108 = fdiv float %107, %44\n  store float %108, ptr %88, align 4, !tbaa !5\n  br label %109\n\n109:                                              ; preds = %84, %106, %86\n  %110 = phi float [ %89, %106 ], [ %89, %86 ], [ %81, %84 ]\n  %111 = add nuw nsw i32 %82, 1\n  br label %80, !llvm.loop !20\n\n112:                                              ; preds = %80\n  %113 = fdiv float 1.000000e+00, %44\n  %114 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %42, i64 %42\n  store float %113, ptr %114, align 4, !tbaa !5\n  %115 = add nuw nsw i32 %17, 1\n  br label %16, !llvm.loop !21\n\n116:                                              ; preds = %16, %137\n  %117 = phi i32 [ %138, %137 ], [ 0, %16 ]\n  %118 = icmp slt i32 %117, %0\n  br i1 %118, label %119, label %139\n\n119:                                              ; preds = %128, %116\n  %120 = zext nneg i32 %117 to i64\n  %121 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %120\n  %122 = load i32, ptr %121, align 4, !tbaa !13\n  %123 = icmp eq i32 %122, %117\n  br i1 %123, label %137, label %124\n\n124:                                              ; preds = %119\n  %125 = sext i32 %122 to i64\n  %126 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %125\n  %127 = load i32, ptr %126, align 4, !tbaa !13\n  store i32 %122, ptr %126, align 4, !tbaa !13\n  store i32 %127, ptr %121, align 4, !tbaa !13\n  br label %128\n\n128:                                              ; preds = %131, %124\n  %129 = phi i32 [ 0, %124 ], [ %136, %131 ]\n  %130 = icmp slt i32 %129, %0\n  br i1 %130, label %131, label %119\n\n131:                                              ; preds = %128\n  %132 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %125, i64 %120\n  %133 = load float, ptr %132, align 4, !tbaa !5\n  %134 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %125, i64 %125\n  %135 = load float, ptr %134, align 4, !tbaa !5\n  store float %135, ptr %132, align 4, !tbaa !5\n  store float %133, ptr %134, align 4, !tbaa !5\n  %136 = add nuw nsw i32 %129, 1\n  br label %128, !llvm.loop !22\n\n137:                                              ; preds = %119\n  %138 = add nuw nsw i32 %117, 1\n  br label %116, !llvm.loop !23\n\n139:                                              ; preds = %116\n  store float %20, ptr @det, align 4, !tbaa !5\n  br label %140\n\n140:                                              ; preds = %3, %139, %47\n  %141 = phi i32 [ 1, %47 ], [ 0, %139 ], [ 999, %3 ]\n  call void @llvm.lifetime.end.p0(i64 2000, ptr nonnull %4) #7\n  ret i32 %141\n}\n",
+        "callsite": {
+          "callee": "minver_fabs",
+          "caller": "minver",
+          "instruction": "  %45 = call fastcc float @minver_fabs(float noundef %44) #8",
+          "module": "third_party/embench-iot/src/minver/libminver.c",
+          "source": "third_party/embench-iot/src/minver/libminver.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 1,
+          "callee_instruction_count": 4,
+          "callee_users": 1,
+          "caller_basic_block_count": 33,
+          "caller_instruction_count": 156,
+          "caller_users": 1,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 7136,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.16,
+        "probabilities": {
+          "do_not_inline": 0.42,
+          "inline": 0.58
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 369.934,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "minver",
+        "caller": "benchmark_body",
+        "decision": true,
+        "default": false,
+        "id": 2,
+        "ir": {
+          "callee": "; Function Attrs: minsize nofree norecurse nosync nounwind optsize memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local range(i32 0, 1000) i32 @minver(i32 noundef %0, i32 noundef %1, float noundef %2) local_unnamed_addr #0 {\n  %4 = alloca [500 x i32], align 16\n  call void @llvm.lifetime.start.p0(i64 2000, ptr nonnull %4) #8\n  %5 = add i32 %0, -2\n  %6 = icmp ult i32 %5, 499\n  %7 = fcmp ugt float %2, 0.000000e+00\n  %8 = and i1 %6, %7\n  br i1 %8, label %9, label %141\n\n9:                                                ; preds = %3\n  %10 = zext nneg i32 %0 to i64\n  br label %11\n\n11:                                               ; preds = %9, %14\n  %12 = phi i64 [ 0, %9 ], [ %17, %14 ]\n  %13 = icmp eq i64 %12, %10\n  br i1 %13, label %18, label %14\n\n14:                                               ; preds = %11\n  %15 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %12\n  %16 = trunc nuw nsw i64 %12 to i32\n  store i32 %16, ptr %15, align 4, !tbaa !13\n  %17 = add nuw nsw i64 %12, 1\n  br label %11, !llvm.loop !15\n\n18:                                               ; preds = %11, %110\n  %19 = phi i64 [ %113, %110 ], [ 0, %11 ]\n  %20 = phi i32 [ %27, %110 ], [ 0, %11 ]\n  %21 = phi float [ %82, %110 ], [ 0.000000e+00, %11 ]\n  %22 = phi float [ %71, %110 ], [ 1.000000e+00, %11 ]\n  %23 = icmp eq i64 %19, %10\n  br i1 %23, label %24, label %25\n\n24:                                               ; preds = %18\n  br label %114\n\n25:                                               ; preds = %18, %31\n  %26 = phi i64 [ %41, %31 ], [ %19, %18 ]\n  %27 = phi i32 [ %39, %31 ], [ %20, %18 ]\n  %28 = phi float [ %36, %31 ], [ %21, %18 ]\n  %29 = phi float [ %40, %31 ], [ 0.000000e+00, %18 ]\n  %30 = icmp eq i64 %26, %10\n  br i1 %30, label %42, label %31\n\n31:                                               ; preds = %25\n  %32 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %26, i64 %19\n  %33 = load float, ptr %32, align 4, !tbaa !5\n  %34 = fcmp ult float %33, 0.000000e+00\n  %35 = fneg float %33\n  %36 = select i1 %34, float %35, float %33\n  %37 = fcmp ogt float %36, %29\n  %38 = trunc nuw nsw i64 %26 to i32\n  %39 = select i1 %37, i32 %38, i32 %27\n  %40 = select i1 %37, float %36, float %29\n  %41 = add nuw nsw i64 %26, 1\n  br label %25, !llvm.loop !16\n\n42:                                               ; preds = %25\n  %43 = sext i32 %27 to i64\n  %44 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %43, i64 %19\n  %45 = load float, ptr %44, align 4, !tbaa !5\n  %46 = tail call float @llvm.fabs.f32(float %45)\n  %47 = fcmp ugt float %46, %2\n  br i1 %47, label %48, label %139\n\n48:                                               ; preds = %42\n  %49 = fmul float %22, %45\n  %50 = zext i32 %27 to i64\n  %51 = icmp eq i64 %19, %50\n  br i1 %51, label %69, label %52\n\n52:                                               ; preds = %48\n  %53 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %19\n  %54 = load i32, ptr %53, align 4, !tbaa !13\n  %55 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %43\n  %56 = load i32, ptr %55, align 4, !tbaa !13\n  store i32 %56, ptr %53, align 4, !tbaa !13\n  store i32 %54, ptr %55, align 4, !tbaa !13\n  br label %57\n\n57:                                               ; preds = %61, %52\n  %58 = phi i64 [ %66, %61 ], [ 0, %52 ]\n  %59 = phi float [ %63, %61 ], [ %28, %52 ]\n  %60 = icmp eq i64 %58, %10\n  br i1 %60, label %67, label %61\n\n61:                                               ; preds = %57\n  %62 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %19, i64 %58\n  %63 = load float, ptr %62, align 4, !tbaa !5\n  %64 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %43, i64 %58\n  %65 = load float, ptr %64, align 4, !tbaa !5\n  store float %65, ptr %62, align 4, !tbaa !5\n  store float %63, ptr %64, align 4, !tbaa !5\n  %66 = add nuw nsw i64 %58, 1\n  br label %57, !llvm.loop !17\n\n67:                                               ; preds = %57\n  %68 = fneg float %28\n  br label %69\n\n69:                                               ; preds = %67, %48\n  %70 = phi float [ %28, %48 ], [ %59, %67 ]\n  %71 = phi float [ %49, %48 ], [ %68, %67 ]\n  br label %72\n\n72:                                               ; preds = %75, %69\n  %73 = phi i64 [ %79, %75 ], [ 0, %69 ]\n  %74 = icmp eq i64 %73, %10\n  br i1 %74, label %80, label %75\n\n75:                                               ; preds = %72\n  %76 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %19, i64 %73\n  %77 = load float, ptr %76, align 4, !tbaa !5\n  %78 = fdiv float %77, %45\n  store float %78, ptr %76, align 4, !tbaa !5\n  %79 = add nuw nsw i64 %73, 1\n  br label %72, !llvm.loop !18\n\n80:                                               ; preds = %72, %107\n  %81 = phi i64 [ %109, %107 ], [ 0, %72 ]\n  %82 = phi float [ %108, %107 ], [ %70, %72 ]\n  %83 = icmp eq i64 %81, %10\n  br i1 %83, label %110, label %84\n\n84:                                               ; preds = %80\n  %85 = icmp eq i64 %81, %19\n  br i1 %85, label %107, label %86\n\n86:                                               ; preds = %84\n  %87 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %81, i64 %19\n  %88 = load float, ptr %87, align 4, !tbaa !5\n  %89 = fcmp une float %88, 0.000000e+00\n  br i1 %89, label %90, label %107\n\n90:                                               ; preds = %86\n  %91 = fneg float %88\n  br label %92\n\n92:                                               ; preds = %90, %103\n  %93 = phi i64 [ 0, %90 ], [ %104, %103 ]\n  %94 = icmp eq i64 %93, %10\n  br i1 %94, label %105, label %95\n\n95:                                               ; preds = %92\n  %96 = icmp eq i64 %93, %19\n  br i1 %96, label %103, label %97\n\n97:                                               ; preds = %95\n  %98 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %19, i64 %93\n  %99 = load float, ptr %98, align 4, !tbaa !5\n  %100 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %81, i64 %93\n  %101 = load float, ptr %100, align 4, !tbaa !5\n  %102 = tail call float @llvm.fmuladd.f32(float %91, float %99, float %101)\n  store float %102, ptr %100, align 4, !tbaa !5\n  br label %103\n\n103:                                              ; preds = %95, %97\n  %104 = add nuw nsw i64 %93, 1\n  br label %92, !llvm.loop !19\n\n105:                                              ; preds = %92\n  %106 = fdiv float %91, %45\n  store float %106, ptr %87, align 4, !tbaa !5\n  br label %107\n\n107:                                              ; preds = %84, %105, %86\n  %108 = phi float [ %88, %105 ], [ %88, %86 ], [ %82, %84 ]\n  %109 = add nuw nsw i64 %81, 1\n  br label %80, !llvm.loop !20\n\n110:                                              ; preds = %80\n  %111 = fdiv float 1.000000e+00, %45\n  %112 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %19, i64 %19\n  store float %111, ptr %112, align 4, !tbaa !5\n  %113 = add nuw nsw i64 %19, 1\n  br label %18, !llvm.loop !21\n\n114:                                              ; preds = %24, %137\n  %115 = phi i64 [ 0, %24 ], [ %138, %137 ]\n  %116 = icmp eq i64 %115, %10\n  br i1 %116, label %139, label %117\n\n117:                                              ; preds = %114\n  %118 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %115\n  %119 = load i32, ptr %118, align 4, !tbaa !13\n  br label %120\n\n120:                                              ; preds = %130, %117\n  %121 = phi i32 [ %119, %117 ], [ %127, %130 ]\n  %122 = zext i32 %121 to i64\n  %123 = icmp eq i64 %115, %122\n  br i1 %123, label %137, label %124\n\n124:                                              ; preds = %120\n  %125 = sext i32 %121 to i64\n  %126 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %125\n  %127 = load i32, ptr %126, align 4, !tbaa !13\n  store i32 %121, ptr %126, align 4, !tbaa !13\n  store i32 %127, ptr %118, align 4, !tbaa !13\n  %128 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %125, i64 %115\n  %129 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %125, i64 %125\n  br label %130\n\n130:                                              ; preds = %133, %124\n  %131 = phi i32 [ 0, %124 ], [ %136, %133 ]\n  %132 = icmp eq i32 %131, %0\n  br i1 %132, label %120, label %133\n\n133:                                              ; preds = %130\n  %134 = load float, ptr %128, align 4, !tbaa !5\n  %135 = load float, ptr %129, align 4, !tbaa !5\n  store float %135, ptr %128, align 4, !tbaa !5\n  store float %134, ptr %129, align 4, !tbaa !5\n  %136 = add nuw i32 %131, 1\n  br label %130, !llvm.loop !22\n\n137:                                              ; preds = %120\n  %138 = add nuw nsw i64 %115, 1\n  br label %114, !llvm.loop !23\n\n139:                                              ; preds = %114, %42\n  %140 = phi i32 [ 1, %42 ], [ 0, %114 ]\n  store float %22, ptr @det, align 4, !tbaa !5\n  br label %141\n\n141:                                              ; preds = %139, %3\n  %142 = phi i32 [ 999, %3 ], [ %140, %139 ]\n  call void @llvm.lifetime.end.p0(i64 2000, ptr nonnull %4) #8\n  ret i32 %142\n}\n",
+          "caller": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #6 {\n  br label %2\n\n2:                                                ; preds = %5, %1\n  %3 = phi i32 [ 0, %1 ], [ %8, %5 ]\n  %4 = icmp slt i32 %3, %0\n  br i1 %4, label %5, label %9\n\n5:                                                ; preds = %2\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @a, ptr noundef nonnull align 16 dereferenceable(36) @a_ref, i64 36, i1 false)\n  %6 = call i32 @minver(i32 noundef 3, i32 noundef 3, float noundef 0x3EB0C6F7A0000000) #8\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @d, ptr noundef nonnull align 16 dereferenceable(36) @a, i64 36, i1 false)\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @a, ptr noundef nonnull align 16 dereferenceable(36) @a_ref, i64 36, i1 false)\n  %7 = call i32 @mmul(i32 noundef 3, i32 noundef 3, i32 noundef 3, i32 noundef 3) #8\n  %8 = add nuw nsw i32 %3, 1\n  br label %2, !llvm.loop !26\n\n9:                                                ; preds = %2\n  ret i32 poison\n}\n",
+          "callsite": "  %6 = call i32 @minver(i32 noundef 3, i32 noundef 3, float noundef 0x3EB0C6F7A0000000) #8"
+        },
+        "module": "third_party/embench-iot/src/minver/libminver.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 37,
+          "callee_instruction_count": 156,
+          "callee_users": 1,
+          "caller_basic_block_count": 4,
+          "caller_instruction_count": 12,
+          "caller_users": 2,
+          "callsite_cost": -45,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 3,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 505,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 75,
+          "simplified_instructions": 61,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": -65,
+          "unsimplified_common_instructions": 475
+        },
+        "source": "third_party/embench-iot/src/minver/libminver.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS minver benchmark\n\n   This version, copyright (C) 2014-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor Pierre Langlois <pierre.langlois@embecosm.com>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   *************************************************************************\n   *                                                                       *\n   *   SNU-RT Benchmark Suite for Worst Case Timing Analysis               *\n   *   =====================================================               *\n   *                              Collected and Modified by S.-S. Lim      *\n   *                                           sslim@archi.snu.ac.kr       *\n   *                                         Real-Time Research Group      *\n   *                                        Seoul National University      *\n   *                                                                       *\n   *                                                                       *\n   *        < Features > - restrictions for our experimental environment   *\n   *                                                                       *\n   *          1. Completely structured.                                    *\n   *               - There are no unconditional jumps.                     *\n   *               - There are no exit from loop bodies.                   *\n   *                 (There are no 'break' or 'return' in loop bodies)     *\n   *          2. No 'switch' statements.                                   *\n   *          3. No 'do..while' statements.                                *\n   *          4. Expressions are restricted.                               *\n   *               - There are no multiple expressions joined by 'or',     *\n   *                'and' operations.                                      *\n   *          5. No library calls.                                         *\n   *               - All the functions needed are implemented in the       *\n   *                 source file.                                          *\n   *                                                                       *\n   *                                                                       *\n   *************************************************************************\n   *                                                                       *\n   *  FILE: minver.c                                                       *\n   *  SOURCE : Turbo C Programming for Engineering by Hyun Soo Ahn         *\n   *                                                                       *\n   *  DESCRIPTION :                                                        *\n   *                                                                       *\n   *     Matrix inversion for 3x3 floating point matrix.                   *\n   *                                                                       *\n   *  REMARK :                                                             *\n   *                                                                       *\n   *  EXECUTION TIME :                                                     *\n   *                                                                       *\n   *                                                                       *\n   *************************************************************************\n\n*/\n\n#include <math.h>\n#include <string.h>\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 555\n\nint minver (int row, int col, float eps);\nint mmul (int row_a, int col_a, int row_b, int col_b);\n\nstatic float a_ref[3][3] = {\n  {3.0, -6.0, 7.0},\n  {9.0, 0.0, -5.0},\n  {5.0, -8.0, 6.0},\n};\n\nstatic float b[3][3] = {\n  {-3.0, 0.0, 2.0},\n  {3.0, -2.0, 0.0},\n  {0.0, 2.0, -3.0},\n};\n\nstatic float a[3][3], c[3][3], d[3][3], det;\n\nstatic float\nminver_fabs (float n)\n{\n  float f;\n\n  if (n >= 0)\n    f = n;\n  else\n    f = -n;\n  return f;\n}\n\nint\nmmul (int row_a, int col_a, int row_b, int col_b)\n{\n  int i, j, k, row_c, col_c;\n  float w;\n\n  row_c = row_a;\n  col_c = col_b;\n\n  if (row_c < 1 || row_b < 1 || col_c < 1 || col_a != row_b)\n    return (999);\n  for (i = 0; i < row_c; i++)\n    {\n      for (j = 0; j < col_c; j++)\n\t{\n\t  w = 0.0;\n\t  for (k = 0; k < row_b; k++)\n\t    w += a[i][k] * b[k][j];\n\t  c[i][j] = w;\n\t}\n    }\n\n  return (0);\n}\n\n\nint\nminver (int row, int col, float eps)\n{\n  int work[500], i, j, k, r, iw, u, v;\n  float w, wmax, pivot, api, w1;\n\n  r = w = 0;\n  if (row < 2 || row > 500 || eps <= 0.0)\n    return (999);\n  w1 = 1.0;\n  for (i = 0; i < row; i++)\n    work[i] = i;\n  for (k = 0; k < row; k++)\n    {\n      wmax = 0.0;\n      for (i = k; i < row; i++)\n\t{\n\t  w = minver_fabs (a[i][k]);\n\t  if (w > wmax)\n\t    {\n\t      wmax = w;\n\t      r = i;\n\t    }\n\t}\n      pivot = a[r][k];\n      api = minver_fabs (pivot);\n      if (api <= eps)\n\t{\n\t  det = w1;\n\t  return (1);\n\t}\n      w1 *= pivot;\n      u = k * col;\n      v = r * col;\n      if (r != k)\n\t{\n\t  w1 = -w;\n\t  iw = work[k];\n\t  work[k] = work[r];\n\t  work[r] = iw;\n\t  for (j = 0; j < row; j++)\n\t    {\n\t      w = a[k][j];\n\t      a[k][j] = a[r][j];\n\t      a[r][j] = w;\n\t    }\n\t}\n      for (i = 0; i < row; i++)\n\ta[k][i] /= pivot;\n      for (i = 0; i < row; i++)\n\t{\n\t  if (i != k)\n\t    {\n\t      v = i * col;\n\t      w = a[i][k];\n\t      if (w != 0.0)\n\t\t{\n\t\t  for (j = 0; j < row; j++)\n\t\t    if (j != k)\n\t\t      a[i][j] -= w * a[k][j];\n\t\t  a[i][k] = -w / pivot;\n\t\t}\n\t    }\n\t}\n      a[k][k] = 1.0 / pivot;\n    }\n\n  for (i = 0; i < row; i++)\n    {\n      while (1)\n\t{\n\t  k = work[i];\n\t  if (k == i)\n\t    break;\n\t  iw = work[k];\n\t  work[k] = work[i];\n\t  work[i] = iw;\n\t  for (j = 0; j < row; j++)\n\t    {\n\t      u = j * col;\n\t      w = a[k][i];\n\t      a[k][i] = a[k][k];\n\t      a[k][k] = w;\n\t    }\n\t}\n    }\n\n  det = w1;\n\n  return (0);\n}\n\n\nint\nverify_benchmark (int res __attribute ((unused)))\n{\n  int i, j;\n  float eps = 1.0e-6;\n\n  static float c_exp[3][3] = {\n    {-27.0, 26.0, -15.0},\n    {-27.0, -10.0, 33.0},\n    {-39.0, 28.0, -8.0}\n  };\n\n  static float d_exp[3][3] = {\n    {0.133333325, -0.199999958, 0.2666665910},\n    {-0.519999862, 0.113333330, 0.5266665220},\n    {0.479999840, -0.359999895, 0.0399999917}\n  };\n\n  /* Allow small errors in floating point */\n\n  for (i = 0; i < 3; i++)\n    for (j = 0; j < 3; j++)\n      if (float_neq_beebs(c[i][j], c_exp[i][j]) || float_neq_beebs(d[i][j], d_exp[i][j]))\n\treturn 0;\n\n  return float_eq_beebs(det, -16.6666718);\n}\n\n\nvoid\ninitialise_benchmark (void)\n{\n}\n\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      float eps = 1.0e-6;\n\n      memcpy (a, a_ref, 3 * 3 * sizeof (a[0][0]));\n      minver (3, 3, eps);\n      memcpy (d, a, 3 * 3 * sizeof (a[0][0]));\n      memcpy (a, a_ref, 3 * 3 * sizeof (a[0][0]));\n      mmul (3, 3, 3, 3);\n    }\n\n  return 0;\n}\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize nofree norecurse nosync nounwind optsize memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local range(i32 0, 1000) i32 @minver(i32 noundef %0, i32 noundef %1, float noundef %2) local_unnamed_addr #0 {\n  %4 = alloca [500 x i32], align 16\n  call void @llvm.lifetime.start.p0(i64 2000, ptr nonnull %4) #8\n  %5 = add i32 %0, -2\n  %6 = icmp ult i32 %5, 499\n  %7 = fcmp ugt float %2, 0.000000e+00\n  %8 = and i1 %6, %7\n  br i1 %8, label %9, label %141\n\n9:                                                ; preds = %3\n  %10 = zext nneg i32 %0 to i64\n  br label %11\n\n11:                                               ; preds = %9, %14\n  %12 = phi i64 [ 0, %9 ], [ %17, %14 ]\n  %13 = icmp eq i64 %12, %10\n  br i1 %13, label %18, label %14\n\n14:                                               ; preds = %11\n  %15 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %12\n  %16 = trunc nuw nsw i64 %12 to i32\n  store i32 %16, ptr %15, align 4, !tbaa !13\n  %17 = add nuw nsw i64 %12, 1\n  br label %11, !llvm.loop !15\n\n18:                                               ; preds = %11, %110\n  %19 = phi i64 [ %113, %110 ], [ 0, %11 ]\n  %20 = phi i32 [ %27, %110 ], [ 0, %11 ]\n  %21 = phi float [ %82, %110 ], [ 0.000000e+00, %11 ]\n  %22 = phi float [ %71, %110 ], [ 1.000000e+00, %11 ]\n  %23 = icmp eq i64 %19, %10\n  br i1 %23, label %24, label %25\n\n24:                                               ; preds = %18\n  br label %114\n\n25:                                               ; preds = %18, %31\n  %26 = phi i64 [ %41, %31 ], [ %19, %18 ]\n  %27 = phi i32 [ %39, %31 ], [ %20, %18 ]\n  %28 = phi float [ %36, %31 ], [ %21, %18 ]\n  %29 = phi float [ %40, %31 ], [ 0.000000e+00, %18 ]\n  %30 = icmp eq i64 %26, %10\n  br i1 %30, label %42, label %31\n\n31:                                               ; preds = %25\n  %32 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %26, i64 %19\n  %33 = load float, ptr %32, align 4, !tbaa !5\n  %34 = fcmp ult float %33, 0.000000e+00\n  %35 = fneg float %33\n  %36 = select i1 %34, float %35, float %33\n  %37 = fcmp ogt float %36, %29\n  %38 = trunc nuw nsw i64 %26 to i32\n  %39 = select i1 %37, i32 %38, i32 %27\n  %40 = select i1 %37, float %36, float %29\n  %41 = add nuw nsw i64 %26, 1\n  br label %25, !llvm.loop !16\n\n42:                                               ; preds = %25\n  %43 = sext i32 %27 to i64\n  %44 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %43, i64 %19\n  %45 = load float, ptr %44, align 4, !tbaa !5\n  %46 = tail call float @llvm.fabs.f32(float %45)\n  %47 = fcmp ugt float %46, %2\n  br i1 %47, label %48, label %139\n\n48:                                               ; preds = %42\n  %49 = fmul float %22, %45\n  %50 = zext i32 %27 to i64\n  %51 = icmp eq i64 %19, %50\n  br i1 %51, label %69, label %52\n\n52:                                               ; preds = %48\n  %53 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %19\n  %54 = load i32, ptr %53, align 4, !tbaa !13\n  %55 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %43\n  %56 = load i32, ptr %55, align 4, !tbaa !13\n  store i32 %56, ptr %53, align 4, !tbaa !13\n  store i32 %54, ptr %55, align 4, !tbaa !13\n  br label %57\n\n57:                                               ; preds = %61, %52\n  %58 = phi i64 [ %66, %61 ], [ 0, %52 ]\n  %59 = phi float [ %63, %61 ], [ %28, %52 ]\n  %60 = icmp eq i64 %58, %10\n  br i1 %60, label %67, label %61\n\n61:                                               ; preds = %57\n  %62 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %19, i64 %58\n  %63 = load float, ptr %62, align 4, !tbaa !5\n  %64 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %43, i64 %58\n  %65 = load float, ptr %64, align 4, !tbaa !5\n  store float %65, ptr %62, align 4, !tbaa !5\n  store float %63, ptr %64, align 4, !tbaa !5\n  %66 = add nuw nsw i64 %58, 1\n  br label %57, !llvm.loop !17\n\n67:                                               ; preds = %57\n  %68 = fneg float %28\n  br label %69\n\n69:                                               ; preds = %67, %48\n  %70 = phi float [ %28, %48 ], [ %59, %67 ]\n  %71 = phi float [ %49, %48 ], [ %68, %67 ]\n  br label %72\n\n72:                                               ; preds = %75, %69\n  %73 = phi i64 [ %79, %75 ], [ 0, %69 ]\n  %74 = icmp eq i64 %73, %10\n  br i1 %74, label %80, label %75\n\n75:                                               ; preds = %72\n  %76 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %19, i64 %73\n  %77 = load float, ptr %76, align 4, !tbaa !5\n  %78 = fdiv float %77, %45\n  store float %78, ptr %76, align 4, !tbaa !5\n  %79 = add nuw nsw i64 %73, 1\n  br label %72, !llvm.loop !18\n\n80:                                               ; preds = %72, %107\n  %81 = phi i64 [ %109, %107 ], [ 0, %72 ]\n  %82 = phi float [ %108, %107 ], [ %70, %72 ]\n  %83 = icmp eq i64 %81, %10\n  br i1 %83, label %110, label %84\n\n84:                                               ; preds = %80\n  %85 = icmp eq i64 %81, %19\n  br i1 %85, label %107, label %86\n\n86:                                               ; preds = %84\n  %87 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %81, i64 %19\n  %88 = load float, ptr %87, align 4, !tbaa !5\n  %89 = fcmp une float %88, 0.000000e+00\n  br i1 %89, label %90, label %107\n\n90:                                               ; preds = %86\n  %91 = fneg float %88\n  br label %92\n\n92:                                               ; preds = %90, %103\n  %93 = phi i64 [ 0, %90 ], [ %104, %103 ]\n  %94 = icmp eq i64 %93, %10\n  br i1 %94, label %105, label %95\n\n95:                                               ; preds = %92\n  %96 = icmp eq i64 %93, %19\n  br i1 %96, label %103, label %97\n\n97:                                               ; preds = %95\n  %98 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %19, i64 %93\n  %99 = load float, ptr %98, align 4, !tbaa !5\n  %100 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %81, i64 %93\n  %101 = load float, ptr %100, align 4, !tbaa !5\n  %102 = tail call float @llvm.fmuladd.f32(float %91, float %99, float %101)\n  store float %102, ptr %100, align 4, !tbaa !5\n  br label %103\n\n103:                                              ; preds = %95, %97\n  %104 = add nuw nsw i64 %93, 1\n  br label %92, !llvm.loop !19\n\n105:                                              ; preds = %92\n  %106 = fdiv float %91, %45\n  store float %106, ptr %87, align 4, !tbaa !5\n  br label %107\n\n107:                                              ; preds = %84, %105, %86\n  %108 = phi float [ %88, %105 ], [ %88, %86 ], [ %82, %84 ]\n  %109 = add nuw nsw i64 %81, 1\n  br label %80, !llvm.loop !20\n\n110:                                              ; preds = %80\n  %111 = fdiv float 1.000000e+00, %45\n  %112 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %19, i64 %19\n  store float %111, ptr %112, align 4, !tbaa !5\n  %113 = add nuw nsw i64 %19, 1\n  br label %18, !llvm.loop !21\n\n114:                                              ; preds = %24, %137\n  %115 = phi i64 [ 0, %24 ], [ %138, %137 ]\n  %116 = icmp eq i64 %115, %10\n  br i1 %116, label %139, label %117\n\n117:                                              ; preds = %114\n  %118 = getelementptr inbounds nuw [500 x i32], ptr %4, i64 0, i64 %115\n  %119 = load i32, ptr %118, align 4, !tbaa !13\n  br label %120\n\n120:                                              ; preds = %130, %117\n  %121 = phi i32 [ %119, %117 ], [ %127, %130 ]\n  %122 = zext i32 %121 to i64\n  %123 = icmp eq i64 %115, %122\n  br i1 %123, label %137, label %124\n\n124:                                              ; preds = %120\n  %125 = sext i32 %121 to i64\n  %126 = getelementptr inbounds [500 x i32], ptr %4, i64 0, i64 %125\n  %127 = load i32, ptr %126, align 4, !tbaa !13\n  store i32 %121, ptr %126, align 4, !tbaa !13\n  store i32 %127, ptr %118, align 4, !tbaa !13\n  %128 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %125, i64 %115\n  %129 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %125, i64 %125\n  br label %130\n\n130:                                              ; preds = %133, %124\n  %131 = phi i32 [ 0, %124 ], [ %136, %133 ]\n  %132 = icmp eq i32 %131, %0\n  br i1 %132, label %120, label %133\n\n133:                                              ; preds = %130\n  %134 = load float, ptr %128, align 4, !tbaa !5\n  %135 = load float, ptr %129, align 4, !tbaa !5\n  store float %135, ptr %128, align 4, !tbaa !5\n  store float %134, ptr %129, align 4, !tbaa !5\n  %136 = add nuw i32 %131, 1\n  br label %130, !llvm.loop !22\n\n137:                                              ; preds = %120\n  %138 = add nuw nsw i64 %115, 1\n  br label %114, !llvm.loop !23\n\n139:                                              ; preds = %114, %42\n  %140 = phi i32 [ 1, %42 ], [ 0, %114 ]\n  store float %22, ptr @det, align 4, !tbaa !5\n  br label %141\n\n141:                                              ; preds = %139, %3\n  %142 = phi i32 [ 999, %3 ], [ %140, %139 ]\n  call void @llvm.lifetime.end.p0(i64 2000, ptr nonnull %4) #8\n  ret i32 %142\n}\n",
+        "caller_ir": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #6 {\n  br label %2\n\n2:                                                ; preds = %5, %1\n  %3 = phi i32 [ 0, %1 ], [ %8, %5 ]\n  %4 = icmp slt i32 %3, %0\n  br i1 %4, label %5, label %9\n\n5:                                                ; preds = %2\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @a, ptr noundef nonnull align 16 dereferenceable(36) @a_ref, i64 36, i1 false)\n  %6 = call i32 @minver(i32 noundef 3, i32 noundef 3, float noundef 0x3EB0C6F7A0000000) #8\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @d, ptr noundef nonnull align 16 dereferenceable(36) @a, i64 36, i1 false)\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @a, ptr noundef nonnull align 16 dereferenceable(36) @a_ref, i64 36, i1 false)\n  %7 = call i32 @mmul(i32 noundef 3, i32 noundef 3, i32 noundef 3, i32 noundef 3) #8\n  %8 = add nuw nsw i32 %3, 1\n  br label %2, !llvm.loop !26\n\n9:                                                ; preds = %2\n  ret i32 poison\n}\n",
+        "callsite": {
+          "callee": "minver",
+          "caller": "benchmark_body",
+          "instruction": "  %6 = call i32 @minver(i32 noundef 3, i32 noundef 3, float noundef 0x3EB0C6F7A0000000) #8",
+          "module": "third_party/embench-iot/src/minver/libminver.c",
+          "source": "third_party/embench-iot/src/minver/libminver.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 37,
+          "callee_instruction_count": 156,
+          "callee_users": 1,
+          "caller_basic_block_count": 4,
+          "caller_instruction_count": 12,
+          "caller_users": 2,
+          "constant_args": 3
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 7556,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.22,
+        "probabilities": {
+          "do_not_inline": 0.39,
+          "inline": 0.61
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 328.381,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "mmul",
+        "caller": "benchmark_body",
+        "decision": true,
+        "default": false,
+        "id": 3,
+        "ir": {
+          "callee": "; Function Attrs: minsize nofree norecurse nosync nounwind optsize memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local range(i32 0, 1000) i32 @mmul(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {\n  %5 = icmp sgt i32 %0, 0\n  %6 = icmp sgt i32 %2, 0\n  %7 = and i1 %5, %6\n  %8 = icmp sgt i32 %3, 0\n  %9 = and i1 %7, %8\n  %10 = icmp eq i32 %1, %2\n  %11 = and i1 %10, %9\n  br i1 %11, label %12, label %38\n\n12:                                               ; preds = %4\n  %13 = zext nneg i32 %0 to i64\n  %14 = zext nneg i32 %3 to i64\n  %15 = zext nneg i32 %2 to i64\n  br label %16\n\n16:                                               ; preds = %12, %36\n  %17 = phi i64 [ 0, %12 ], [ %37, %36 ]\n  %18 = icmp eq i64 %17, %13\n  br i1 %18, label %38, label %19\n\n19:                                               ; preds = %16, %33\n  %20 = phi i64 [ %35, %33 ], [ 0, %16 ]\n  %21 = icmp eq i64 %20, %14\n  br i1 %21, label %36, label %22\n\n22:                                               ; preds = %19, %26\n  %23 = phi i64 [ %32, %26 ], [ 0, %19 ]\n  %24 = phi float [ %31, %26 ], [ 0.000000e+00, %19 ]\n  %25 = icmp eq i64 %23, %15\n  br i1 %25, label %33, label %26\n\n26:                                               ; preds = %22\n  %27 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %17, i64 %23\n  %28 = load float, ptr %27, align 4, !tbaa !5\n  %29 = getelementptr inbounds nuw [3 x [3 x float]], ptr @b, i64 0, i64 %23, i64 %20\n  %30 = load float, ptr %29, align 4, !tbaa !5\n  %31 = tail call float @llvm.fmuladd.f32(float %28, float %30, float %24)\n  %32 = add nuw nsw i64 %23, 1\n  br label %22, !llvm.loop !9\n\n33:                                               ; preds = %22\n  %34 = getelementptr inbounds nuw [3 x [3 x float]], ptr @c, i64 0, i64 %17, i64 %20\n  store float %24, ptr %34, align 4, !tbaa !5\n  %35 = add nuw nsw i64 %20, 1\n  br label %19, !llvm.loop !11\n\n36:                                               ; preds = %19\n  %37 = add nuw nsw i64 %17, 1\n  br label %16, !llvm.loop !12\n\n38:                                               ; preds = %16, %4\n  %39 = phi i32 [ 999, %4 ], [ 0, %16 ]\n  ret i32 %39\n}\n",
+          "caller": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #6 {\n  %2 = alloca [500 x i32], align 16\n  br label %3\n\n3:                                                ; preds = %135, %1\n  %4 = phi i32 [ 0, %1 ], [ %138, %135 ]\n  %5 = icmp slt i32 %4, %0\n  br i1 %5, label %6, label %139\n\n6:                                                ; preds = %3\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @a, ptr noundef nonnull align 16 dereferenceable(36) @a_ref, i64 36, i1 false)\n  call void @llvm.lifetime.start.p0(i64 2000, ptr nonnull %2) #8\n  br label %7\n\n7:                                                ; preds = %10, %6\n  %8 = phi i64 [ 0, %6 ], [ %13, %10 ]\n  %9 = icmp eq i64 %8, 3\n  br i1 %9, label %14, label %10\n\n10:                                               ; preds = %7\n  %11 = getelementptr inbounds nuw [500 x i32], ptr %2, i64 0, i64 %8\n  %12 = trunc nuw nsw i64 %8 to i32\n  store i32 %12, ptr %11, align 4, !tbaa !13\n  %13 = add nuw nsw i64 %8, 1\n  br label %7, !llvm.loop !15\n\n14:                                               ; preds = %106, %7\n  %15 = phi i64 [ %109, %106 ], [ 0, %7 ]\n  %16 = phi i32 [ %23, %106 ], [ 0, %7 ]\n  %17 = phi float [ %78, %106 ], [ 0.000000e+00, %7 ]\n  %18 = phi float [ %67, %106 ], [ 1.000000e+00, %7 ]\n  %19 = icmp eq i64 %15, 3\n  br i1 %19, label %20, label %21\n\n20:                                               ; preds = %14\n  br label %110\n\n21:                                               ; preds = %27, %14\n  %22 = phi i64 [ %37, %27 ], [ %15, %14 ]\n  %23 = phi i32 [ %35, %27 ], [ %16, %14 ]\n  %24 = phi float [ %32, %27 ], [ %17, %14 ]\n  %25 = phi float [ %36, %27 ], [ 0.000000e+00, %14 ]\n  %26 = icmp eq i64 %22, 3\n  br i1 %26, label %38, label %27\n\n27:                                               ; preds = %21\n  %28 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %22, i64 %15\n  %29 = load float, ptr %28, align 4, !tbaa !5\n  %30 = fcmp ult float %29, 0.000000e+00\n  %31 = fneg float %29\n  %32 = select i1 %30, float %31, float %29\n  %33 = fcmp ogt float %32, %25\n  %34 = trunc nuw nsw i64 %22 to i32\n  %35 = select i1 %33, i32 %34, i32 %23\n  %36 = select i1 %33, float %32, float %25\n  %37 = add nuw nsw i64 %22, 1\n  br label %21, !llvm.loop !16\n\n38:                                               ; preds = %21\n  %39 = sext i32 %23 to i64\n  %40 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %39, i64 %15\n  %41 = load float, ptr %40, align 4, !tbaa !5\n  %42 = call float @llvm.fabs.f32(float %41)\n  %43 = fcmp ugt float %42, 0x3EB0C6F7A0000000\n  br i1 %43, label %44, label %135\n\n44:                                               ; preds = %38\n  %45 = fmul float %18, %41\n  %46 = zext i32 %23 to i64\n  %47 = icmp eq i64 %15, %46\n  br i1 %47, label %65, label %48\n\n48:                                               ; preds = %44\n  %49 = getelementptr inbounds nuw [500 x i32], ptr %2, i64 0, i64 %15\n  %50 = load i32, ptr %49, align 4, !tbaa !13\n  %51 = getelementptr inbounds [500 x i32], ptr %2, i64 0, i64 %39\n  %52 = load i32, ptr %51, align 4, !tbaa !13\n  store i32 %52, ptr %49, align 4, !tbaa !13\n  store i32 %50, ptr %51, align 4, !tbaa !13\n  br label %53\n\n53:                                               ; preds = %57, %48\n  %54 = phi i64 [ %62, %57 ], [ 0, %48 ]\n  %55 = phi float [ %59, %57 ], [ %24, %48 ]\n  %56 = icmp eq i64 %54, 3\n  br i1 %56, label %63, label %57\n\n57:                                               ; preds = %53\n  %58 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %15, i64 %54\n  %59 = load float, ptr %58, align 4, !tbaa !5\n  %60 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %39, i64 %54\n  %61 = load float, ptr %60, align 4, !tbaa !5\n  store float %61, ptr %58, align 4, !tbaa !5\n  store float %59, ptr %60, align 4, !tbaa !5\n  %62 = add nuw nsw i64 %54, 1\n  br label %53, !llvm.loop !17\n\n63:                                               ; preds = %53\n  %64 = fneg float %24\n  br label %65\n\n65:                                               ; preds = %63, %44\n  %66 = phi float [ %24, %44 ], [ %55, %63 ]\n  %67 = phi float [ %45, %44 ], [ %64, %63 ]\n  br label %68\n\n68:                                               ; preds = %71, %65\n  %69 = phi i64 [ %75, %71 ], [ 0, %65 ]\n  %70 = icmp eq i64 %69, 3\n  br i1 %70, label %76, label %71\n\n71:                                               ; preds = %68\n  %72 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %15, i64 %69\n  %73 = load float, ptr %72, align 4, !tbaa !5\n  %74 = fdiv float %73, %41\n  store float %74, ptr %72, align 4, !tbaa !5\n  %75 = add nuw nsw i64 %69, 1\n  br label %68, !llvm.loop !18\n\n76:                                               ; preds = %103, %68\n  %77 = phi i64 [ %105, %103 ], [ 0, %68 ]\n  %78 = phi float [ %104, %103 ], [ %66, %68 ]\n  %79 = icmp eq i64 %77, 3\n  br i1 %79, label %106, label %80\n\n80:                                               ; preds = %76\n  %81 = icmp eq i64 %77, %15\n  br i1 %81, label %103, label %82\n\n82:                                               ; preds = %80\n  %83 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %77, i64 %15\n  %84 = load float, ptr %83, align 4, !tbaa !5\n  %85 = fcmp une float %84, 0.000000e+00\n  br i1 %85, label %86, label %103\n\n86:                                               ; preds = %82\n  %87 = fneg float %84\n  br label %88\n\n88:                                               ; preds = %99, %86\n  %89 = phi i64 [ 0, %86 ], [ %100, %99 ]\n  %90 = icmp eq i64 %89, 3\n  br i1 %90, label %101, label %91\n\n91:                                               ; preds = %88\n  %92 = icmp eq i64 %89, %15\n  br i1 %92, label %99, label %93\n\n93:                                               ; preds = %91\n  %94 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %15, i64 %89\n  %95 = load float, ptr %94, align 4, !tbaa !5\n  %96 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %77, i64 %89\n  %97 = load float, ptr %96, align 4, !tbaa !5\n  %98 = call float @llvm.fmuladd.f32(float %87, float %95, float %97)\n  store float %98, ptr %96, align 4, !tbaa !5\n  br label %99\n\n99:                                               ; preds = %93, %91\n  %100 = add nuw nsw i64 %89, 1\n  br label %88, !llvm.loop !19\n\n101:                                              ; preds = %88\n  %102 = fdiv float %87, %41\n  store float %102, ptr %83, align 4, !tbaa !5\n  br label %103\n\n103:                                              ; preds = %101, %82, %80\n  %104 = phi float [ %84, %101 ], [ %84, %82 ], [ %78, %80 ]\n  %105 = add nuw nsw i64 %77, 1\n  br label %76, !llvm.loop !20\n\n106:                                              ; preds = %76\n  %107 = fdiv float 1.000000e+00, %41\n  %108 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %15, i64 %15\n  store float %107, ptr %108, align 4, !tbaa !5\n  %109 = add nuw nsw i64 %15, 1\n  br label %14, !llvm.loop !21\n\n110:                                              ; preds = %133, %20\n  %111 = phi i64 [ 0, %20 ], [ %134, %133 ]\n  %112 = icmp eq i64 %111, 3\n  br i1 %112, label %135, label %113\n\n113:                                              ; preds = %110\n  %114 = getelementptr inbounds nuw [500 x i32], ptr %2, i64 0, i64 %111\n  %115 = load i32, ptr %114, align 4, !tbaa !13\n  br label %116\n\n116:                                              ; preds = %126, %113\n  %117 = phi i32 [ %115, %113 ], [ %123, %126 ]\n  %118 = zext i32 %117 to i64\n  %119 = icmp eq i64 %111, %118\n  br i1 %119, label %133, label %120\n\n120:                                              ; preds = %116\n  %121 = sext i32 %117 to i64\n  %122 = getelementptr inbounds [500 x i32], ptr %2, i64 0, i64 %121\n  %123 = load i32, ptr %122, align 4, !tbaa !13\n  store i32 %117, ptr %122, align 4, !tbaa !13\n  store i32 %123, ptr %114, align 4, !tbaa !13\n  %124 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %121, i64 %111\n  %125 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %121, i64 %121\n  br label %126\n\n126:                                              ; preds = %129, %120\n  %127 = phi i32 [ 0, %120 ], [ %132, %129 ]\n  %128 = icmp eq i32 %127, 3\n  br i1 %128, label %116, label %129\n\n129:                                              ; preds = %126\n  %130 = load float, ptr %124, align 4, !tbaa !5\n  %131 = load float, ptr %125, align 4, !tbaa !5\n  store float %131, ptr %124, align 4, !tbaa !5\n  store float %130, ptr %125, align 4, !tbaa !5\n  %132 = add nuw i32 %127, 1\n  br label %126, !llvm.loop !22\n\n133:                                              ; preds = %116\n  %134 = add nuw nsw i64 %111, 1\n  br label %110, !llvm.loop !23\n\n135:                                              ; preds = %38, %110\n  %136 = phi i32 [ 1, %38 ], [ 0, %110 ]\n  store float %18, ptr @det, align 4, !tbaa !5\n  call void @llvm.lifetime.end.p0(i64 2000, ptr nonnull %2) #8\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @d, ptr noundef nonnull align 16 dereferenceable(36) @a, i64 36, i1 false)\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @a, ptr noundef nonnull align 16 dereferenceable(36) @a_ref, i64 36, i1 false)\n  %137 = call i32 @mmul(i32 noundef 3, i32 noundef 3, i32 noundef 3, i32 noundef 3) #9\n  %138 = add nuw nsw i32 %4, 1\n  br label %3, !llvm.loop !26\n\n139:                                              ; preds = %3\n  ret i32 poison\n}\n",
+          "callsite": "  %137 = call i32 @mmul(i32 noundef 3, i32 noundef 3, i32 noundef 3, i32 noundef 3) #9"
+        },
+        "module": "third_party/embench-iot/src/minver/libminver.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 9,
+          "callee_instruction_count": 37,
+          "callee_users": 1,
+          "caller_basic_block_count": 38,
+          "caller_instruction_count": 158,
+          "caller_users": 2,
+          "callsite_cost": -50,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 4,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 55,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 25,
+          "simplified_instructions": 21,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": -9,
+          "unsimplified_common_instructions": 80
+        },
+        "source": "third_party/embench-iot/src/minver/libminver.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS minver benchmark\n\n   This version, copyright (C) 2014-2019 Embecosm Limited and University of\n   Bristol\n\n   Contributor Pierre Langlois <pierre.langlois@embecosm.com>\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later\n\n   *************************************************************************\n   *                                                                       *\n   *   SNU-RT Benchmark Suite for Worst Case Timing Analysis               *\n   *   =====================================================               *\n   *                              Collected and Modified by S.-S. Lim      *\n   *                                           sslim@archi.snu.ac.kr       *\n   *                                         Real-Time Research Group      *\n   *                                        Seoul National University      *\n   *                                                                       *\n   *                                                                       *\n   *        < Features > - restrictions for our experimental environment   *\n   *                                                                       *\n   *          1. Completely structured.                                    *\n   *               - There are no unconditional jumps.                     *\n   *               - There are no exit from loop bodies.                   *\n   *                 (There are no 'break' or 'return' in loop bodies)     *\n   *          2. No 'switch' statements.                                   *\n   *          3. No 'do..while' statements.                                *\n   *          4. Expressions are restricted.                               *\n   *               - There are no multiple expressions joined by 'or',     *\n   *                'and' operations.                                      *\n   *          5. No library calls.                                         *\n   *               - All the functions needed are implemented in the       *\n   *                 source file.                                          *\n   *                                                                       *\n   *                                                                       *\n   *************************************************************************\n   *                                                                       *\n   *  FILE: minver.c                                                       *\n   *  SOURCE : Turbo C Programming for Engineering by Hyun Soo Ahn         *\n   *                                                                       *\n   *  DESCRIPTION :                                                        *\n   *                                                                       *\n   *     Matrix inversion for 3x3 floating point matrix.                   *\n   *                                                                       *\n   *  REMARK :                                                             *\n   *                                                                       *\n   *  EXECUTION TIME :                                                     *\n   *                                                                       *\n   *                                                                       *\n   *************************************************************************\n\n*/\n\n#include <math.h>\n#include <string.h>\n#include \"support.h\"\n\n/* This scale factor will be changed to equalise the runtime of the\n   benchmarks. */\n#define LOCAL_SCALE_FACTOR 555\n\nint minver (int row, int col, float eps);\nint mmul (int row_a, int col_a, int row_b, int col_b);\n\nstatic float a_ref[3][3] = {\n  {3.0, -6.0, 7.0},\n  {9.0, 0.0, -5.0},\n  {5.0, -8.0, 6.0},\n};\n\nstatic float b[3][3] = {\n  {-3.0, 0.0, 2.0},\n  {3.0, -2.0, 0.0},\n  {0.0, 2.0, -3.0},\n};\n\nstatic float a[3][3], c[3][3], d[3][3], det;\n\nstatic float\nminver_fabs (float n)\n{\n  float f;\n\n  if (n >= 0)\n    f = n;\n  else\n    f = -n;\n  return f;\n}\n\nint\nmmul (int row_a, int col_a, int row_b, int col_b)\n{\n  int i, j, k, row_c, col_c;\n  float w;\n\n  row_c = row_a;\n  col_c = col_b;\n\n  if (row_c < 1 || row_b < 1 || col_c < 1 || col_a != row_b)\n    return (999);\n  for (i = 0; i < row_c; i++)\n    {\n      for (j = 0; j < col_c; j++)\n\t{\n\t  w = 0.0;\n\t  for (k = 0; k < row_b; k++)\n\t    w += a[i][k] * b[k][j];\n\t  c[i][j] = w;\n\t}\n    }\n\n  return (0);\n}\n\n\nint\nminver (int row, int col, float eps)\n{\n  int work[500], i, j, k, r, iw, u, v;\n  float w, wmax, pivot, api, w1;\n\n  r = w = 0;\n  if (row < 2 || row > 500 || eps <= 0.0)\n    return (999);\n  w1 = 1.0;\n  for (i = 0; i < row; i++)\n    work[i] = i;\n  for (k = 0; k < row; k++)\n    {\n      wmax = 0.0;\n      for (i = k; i < row; i++)\n\t{\n\t  w = minver_fabs (a[i][k]);\n\t  if (w > wmax)\n\t    {\n\t      wmax = w;\n\t      r = i;\n\t    }\n\t}\n      pivot = a[r][k];\n      api = minver_fabs (pivot);\n      if (api <= eps)\n\t{\n\t  det = w1;\n\t  return (1);\n\t}\n      w1 *= pivot;\n      u = k * col;\n      v = r * col;\n      if (r != k)\n\t{\n\t  w1 = -w;\n\t  iw = work[k];\n\t  work[k] = work[r];\n\t  work[r] = iw;\n\t  for (j = 0; j < row; j++)\n\t    {\n\t      w = a[k][j];\n\t      a[k][j] = a[r][j];\n\t      a[r][j] = w;\n\t    }\n\t}\n      for (i = 0; i < row; i++)\n\ta[k][i] /= pivot;\n      for (i = 0; i < row; i++)\n\t{\n\t  if (i != k)\n\t    {\n\t      v = i * col;\n\t      w = a[i][k];\n\t      if (w != 0.0)\n\t\t{\n\t\t  for (j = 0; j < row; j++)\n\t\t    if (j != k)\n\t\t      a[i][j] -= w * a[k][j];\n\t\t  a[i][k] = -w / pivot;\n\t\t}\n\t    }\n\t}\n      a[k][k] = 1.0 / pivot;\n    }\n\n  for (i = 0; i < row; i++)\n    {\n      while (1)\n\t{\n\t  k = work[i];\n\t  if (k == i)\n\t    break;\n\t  iw = work[k];\n\t  work[k] = work[i];\n\t  work[i] = iw;\n\t  for (j = 0; j < row; j++)\n\t    {\n\t      u = j * col;\n\t      w = a[k][i];\n\t      a[k][i] = a[k][k];\n\t      a[k][k] = w;\n\t    }\n\t}\n    }\n\n  det = w1;\n\n  return (0);\n}\n\n\nint\nverify_benchmark (int res __attribute ((unused)))\n{\n  int i, j;\n  float eps = 1.0e-6;\n\n  static float c_exp[3][3] = {\n    {-27.0, 26.0, -15.0},\n    {-27.0, -10.0, 33.0},\n    {-39.0, 28.0, -8.0}\n  };\n\n  static float d_exp[3][3] = {\n    {0.133333325, -0.199999958, 0.2666665910},\n    {-0.519999862, 0.113333330, 0.5266665220},\n    {0.479999840, -0.359999895, 0.0399999917}\n  };\n\n  /* Allow small errors in floating point */\n\n  for (i = 0; i < 3; i++)\n    for (j = 0; j < 3; j++)\n      if (float_neq_beebs(c[i][j], c_exp[i][j]) || float_neq_beebs(d[i][j], d_exp[i][j]))\n\treturn 0;\n\n  return float_eq_beebs(det, -16.6666718);\n}\n\n\nvoid\ninitialise_benchmark (void)\n{\n}\n\n\nstatic int benchmark_body (int  rpt);\n\nvoid\nwarm_caches (int  heat)\n{\n  int  res = benchmark_body (heat);\n\n  return;\n}\n\n\nint\nbenchmark (void)\n{\n  return benchmark_body (LOCAL_SCALE_FACTOR * CPU_MHZ);\n}\n\n\nstatic int __attribute__ ((noinline))\nbenchmark_body (int rpt)\n{\n  int i;\n\n  for (i = 0; i < rpt; i++)\n    {\n      float eps = 1.0e-6;\n\n      memcpy (a, a_ref, 3 * 3 * sizeof (a[0][0]));\n      minver (3, 3, eps);\n      memcpy (d, a, 3 * 3 * sizeof (a[0][0]));\n      memcpy (a, a_ref, 3 * 3 * sizeof (a[0][0]));\n      mmul (3, 3, 3, 3);\n    }\n\n  return 0;\n}\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize nofree norecurse nosync nounwind optsize memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local range(i32 0, 1000) i32 @mmul(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {\n  %5 = icmp sgt i32 %0, 0\n  %6 = icmp sgt i32 %2, 0\n  %7 = and i1 %5, %6\n  %8 = icmp sgt i32 %3, 0\n  %9 = and i1 %7, %8\n  %10 = icmp eq i32 %1, %2\n  %11 = and i1 %10, %9\n  br i1 %11, label %12, label %38\n\n12:                                               ; preds = %4\n  %13 = zext nneg i32 %0 to i64\n  %14 = zext nneg i32 %3 to i64\n  %15 = zext nneg i32 %2 to i64\n  br label %16\n\n16:                                               ; preds = %12, %36\n  %17 = phi i64 [ 0, %12 ], [ %37, %36 ]\n  %18 = icmp eq i64 %17, %13\n  br i1 %18, label %38, label %19\n\n19:                                               ; preds = %16, %33\n  %20 = phi i64 [ %35, %33 ], [ 0, %16 ]\n  %21 = icmp eq i64 %20, %14\n  br i1 %21, label %36, label %22\n\n22:                                               ; preds = %19, %26\n  %23 = phi i64 [ %32, %26 ], [ 0, %19 ]\n  %24 = phi float [ %31, %26 ], [ 0.000000e+00, %19 ]\n  %25 = icmp eq i64 %23, %15\n  br i1 %25, label %33, label %26\n\n26:                                               ; preds = %22\n  %27 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %17, i64 %23\n  %28 = load float, ptr %27, align 4, !tbaa !5\n  %29 = getelementptr inbounds nuw [3 x [3 x float]], ptr @b, i64 0, i64 %23, i64 %20\n  %30 = load float, ptr %29, align 4, !tbaa !5\n  %31 = tail call float @llvm.fmuladd.f32(float %28, float %30, float %24)\n  %32 = add nuw nsw i64 %23, 1\n  br label %22, !llvm.loop !9\n\n33:                                               ; preds = %22\n  %34 = getelementptr inbounds nuw [3 x [3 x float]], ptr @c, i64 0, i64 %17, i64 %20\n  store float %24, ptr %34, align 4, !tbaa !5\n  %35 = add nuw nsw i64 %20, 1\n  br label %19, !llvm.loop !11\n\n36:                                               ; preds = %19\n  %37 = add nuw nsw i64 %17, 1\n  br label %16, !llvm.loop !12\n\n38:                                               ; preds = %16, %4\n  %39 = phi i32 [ 999, %4 ], [ 0, %16 ]\n  ret i32 %39\n}\n",
+        "caller_ir": "; Function Attrs: minsize noinline nounwind optsize uwtable\ndefine internal fastcc i32 @benchmark_body(i32 noundef %0) unnamed_addr #6 {\n  %2 = alloca [500 x i32], align 16\n  br label %3\n\n3:                                                ; preds = %135, %1\n  %4 = phi i32 [ 0, %1 ], [ %138, %135 ]\n  %5 = icmp slt i32 %4, %0\n  br i1 %5, label %6, label %139\n\n6:                                                ; preds = %3\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @a, ptr noundef nonnull align 16 dereferenceable(36) @a_ref, i64 36, i1 false)\n  call void @llvm.lifetime.start.p0(i64 2000, ptr nonnull %2) #8\n  br label %7\n\n7:                                                ; preds = %10, %6\n  %8 = phi i64 [ 0, %6 ], [ %13, %10 ]\n  %9 = icmp eq i64 %8, 3\n  br i1 %9, label %14, label %10\n\n10:                                               ; preds = %7\n  %11 = getelementptr inbounds nuw [500 x i32], ptr %2, i64 0, i64 %8\n  %12 = trunc nuw nsw i64 %8 to i32\n  store i32 %12, ptr %11, align 4, !tbaa !13\n  %13 = add nuw nsw i64 %8, 1\n  br label %7, !llvm.loop !15\n\n14:                                               ; preds = %106, %7\n  %15 = phi i64 [ %109, %106 ], [ 0, %7 ]\n  %16 = phi i32 [ %23, %106 ], [ 0, %7 ]\n  %17 = phi float [ %78, %106 ], [ 0.000000e+00, %7 ]\n  %18 = phi float [ %67, %106 ], [ 1.000000e+00, %7 ]\n  %19 = icmp eq i64 %15, 3\n  br i1 %19, label %20, label %21\n\n20:                                               ; preds = %14\n  br label %110\n\n21:                                               ; preds = %27, %14\n  %22 = phi i64 [ %37, %27 ], [ %15, %14 ]\n  %23 = phi i32 [ %35, %27 ], [ %16, %14 ]\n  %24 = phi float [ %32, %27 ], [ %17, %14 ]\n  %25 = phi float [ %36, %27 ], [ 0.000000e+00, %14 ]\n  %26 = icmp eq i64 %22, 3\n  br i1 %26, label %38, label %27\n\n27:                                               ; preds = %21\n  %28 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %22, i64 %15\n  %29 = load float, ptr %28, align 4, !tbaa !5\n  %30 = fcmp ult float %29, 0.000000e+00\n  %31 = fneg float %29\n  %32 = select i1 %30, float %31, float %29\n  %33 = fcmp ogt float %32, %25\n  %34 = trunc nuw nsw i64 %22 to i32\n  %35 = select i1 %33, i32 %34, i32 %23\n  %36 = select i1 %33, float %32, float %25\n  %37 = add nuw nsw i64 %22, 1\n  br label %21, !llvm.loop !16\n\n38:                                               ; preds = %21\n  %39 = sext i32 %23 to i64\n  %40 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %39, i64 %15\n  %41 = load float, ptr %40, align 4, !tbaa !5\n  %42 = call float @llvm.fabs.f32(float %41)\n  %43 = fcmp ugt float %42, 0x3EB0C6F7A0000000\n  br i1 %43, label %44, label %135\n\n44:                                               ; preds = %38\n  %45 = fmul float %18, %41\n  %46 = zext i32 %23 to i64\n  %47 = icmp eq i64 %15, %46\n  br i1 %47, label %65, label %48\n\n48:                                               ; preds = %44\n  %49 = getelementptr inbounds nuw [500 x i32], ptr %2, i64 0, i64 %15\n  %50 = load i32, ptr %49, align 4, !tbaa !13\n  %51 = getelementptr inbounds [500 x i32], ptr %2, i64 0, i64 %39\n  %52 = load i32, ptr %51, align 4, !tbaa !13\n  store i32 %52, ptr %49, align 4, !tbaa !13\n  store i32 %50, ptr %51, align 4, !tbaa !13\n  br label %53\n\n53:                                               ; preds = %57, %48\n  %54 = phi i64 [ %62, %57 ], [ 0, %48 ]\n  %55 = phi float [ %59, %57 ], [ %24, %48 ]\n  %56 = icmp eq i64 %54, 3\n  br i1 %56, label %63, label %57\n\n57:                                               ; preds = %53\n  %58 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %15, i64 %54\n  %59 = load float, ptr %58, align 4, !tbaa !5\n  %60 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %39, i64 %54\n  %61 = load float, ptr %60, align 4, !tbaa !5\n  store float %61, ptr %58, align 4, !tbaa !5\n  store float %59, ptr %60, align 4, !tbaa !5\n  %62 = add nuw nsw i64 %54, 1\n  br label %53, !llvm.loop !17\n\n63:                                               ; preds = %53\n  %64 = fneg float %24\n  br label %65\n\n65:                                               ; preds = %63, %44\n  %66 = phi float [ %24, %44 ], [ %55, %63 ]\n  %67 = phi float [ %45, %44 ], [ %64, %63 ]\n  br label %68\n\n68:                                               ; preds = %71, %65\n  %69 = phi i64 [ %75, %71 ], [ 0, %65 ]\n  %70 = icmp eq i64 %69, 3\n  br i1 %70, label %76, label %71\n\n71:                                               ; preds = %68\n  %72 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %15, i64 %69\n  %73 = load float, ptr %72, align 4, !tbaa !5\n  %74 = fdiv float %73, %41\n  store float %74, ptr %72, align 4, !tbaa !5\n  %75 = add nuw nsw i64 %69, 1\n  br label %68, !llvm.loop !18\n\n76:                                               ; preds = %103, %68\n  %77 = phi i64 [ %105, %103 ], [ 0, %68 ]\n  %78 = phi float [ %104, %103 ], [ %66, %68 ]\n  %79 = icmp eq i64 %77, 3\n  br i1 %79, label %106, label %80\n\n80:                                               ; preds = %76\n  %81 = icmp eq i64 %77, %15\n  br i1 %81, label %103, label %82\n\n82:                                               ; preds = %80\n  %83 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %77, i64 %15\n  %84 = load float, ptr %83, align 4, !tbaa !5\n  %85 = fcmp une float %84, 0.000000e+00\n  br i1 %85, label %86, label %103\n\n86:                                               ; preds = %82\n  %87 = fneg float %84\n  br label %88\n\n88:                                               ; preds = %99, %86\n  %89 = phi i64 [ 0, %86 ], [ %100, %99 ]\n  %90 = icmp eq i64 %89, 3\n  br i1 %90, label %101, label %91\n\n91:                                               ; preds = %88\n  %92 = icmp eq i64 %89, %15\n  br i1 %92, label %99, label %93\n\n93:                                               ; preds = %91\n  %94 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %15, i64 %89\n  %95 = load float, ptr %94, align 4, !tbaa !5\n  %96 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %77, i64 %89\n  %97 = load float, ptr %96, align 4, !tbaa !5\n  %98 = call float @llvm.fmuladd.f32(float %87, float %95, float %97)\n  store float %98, ptr %96, align 4, !tbaa !5\n  br label %99\n\n99:                                               ; preds = %93, %91\n  %100 = add nuw nsw i64 %89, 1\n  br label %88, !llvm.loop !19\n\n101:                                              ; preds = %88\n  %102 = fdiv float %87, %41\n  store float %102, ptr %83, align 4, !tbaa !5\n  br label %103\n\n103:                                              ; preds = %101, %82, %80\n  %104 = phi float [ %84, %101 ], [ %84, %82 ], [ %78, %80 ]\n  %105 = add nuw nsw i64 %77, 1\n  br label %76, !llvm.loop !20\n\n106:                                              ; preds = %76\n  %107 = fdiv float 1.000000e+00, %41\n  %108 = getelementptr inbounds nuw [3 x [3 x float]], ptr @a, i64 0, i64 %15, i64 %15\n  store float %107, ptr %108, align 4, !tbaa !5\n  %109 = add nuw nsw i64 %15, 1\n  br label %14, !llvm.loop !21\n\n110:                                              ; preds = %133, %20\n  %111 = phi i64 [ 0, %20 ], [ %134, %133 ]\n  %112 = icmp eq i64 %111, 3\n  br i1 %112, label %135, label %113\n\n113:                                              ; preds = %110\n  %114 = getelementptr inbounds nuw [500 x i32], ptr %2, i64 0, i64 %111\n  %115 = load i32, ptr %114, align 4, !tbaa !13\n  br label %116\n\n116:                                              ; preds = %126, %113\n  %117 = phi i32 [ %115, %113 ], [ %123, %126 ]\n  %118 = zext i32 %117 to i64\n  %119 = icmp eq i64 %111, %118\n  br i1 %119, label %133, label %120\n\n120:                                              ; preds = %116\n  %121 = sext i32 %117 to i64\n  %122 = getelementptr inbounds [500 x i32], ptr %2, i64 0, i64 %121\n  %123 = load i32, ptr %122, align 4, !tbaa !13\n  store i32 %117, ptr %122, align 4, !tbaa !13\n  store i32 %123, ptr %114, align 4, !tbaa !13\n  %124 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %121, i64 %111\n  %125 = getelementptr inbounds [3 x [3 x float]], ptr @a, i64 0, i64 %121, i64 %121\n  br label %126\n\n126:                                              ; preds = %129, %120\n  %127 = phi i32 [ 0, %120 ], [ %132, %129 ]\n  %128 = icmp eq i32 %127, 3\n  br i1 %128, label %116, label %129\n\n129:                                              ; preds = %126\n  %130 = load float, ptr %124, align 4, !tbaa !5\n  %131 = load float, ptr %125, align 4, !tbaa !5\n  store float %131, ptr %124, align 4, !tbaa !5\n  store float %130, ptr %125, align 4, !tbaa !5\n  %132 = add nuw i32 %127, 1\n  br label %126, !llvm.loop !22\n\n133:                                              ; preds = %116\n  %134 = add nuw nsw i64 %111, 1\n  br label %110, !llvm.loop !23\n\n135:                                              ; preds = %38, %110\n  %136 = phi i32 [ 1, %38 ], [ 0, %110 ]\n  store float %18, ptr @det, align 4, !tbaa !5\n  call void @llvm.lifetime.end.p0(i64 2000, ptr nonnull %2) #8\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @d, ptr noundef nonnull align 16 dereferenceable(36) @a, i64 36, i1 false)\n  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) @a, ptr noundef nonnull align 16 dereferenceable(36) @a_ref, i64 36, i1 false)\n  %137 = call i32 @mmul(i32 noundef 3, i32 noundef 3, i32 noundef 3, i32 noundef 3) #9\n  %138 = add nuw nsw i32 %4, 1\n  br label %3, !llvm.loop !26\n\n139:                                              ; preds = %3\n  ret i32 poison\n}\n",
+        "callsite": {
+          "callee": "mmul",
+          "caller": "benchmark_body",
+          "instruction": "  %137 = call i32 @mmul(i32 noundef 3, i32 noundef 3, i32 noundef 3, i32 noundef 3) #9",
+          "module": "third_party/embench-iot/src/minver/libminver.c",
+          "source": "third_party/embench-iot/src/minver/libminver.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 9,
+          "callee_instruction_count": 37,
+          "callee_users": 1,
+          "caller_basic_block_count": 38,
+          "caller_instruction_count": 158,
+          "caller_users": 2,
+          "constant_args": 4
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 8208,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    },
+    {
+      "answer": {
+        "choice": "inline",
+        "confidence": 0.6,
+        "probabilities": {
+          "do_not_inline": 0.2,
+          "inline": 0.8
+        }
+      },
+      "fallback_reason": null,
+      "latency_ms": 343.515,
+      "llvm_observation": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "callee": "malloc_beebs",
+        "caller": "calloc_beebs",
+        "decision": true,
+        "default": false,
+        "id": 0,
+        "ir": {
+          "callee": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+          "caller": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+          "callsite": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5"
+        },
+        "module": "third_party/embench-iot/support/beebsc.c",
+        "numeric_features": {
+          "call_argument_setup": 0,
+          "call_penalty": 0,
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "callsite_cost": -35,
+          "case_cluster_penalty": 0,
+          "cold_cc_penalty": 0,
+          "constant_args": 0,
+          "constant_offset_ptr_args": 0,
+          "cost_estimate": 15,
+          "dead_blocks": 0,
+          "indirect_call_penalty": 0,
+          "is_multiple_blocks": 1,
+          "jump_table_penalty": 0,
+          "last_call_to_static_bonus": 0,
+          "load_elimination": 1,
+          "load_relative_intrinsic": 0,
+          "lowered_call_arg_setup": 0,
+          "nested_inline_cost_estimate": 0,
+          "nested_inlines": 0,
+          "num_loops": 0,
+          "simplified_instructions": 4,
+          "sroa_losses": 0,
+          "sroa_savings": 0,
+          "switch_default_dest_penalty": 0,
+          "switch_penalty": 0,
+          "threshold": 1,
+          "unsimplified_common_instructions": 50
+        },
+        "source": "third_party/embench-iot/support/beebsc.c"
+      },
+      "model": "jev-1.13.0",
+      "prompt_version": "inline-size-v3-minimal-ir-full-budget-structure-features-source-blind",
+      "question": {
+        "criteria": {
+          "do_not_inline": {
+            "meaning": "Keep this call out of line."
+          },
+          "inline": {
+            "meaning": "Inline this call site."
+          }
+        },
+        "instructions": {
+          "decision": "Both actions are legal. Choose the action expected to produce the smaller final native executable .text section after optimization and linking."
+        }
+      },
+      "sent_to_llvm": 1,
+      "state": {
+        "build_context": {
+          "data_sections": true,
+          "function_sections": true,
+          "linker_gc_sections": true,
+          "lto": false,
+          "optimization": "-Oz",
+          "preprocessor_definitions": [
+            "CPU_MHZ=1",
+            "WARMUP_HEAT=1"
+          ],
+          "separate_translation_units": true
+        },
+        "c_translation_unit": "/* BEEBS local library variants\n\n   Copyright (C) 2019 Embecosm Limited.\n\n   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>\n\n   This file is part of Embench and was formerly part of the Bristol/Embecosm\n   Embedded Benchmark Suite.\n\n   SPDX-License-Identifier: GPL-3.0-or-later */\n\n/* These are very simple local versions of library routines, to ensure the\n   code is compiled with the flags used for the benchmark.  Not all library\n   routines are here, just ones that cause a lot of unecessary load, or where\n   there is variation between platforms and architectures. */\n\n#include <stddef.h>\n#include <string.h>\n#include \"beebsc.h\"\n\n/* Seed for the random number generator */\n\nstatic long int seed = 0;\n\n/* Heap records and sane initial values */\n\nstatic void *heap_ptr = NULL;\nstatic void *heap_end = NULL;\nstatic size_t heap_requested = 0;\n\n\n/* Yield a sequence of random numbers in the range [0, 2^15-1].\n\n   long int is guaranteed to be at least 32 bits. The seed only ever uses 31\n   bits (so is positive).\n\n   For BEEBS this gets round different operating systems using different\n   multipliers and offsets and RAND_MAX variations. */\n\nint\nrand_beebs (void)\n{\n  seed = (seed * 1103515245L + 12345) & ((1UL << 31) - 1);\n  return (int) (seed >> 16);\n}\n\n\n/* Initialize the random number generator */\n\nvoid\nsrand_beebs (unsigned int new_seed)\n{\n  seed = (long int) new_seed;\n}\n\n\n/* Initialize the BEEBS heap pointers. Note that the actual memory block is\n   in the caller code. */\n\nvoid\ninit_heap_beebs (void *heap, size_t heap_size)\n{\n  heap_ptr = (void *) heap;\n  heap_end = (void *) ((char *) heap_ptr + heap_size);\n  heap_requested = 0;\n}\n\n\n/* Report if malloc ever failed.\n\n   Return non-zero (TRUE) if malloc did not reqest more than was available\n   since the last call to init_heap_beebs, zero (FALSE) otherwise. */\n\nint\ncheck_heap_beebs (void *heap)\n{\n  return ((void *) ((char *) heap + heap_requested) <= heap_end);\n}\n\n\n/* BEEBS version of malloc.\n\n   This is primarily to reduce library and OS dependencies. Malloc is\n   generally not used in embedded code, or if it is, only in well defined\n   contexts to pre-allocate a fixed amount of memory. So this simplistic\n   implementation is just fine.\n\n   Note in particular the assumption that memory will never be freed! */\n\nvoid *\nmalloc_beebs (size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of calloc.\n\n   Implement as wrapper for malloc */\n\nvoid *\ncalloc_beebs (size_t nmemb, size_t size)\n{\n  void *new_ptr = malloc_beebs (nmemb * size);\n\n  /* Calloc is defined to zero the memory. OK to use a function here, because\n     it will be handled specially by the compiler anyway. */\n\n  if (NULL != new_ptr)\n    memset (new_ptr, 0, nmemb * size);\n\n  return new_ptr;\n}\n\n\n/* BEEBS version of realloc.\n\n   This is primarily to reduce library and OS dependencies. We just have to\n   allocate new memory and copy stuff across. */\n\nvoid *\nrealloc_beebs (void *ptr, size_t size)\n{\n  void *new_ptr = heap_ptr;\n\n  heap_requested += size;\n\n  if (((void *) ((char *) heap_ptr + size) > heap_end) || (0 == size))\n    return NULL;\n  else\n    {\n      heap_ptr = (void *) ((char *) heap_ptr + size);\n\n      /* This is clunky, since we don't know the size of the original\n         pointer. However it is a read only action and we know it must\n         be big enough if we right off the end, or we couldn't have\n         allocated here. If the size is smaller, it doesn't matter. */\n\n      if (NULL != ptr)\n\t{\n\t  size_t i;\n\n\t  for (i = 0; i < size; i++)\n\t    ((char *) new_ptr)[i] = ((char *) ptr)[i];\n\t}\n\n      return new_ptr;\n    }\n}\n\n\n/* BEEBS version of free.\n\n   For our simplified version of memory handling, free can just do nothing. */\n\nvoid\nfree_beebs (void *ptr __attribute__ ((unused)))\n{\n}\n\n\n/*\n   Local Variables:\n   mode: C\n   c-file-style: \"gnu\"\n   End:\n*/\n",
+        "callee_ir": "; Function Attrs: minsize mustprogress nofree norecurse nosync nounwind optsize willreturn memory(readwrite, argmem: none, inaccessiblemem: none) uwtable\ndefine dso_local ptr @malloc_beebs(i64 noundef %0) local_unnamed_addr #0 {\n  %2 = load ptr, ptr @heap_ptr, align 8, !tbaa !9\n  %3 = load i64, ptr @heap_requested, align 8, !tbaa !5\n  %4 = add i64 %3, %0\n  store i64 %4, ptr @heap_requested, align 8, !tbaa !5\n  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %0\n  %6 = load ptr, ptr @heap_end, align 8, !tbaa !9\n  %7 = icmp ugt ptr %5, %6\n  %8 = icmp eq i64 %0, 0\n  %9 = or i1 %8, %7\n  br i1 %9, label %11, label %10\n\n10:                                               ; preds = %1\n  store ptr %5, ptr @heap_ptr, align 8, !tbaa !9\n  br label %11\n\n11:                                               ; preds = %1, %10\n  %12 = phi ptr [ %2, %10 ], [ null, %1 ]\n  ret ptr %12\n}\n",
+        "caller_ir": "; Function Attrs: minsize nounwind optsize uwtable\ndefine dso_local ptr @calloc_beebs(i64 noundef %0, i64 noundef %1) local_unnamed_addr #3 {\n  %3 = mul i64 %0, %1\n  %4 = call ptr @malloc_beebs(i64 noundef %3) #5\n  %5 = icmp eq ptr %4, null\n  br i1 %5, label %7, label %6\n\n6:                                                ; preds = %2\n  call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 0, i64 %3, i1 false)\n  br label %7\n\n7:                                                ; preds = %6, %2\n  ret ptr %4\n}\n",
+        "callsite": {
+          "callee": "malloc_beebs",
+          "caller": "calloc_beebs",
+          "instruction": "  %4 = call ptr @malloc_beebs(i64 noundef %3) #5",
+          "module": "third_party/embench-iot/support/beebsc.c",
+          "source": "third_party/embench-iot/support/beebsc.c"
+        },
+        "numeric_facts": {
+          "callee_basic_block_count": 3,
+          "callee_instruction_count": 14,
+          "callee_users": 1,
+          "caller_basic_block_count": 3,
+          "caller_instruction_count": 7,
+          "caller_users": 0,
+          "constant_args": 0
+        },
+        "objective": "Minimize final native executable .text size after all LLVM optimizations.",
+        "target": "x86-64, Clang 21.1.8"
+      },
+      "usage": {
+        "input_tokens": 2342,
+        "output_tokens": 36
+      },
+      "used_llvm_default": false
+    }
+  ],
+  "feature_set": "structure",
+  "includes_ir": true,
+  "includes_llvm_default": false,
+  "includes_source": true,
+  "jev_binary": {
+    "path": "runs/jevopt-embench/minver/jev",
+    "sha256": "c84248dcac44258d3b0c655c6a44b58a68ddf0e76783f3ea6dc2fdd9c1d0e12f",
+    "text_bytes": 1342
+  },
+  "link_command": [
+    "/usr/bin/clang-21",
+    "-fuse-ld=lld",
+    "-march=x86-64",
+    "-Wl,--build-id=none",
+    "runs/jevopt-embench/minver/objects/libminver.o",
+    "runs/jevopt-embench/minver/objects/main.o",
+    "runs/jevopt-embench/minver/objects/beebsc.o",
+    "runs/jevopt-embench/minver/objects/chipsupport.o",
+    "runs/jevopt-embench/minver/objects/boardsupport.o",
+    "-Wl,--gc-sections",
+    "-lm",
+    "-o",
+    "runs/jevopt-embench/minver/jev"
+  ],
+  "min_confidence": 0.0,
+  "mode": "jev-live",
+  "program": {
+    "correct": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "stock_binary": {
+    "path": "runs/jevopt-embench/minver/stock-run/program",
+    "sha256": "e9d9fbe43824a94f801ae2cb957ccf511a87b36c7b8c1308bcb36c7f495a1456",
+    "text_bytes": 1461
+  },
+  "summary": {
+    "beats_llvm": true,
+    "decisions": 5,
+    "do_not_inline": 0,
+    "inline": 5,
+    "input_tokens": 32337,
+    "ir_clipped": 0,
+    "jev_inline_answers": 5,
+    "jev_latency_ms": 2613.928,
+    "llvm_confidence_fallbacks": 0,
+    "llvm_default_overrides": 3,
+    "output_tokens": 180,
+    "text_delta_bytes": -119,
+    "text_delta_percent": -8.1451
+  }
+}

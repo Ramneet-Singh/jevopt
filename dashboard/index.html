@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Explore how jevopt uses Jev to make LLVM inlining decisions and compare final executable .text size against Clang -Oz across Embench."
+    />
+    <title>jevopt — Intelligent compiler optimisation with Jev</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="nav">
+        <a class="brand" href="./" aria-label="jevopt home">
+          <img src="favicon.svg" alt="" />
+          <span>jevopt</span>
+        </a>
+        <a
+          class="github-link"
+          href="https://github.com/Ramneet-Singh/jevopt"
+          aria-label="jevopt on GitHub"
+          title="jevopt on GitHub"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943" />
+          </svg>
+        </a>
+      </nav>
+
+      <header class="intro">
+        <h1>
+          Making intelligent compiler optimisation decisions with
+          <a class="jev-link" href="https://typesafe.ai/">Jev</a>.
+        </h1>
+        <p class="intro-copy">
+          We use Jev to make inlining decisions at each call-site and compare it to the
+          clang <code>-Oz</code> inliner on the final executable <code>.text</code> size.
+        </p>
+      </header>
+
+      <section class="control-panel" aria-label="Result selection">
+        <label>
+          <span>Run</span>
+          <select id="run-select"></select>
+        </label>
+        <span class="control-divider"></span>
+        <label>
+          <span>Program</span>
+          <select id="program-select"></select>
+        </label>
+        <div class="config" id="configuration"></div>
+      </section>
+
+      <section class="result-card">
+        <div class="result-copy">
+          <p class="result-kicker"><span id="result-icon">↓</span> Final Executable <code>.text</code> Size</p>
+          <h2 class="result-heading"><span class="result-number" id="delta-percent">58.2%</span> <span id="delta-label">smaller than clang -Oz</span></h2>
+          <p id="delta-detail">Jevopt removes 3,316 bytes from the final executable.</p>
+        </div>
+        <div class="size-chart" aria-label="Binary size comparison">
+          <div class="chart-row">
+            <div class="chart-label"><span>clang -Oz</span><strong id="clang-chart-value"></strong></div>
+            <div class="track"><div class="bar clang-bar" id="clang-bar"></div></div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-label"><span>jevopt</span><strong id="jevopt-chart-value"></strong></div>
+            <div class="track"><div class="bar jevopt-bar" id="jevopt-bar"></div></div>
+          </div>
+          <p class="chart-note">Executable <code>.text</code> · lower is better</p>
+        </div>
+      </section>
+
+      <section class="comparison" aria-labelledby="comparison-title">
+        <div class="section-heading">
+          <h2 id="comparison-title">Inliner Performance Comparison</h2>
+          <div class="decision-count"><strong id="decision-total"></strong> discretionary call sites</div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th scope="col">
+                  <span class="compiler-title">
+                    <img class="llvm-logo" src="assets/llvm-wyvern.png" alt="" />
+                    <span><span class="compiler-name">LLVM</span><span class="compiler-subtitle">clang -Oz</span></span>
+                  </span>
+                </th>
+                <th scope="col">
+                  <span class="compiler-title">
+                    <img src="favicon.svg" alt="" />
+                    <span><span class="compiler-name">jevopt</span><span class="compiler-subtitle">Jev + clang</span></span>
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Translation units</th><td id="clang-units"></td><td id="jevopt-units"></td></tr>
+              <tr><th scope="row">Inlining decisions</th><td id="clang-decisions"></td><td id="jevopt-decisions"></td></tr>
+              <tr><th scope="row">Inline</th><td id="clang-inline"></td><td id="jevopt-inline"></td></tr>
+              <tr><th scope="row">Keep out of line</th><td id="clang-no-inline"></td><td id="jevopt-no-inline"></td></tr>
+              <tr><th scope="row" title="Derived from recorded input tokens at $42 per billion tokens">Jev API Cost (USD)</th><td>—</td><td id="jevopt-cost"></td></tr>
+              <tr class="total"><th scope="row">Final <code>.text</code></th><td id="clang-bytes"></td><td id="jevopt-bytes"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="run-summary">
+        <div>
+          <p class="eyebrow">Full Run</p>
+          <p id="run-score"></p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>© 2026 Ramneet Singh</span>
+        <a href="https://github.com/Ramneet-Singh/jevopt/blob/main/LICENSE">GPLv3</a>
+      </footer>
+    </main>
+    <script src="data/runs.js"></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>
