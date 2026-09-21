@@ -1,4 +1,4 @@
-# jevopt
+# jevopt [![Listed in Awesome Jev](https://awesomejev.vercel.app/badge.svg)](https://github.com/valentynkit/awesome-jev-typesafe)
 
 **Making intelligent compiler optimisation decisions with Jev.** jevopt is a C/C++ compiler driver that combines Clang’s optimiser with [Jev](https://typesafe.ai/) for function-call inlining decisions. At every discretionary call site, Jev chooses whether to inline using the current LLVM IR, original source, build context, and a small set of structural facts.
 
